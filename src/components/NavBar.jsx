@@ -35,11 +35,11 @@ const NavBar = () => {
                     </ul>
                 </nav>
 
-                {/*<a href="#contact" className="contact-btn group">*/}
-                {/*    <div className="inner">*/}
-                {/*        <span>Contact Me</span>*/}
-                {/*    </div>*/}
-                {/*</a>*/}
+                <a href="#contact" className="contact-btn group">
+                    <div className="inner">
+                        <span>Contact Me</span>
+                    </div>
+                </a>
             </div>
         </header>
     )
