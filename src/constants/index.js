@@ -1,7 +1,7 @@
 const navLinks = [
     {
         name: "Work",
-        link: "#work",
+        link: "#counter",
     },
     {
         name: "Experience",
@@ -10,10 +10,6 @@ const navLinks = [
     {
         name: "Skills",
         link: "#skills",
-    },
-    {
-        name: "Testimonials",
-        link: "#testimonials",
     },
 ];
 
@@ -29,10 +25,10 @@ const words = [
 ];
 
 const counterItems = [
-    { value: 7, suffix: "+", label: "Years of Experience" },
-    { value: 20, suffix: "+", label: "Completed Projects" },
-    { value: 10, suffix: "+", label: "Clients & Employers" },
-    { value: 90, suffix: "%", label: "Client Satisfaction" },
+    { value: 8, suffix: "+", label: "Years of Experience" },
+    { value: 6, suffix: "", label: "Domains" },
+    { value: 8, suffix: "", label: "Clients & Employers" },
+    { value: 100, suffix: "%", label: "Satisfaction" },
 ];
 
 const logoIconsList = [
@@ -60,56 +56,48 @@ const logoIconsList = [
     {
         imgPath: "/images/logos/company-logo-8.png",
     },
-    {
-        imgPath: "/images/logos/company-logo-9.png",
-    },
-    {
-        imgPath: "/images/logos/company-logo-10.png",
-    },
-    {
-        imgPath: "/images/logos/company-logo-11.png",
-    },
 ];
 
 const abilities = [
     {
         imgPath: "/images/seo.png",
-        title: "Quality Focus",
-        desc: "Delivering high-quality results while maintaining attention to every detail.",
+        title: "Large-Scale Frontend Engineering",
+        desc: "I build frontends people actually use — at 30,000 feet.",
     },
     {
         imgPath: "/images/chat.png",
-        title: "Reliable Communication",
-        desc: "Keeping you updated at every step to ensure transparency and clarity.",
+        title: "Cloud-Native & Serverless Architecture on AWS",
+        desc: "AWS runs through my entire career — Lambda, S3, EC2, API Gateway, DynamoDB, Redshift, CodePipeline",
     },
     {
         imgPath: "/images/time.png",
-        title: "On-Time Delivery",
-        desc: "Making sure projects are completed on schedule, with quality & attention to detail.",
+        title: "Enterprise Java Integration & Backend Systems",
+        desc: "Experience working at large enterprises, consulting firms, and government-adjacent roles",
     },
 ];
 
 const techStackImgs = [
     {
-        name: "React Developer",
+        name: "Java",
+        imgPath: "/images/logos/java.svg",
+    },
+    {
+        name: "Angular",
+        imgPath: "/images/logos/angular.svg",
+    },
+    {
+        name: "React",
         imgPath: "/images/logos/react.png",
     },
     {
-        name: "Python Developer",
-        imgPath: "/images/logos/python.svg",
-    },
-    {
-        name: "Backend Developer",
+        name: "Backend",
         imgPath: "/images/logos/node.png",
     },
     {
-        name: "Interactive Developer",
+        name: "Three JS",
         imgPath: "/images/logos/three.png",
     },
-    {
-        name: "Project Manager",
-        imgPath: "/images/logos/git.svg",
-    },
+
 ];
 
 const techStackIcons = [
@@ -191,8 +179,8 @@ const expCards = [
     {
         review:
             "Contributed to DeltaSync Wi-Fi team delivering personalized onboard Wi-Fi experiences with Angular and dashboard solutions.",
-        imgPath: "/images/exp1.png",
-        logoPath: "/images/logo1.png",
+        imgPath: "/images/exp4.png",
+        logoPath: "/images/logo4.png",
         title: "Sr. Full Stack Developer – Delta Airlines",
         date: "September 2024 – Present",
         responsibilities: [
@@ -204,8 +192,8 @@ const expCards = [
     {
         review:
             "Worked as a Senior Developer on system integrator tean for Ohio Medicaid systems, building scalable Java solutions and automation tools.",
-        imgPath: "/images/exp2.png",
-        logoPath: "/images/logo2.png",
+        imgPath: "/images/exp6.png",
+        logoPath: "/images/logo6.png",
         title: "Sr. Java Developer – Deloitte Consulting",
         date: "January 2024 – August 2024",
         responsibilities: [
@@ -217,8 +205,8 @@ const expCards = [
     {
         review:
             "Built project management tool with Next.js, TypeScript, and React UI to streamline repository and pipeline management.",
-        imgPath: "/images/exp3.png",
-        logoPath: "/images/logo3.png",
+        imgPath: "/images/exp5.png",
+        logoPath: "/images/logo5.png",
         title: "Java Developer – RiceFW Technologies",
         date: "July 2023 – December 2023",
         responsibilities: [
@@ -243,8 +231,8 @@ const expCards = [
     {
         review:
             "Created robust cloud storage framework using modern technologies like Kotlin and TypeScript.",
-        imgPath: "/images/exp5.png",
-        logoPath: "/images/logo5.png",
+        imgPath: "/images/exp3.png",
+        logoPath: "/images/logo3.png",
         title: "Java Developer – CloudData Technology",
         date: "May 2021 – February 2022",
         responsibilities: [
@@ -256,8 +244,8 @@ const expCards = [
     {
         review:
             "Worked on warranty management platform for Amazon devices with React frontend and Node backend.",
-        imgPath: "/images/exp6.png",
-        logoPath: "/images/logo6.png",
+        imgPath: "/images/exp2.png",
+        logoPath: "/images/logo2.png",
         title: "Software Development Engineer – Amazon",
         date: "July 2020 – May 2021",
         responsibilities: [
@@ -269,8 +257,8 @@ const expCards = [
     {
         review:
             "Contributed to Global Technology Infrastructure projects at JPMorgan with scalable REST APIs and microservices.",
-        imgPath: "/images/exp7.png",
-        logoPath: "/images/logo7.png",
+        imgPath: "/images/exp1.svg",
+        logoPath: "/images/logo1.png",
         title: "Infrastructure Software Engineer – JPMorgan Chase",
         date: "July 2016 – May 2018",
         responsibilities: [
@@ -282,79 +270,34 @@ const expCards = [
 ];
 
 const expLogos = [
-    { name: "Delta Airlines", imgPath: "/images/logo1.png" },
-    { name: "Deloitte", imgPath: "/images/logo2.png" },
-    { name: "RiceFW Technologies", imgPath: "/images/logo3.png" },
     { name: "Delta Airlines", imgPath: "/images/logo4.png" },
-    { name: "CloudData Technology", imgPath: "/images/logo5.png" },
-    { name: "Amazon", imgPath: "/images/logo6.png" },
-    { name: "JPMorgan Chase", imgPath: "/images/logo7.png" },
-];
-
-const testimonials = [
-    {
-        name: "Esther Howard",
-        mentions: "@estherhoward",
-        review:
-            "I can’t say enough good things about Adrian. He was able to take our complex project requirements and turn them into a seamless, functional website. His problem-solving abilities are outstanding.",
-        imgPath: "/images/client1.png",
-    },
-    {
-        name: "Wade Warren",
-        mentions: "@wadewarren",
-        review:
-            "Working with Adrian was a fantastic experience. He transformed our outdated website into a modern, user-friendly platform. His attention to detail and commitment to quality are unmatched. Highly recommend him for any web dev projects.",
-        imgPath: "/images/client3.png",
-    },
-    {
-        name: "Guy Hawkins",
-        mentions: "@guyhawkins",
-        review:
-            "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-        imgPath: "/images/client2.png",
-    },
-    {
-        name: "Marvin McKinney",
-        mentions: "@marvinmckinney",
-        review:
-            "Adrian was a pleasure to work with. He turned our outdated website into a fresh, intuitive platform that’s both modern and easy to navigate. Fantastic work overall.",
-        imgPath: "/images/client5.png",
-    },
-    {
-        name: "Floyd Miles",
-        mentions: "@floydmiles",
-        review:
-            "Adrian’s expertise in web development is truly impressive. He delivered a robust and scalable solution for our e-commerce site, and our online sales have significantly increased since the launch. He’s a true professional!",
-        imgPath: "/images/client4.png",
-    },
-    {
-        name: "Albert Flores",
-        mentions: "@albertflores",
-        review:
-            "Adrian was a pleasure to work with. He understood our requirements perfectly and delivered a website that exceeded our expectations. His skills in both frontend and backend dev are top-notch.",
-        imgPath: "/images/client6.png",
-    },
+    { name: "Deloitte", imgPath: "/images/logo6.png" },
+    { name: "RiceFW Technologies", imgPath: "/images/logo5.png" },
+    { name: "Delta Airlines", imgPath: "/images/logo4.png" },
+    { name: "CloudData Technology", imgPath: "/images/logo3.png" },
+    { name: "Amazon", imgPath: "/images/logo2.png" },
+    { name: "JPMorgan Chase", imgPath: "/images/logo1.png" },
 ];
 
 const socialImgs = [
-    {
-        name: "insta",
-        url: "https://www.instagram.com/",
-        imgPath: "/images/insta.png",
-    },
-    {
-        name: "fb",
-        url: "https://www.facebook.com/",
-        imgPath: "/images/fb.png",
-    },
-    {
-        name: "x",
-        url: "https://www.x.com/",
-        imgPath: "/images/x.png",
-    },
+    // {
+    //     name: "insta",
+    //     url: "https://www.instagram.com/",
+    //     imgPath: "/images/insta.png",
+    // },
+    // {
+    //     name: "fb",
+    //     url: "https://www.facebook.com/",
+    //     imgPath: "/images/fb.png",
+    // },
+    // {
+    //     name: "x",
+    //     url: "https://www.x.com/",
+    //     imgPath: "/images/x.png",
+    // },
     {
         name: "linkedin",
-        url: "https://www.linkedin.com/",
+        url: "https://www.linkedin.com/bhasanth/",
         imgPath: "/images/linkedin.png",
     },
 ];
@@ -366,7 +309,6 @@ export {
     counterItems,
     expCards,
     expLogos,
-    testimonials,
     socialImgs,
     techStackIcons,
     techStackImgs,
