@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {navLinks} from "../constants/index.js";
+import {navLinks, socialImgs} from "../constants/index.js";
 
 const NavBar = () => {
 
@@ -44,11 +44,11 @@ const NavBar = () => {
                     </ul>
                 </nav>
 
-                <a href="#contact" className="contact-btn group" onClick={(e) => scrollToSection(e, 'contact')}>
-                    <div className="inner">
-                        <span>Contact Me</span>
-                    </div>
-                </a>
+                {socialImgs.filter(s => s.name === 'linkedin').map(s => (
+                    <a key={s.name} className="icon" target="_blank" rel="noopener noreferrer" href={s.url}>
+                        <img src={s.imgPath} alt="LinkedIn" />
+                    </a>
+                ))}
             </div>
         </header>
     )

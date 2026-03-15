@@ -6,6 +6,7 @@ import ExperienceSection from "./sections/ExperienceSection.jsx";
 import TechStack from "./sections/TechStack.jsx";
 import Contact from "./sections/Contact.jsx";
 import Footer from "./sections/Footer.jsx";
+import LogoSection from "./sections/LogoSection.jsx";
 
 const App = () => {
     return (
@@ -14,10 +15,10 @@ const App = () => {
             <Hero />
             <AnimatedCounter />
             {/*<Showcase />*/}
-            {/*<LogoSection />*/}
             <FeatureCards />
             <ExperienceSection />
             <TechStack />
+            <LogoSection />
             <Contact />
             <Footer />
         </main>

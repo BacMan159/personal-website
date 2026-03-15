@@ -38,25 +38,6 @@ const TechStack = () => {
                 <TitleHeader title="Tech Stack" subtitle="My Skillset"/>
                 <div className="tech-grid">
 
-                    {/*3D - Icons*/}
-
-                    {/*{techStackIcons.map((icon) => (*/}
-                    {/*    <div key={icon.name} className="card-border tech-card overflow-hidden group xl:rounded-full rounded-lg">*/}
-                    {/*        <div className="tech-card-animated-bg" />*/}
-                    {/*        <div className="tech-card-content">*/}
-                    {/*            <div className="tech-icon-wrapper">*/}
-                    {/*                <TechIcon model={icon}/>*/}
-                    {/*            </div>*/}
-
-                    {/*            <div className="padding-x w-full">*/}
-                    {/*                <p>{icon.name}</p>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*))}*/}
-
-                    {/*2D - Icons*/}
-
                     {techStackImgs.map((techStackIcon, index) => (
                         <div
                             key={index}

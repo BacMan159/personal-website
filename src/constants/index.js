@@ -11,6 +11,10 @@ const navLinks = [
         name: "Skills",
         link: "#skills",
     },
+    {
+        name: "Contact",
+        link: "#contact",
+    },
 ];
 
 const words = [
@@ -31,31 +35,28 @@ const counterItems = [
     { value: 100, suffix: "%", label: "Team Satisfaction" },
 ];
 
-const logoIconsList = [
-    {
-        imgPath: "/images/logos/company-logo-1.png",
-    },
-    {
-        imgPath: "/images/logos/company-logo-2.png",
-    },
-    {
-        imgPath: "/images/logos/company-logo-3.png",
-    },
-    {
-        imgPath: "/images/logos/company-logo-4.png",
-    },
-    {
-        imgPath: "/images/logos/company-logo-5.png",
-    },
-    {
-        imgPath: "/images/logos/company-logo-6.png",
-    },
-    {
-        imgPath: "/images/logos/company-logo-7.png",
-    },
-    {
-        imgPath: "/images/logos/company-logo-8.png",
-    },
+const skills = [
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Angular",
+    "Next.js",
+    "Java",
+    "Spring Boot",
+    "Node.js",
+    "Python",
+    "AWS",
+    "MongoDB",
+    "DynamoDB",
+    "REST APIs",
+    "CI/CD",
+    "Docker",
+    "Git",
+    "Jenkins",
+    "Kotlin",
+    "ThreeJS",
+    "React Three Fiber",
+    "GSAP"
 ];
 
 const abilities = [
@@ -280,21 +281,6 @@ const expLogos = [
 ];
 
 const socialImgs = [
-    // {
-    //     name: "insta",
-    //     url: "https://www.instagram.com/",
-    //     imgPath: "/images/insta.png",
-    // },
-    // {
-    //     name: "fb",
-    //     url: "https://www.facebook.com/",
-    //     imgPath: "/images/fb.png",
-    // },
-    // {
-    //     name: "x",
-    //     url: "https://www.x.com/",
-    //     imgPath: "/images/x.png",
-    // },
     {
         name: "linkedin",
         url: "https://www.linkedin.com/bhasanth/",
@@ -305,7 +291,7 @@ const socialImgs = [
 export {
     words,
     abilities,
-    logoIconsList,
+    skills,
     counterItems,
     expCards,
     expLogos,

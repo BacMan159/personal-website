@@ -1,13 +1,13 @@
 import React from 'react'
-import {logoIconsList} from "../constants/index.js";
+import { skills } from "../constants/index.js";
 
-const LogoIcon = ({icon}) => {
-    return (
-        <div className="flex-none flex-center marquee-item">
-            <img src={icon.imgPath} alt={icon.name} />
-        </div>
-    )
-}
+const SkillTag = ({ name }) => (
+    <div className="flex-none flex-center marquee-item">
+        <span className="px-5 py-2 rounded-full border border-black-50 bg-black-100 text-white-50 font-medium text-sm md:text-base whitespace-nowrap">
+            {name}
+        </span>
+    </div>
+)
 
 const LogoSection = () => {
     return (
@@ -15,17 +15,16 @@ const LogoSection = () => {
             <div className="gradient-edge" />
             <div className="gradient-edge" />
 
-            <div className="marquee h-52">
-                <div className="marquee-box md:gap-12 gap-5">
-                    {logoIconsList.map((icon) => (
-                        <LogoIcon key={icon.name} icon={icon} />
+            <div className="marquee h-20">
+                <div className="marquee-box">
+                    {skills.map((skill) => (
+                        <SkillTag key={skill} name={skill} />
                     ))}
-                    {logoIconsList.map((icon) => (
-                        <LogoIcon key={icon.name} icon={icon} />
+                    {skills.map((skill) => (
+                        <SkillTag key={`${skill}-copy`} name={skill} />
                     ))}
                 </div>
             </div>
-
         </div>
     )
 }
