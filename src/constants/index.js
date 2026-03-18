@@ -313,7 +313,7 @@ const educationLocations = [
         color: "#003087",       // UF Blue
         accentDark: "#FA4616",  // UF Orange
         highlights: ["Machine Learning", "Distributed Systems", "Analysis of Algorithms", "Advanced Data Structures", "Computer Networks"],
-        Capstone: "Implementation of Object recognition CNNs using a YOLOv3 model trained on COCO dataset",
+        Capstone: "Implementation of real-time Object Detection using YOLOv3 (CNN) trained on the COCO dataset (80 classes)",
     },
     {
         id: 2,

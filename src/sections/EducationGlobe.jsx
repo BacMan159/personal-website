@@ -7,7 +7,7 @@ import { educationLocations as locations } from "../constants/index.js";
 
 // ─── Config ────────────────────────────────────────────────────────────────────
 
-const GLOBE_RADIUS = 1;
+const GLOBE_RADIUS = 1.25;
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -38,18 +38,14 @@ function buildArcPoints(loc1, loc2, radius = GLOBE_RADIUS, segments = 80) {
 // ─── Sub-components ────────────────────────────────────────────────────────────
 
 function GlobePin({ location, isActive, onClick }) {
-    const pinRef = useRef();
-    const ringRef = useRef();
+    const groupRef = useRef();
     const position = latLngToVec3(location.lat, location.lng, GLOBE_RADIUS);
     const normal = position.clone().normalize();
 
     useFrame(({ clock }) => {
-        if (ringRef.current) {
-            const pulse = 1 + Math.sin(clock.getElapsedTime() * 2) * 0.15;
-            ringRef.current.scale.setScalar(isActive ? pulse * 1.3 : pulse);
-        }
-        if (pinRef.current) {
-            pinRef.current.scale.setScalar(isActive ? 1.4 : 1);
+        if (groupRef.current) {
+            const float = isActive ? Math.sin(clock.getElapsedTime() * 2) * 0.012 : 0;
+            groupRef.current.position.copy(position.clone().add(normal.clone().multiplyScalar(float)));
         }
     });
 
@@ -59,33 +55,37 @@ function GlobePin({ location, isActive, onClick }) {
     }, [normal]);
 
     const color = new THREE.Color(location.color);
+    const scale = isActive ? 1.35 : 1;
 
     return (
-        <group position={position}>
-            <mesh ref={ringRef} quaternion={quaternion}>
-                <torusGeometry args={[0.065, 0.012, 8, 32]} />
-                <meshBasicMaterial color={color} transparent opacity={0.7} />
-            </mesh>
-
+        <group ref={groupRef} position={position} quaternion={quaternion} scale={[scale, scale, scale]}>
+            {/* Pin head — sphere at top */}
             <mesh
-                ref={pinRef}
+                position={[0, 0.13, 0]}
                 onClick={(e) => { e.stopPropagation(); onClick(location.id); }}
                 onPointerOver={() => document.body.style.cursor = "pointer"}
                 onPointerOut={() => document.body.style.cursor = "default"}
             >
-                <sphereGeometry args={[0.045, 16, 16]} />
+                <sphereGeometry args={[0.055, 16, 16]} />
                 <meshStandardMaterial
                     color={color}
                     emissive={color}
-                    emissiveIntensity={isActive ? 2 : 0.8}
+                    emissiveIntensity={isActive ? 2.5 : 1}
                     roughness={0.2}
-                    metalness={0.5}
+                    metalness={0.4}
                 />
             </mesh>
 
-            <mesh quaternion={quaternion} position={normal.clone().multiplyScalar(0.04)}>
-                <coneGeometry args={[0.018, 0.1, 8]} />
-                <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.5} />
+            {/* Pin needle — cone pointing down to surface */}
+            <mesh position={[0, 0.055, 0]} rotation={[Math.PI, 0, 0]}>
+                <coneGeometry args={[0.022, 0.11, 8]} />
+                <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.6} roughness={0.3} />
+            </mesh>
+
+            {/* Base ring shadow */}
+            <mesh rotation={[-Math.PI / 2, 0, 0]}>
+                <ringGeometry args={[0.028, 0.048, 32]} />
+                <meshBasicMaterial color={color} transparent opacity={isActive ? 0.6 : 0.3} side={THREE.DoubleSide} />
             </mesh>
 
             {isActive && (
@@ -118,14 +118,6 @@ function GlobePin({ location, isActive, onClick }) {
                         </div>
                         <div style={{ color: "#839cb5", fontSize: 11, marginBottom: 10 }}>
                             📍 {location.location}
-                        </div>
-                        <div style={{ borderTop: "1px solid #1c1c21", paddingTop: 8, display: "flex", flexDirection: "column", gap: 4 }}>
-                            {location.highlights.map((h) => (
-                                <div key={h} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                    <div style={{ width: 4, height: 4, borderRadius: "50%", background: location.color, flexShrink: 0 }} />
-                                    <span style={{ color: "#d9ecff", fontSize: 11 }}>{h}</span>
-                                </div>
-                            ))}
                         </div>
                     </div>
                 </Html>
@@ -164,9 +156,12 @@ function EarthSphere() {
     );
 }
 
+const ufPos = latLngToVec3(locations[0].lat, locations[0].lng);
+const UF_INIT_ROT_Y = Math.atan2(-ufPos.x, ufPos.z);
+
 function GlobeMesh({ activeId, onPinClick }) {
     const globeRef = useRef();
-    const targetRotY = useRef(0);
+    const targetRotY = useRef(UF_INIT_ROT_Y);
     const prevActiveId = useRef(null);
 
     useFrame(() => {
@@ -268,91 +263,86 @@ export default function EducationGlobe() {
         setActiveId((prev) => (prev === id ? null : id));
     };
 
+    const renderCard = (loc) => (
+        <div style={{ display: "flex", flexDirection: "column" }}>
+            <button
+                onClick={() => handlePinClick(loc.id)}
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 14,
+                    background: "#f8f9fc",
+                    border: `1px solid ${activeId === loc.id ? loc.color : "#d1d5db"}`,
+                    borderRadius: activeId === loc.id ? "14px 14px 0 0" : 14,
+                    padding: "14px 20px",
+                    cursor: "pointer",
+                    transition: "all 0.25s ease",
+                    boxShadow: activeId === loc.id ? `0 6px 24px ${loc.color}33` : "0 1px 4px rgba(0,0,0,0.06)",
+                    width: "100%",
+                    textAlign: "left",
+                }}
+            >
+                <div style={{ width: 9, height: 9, borderRadius: "50%", background: loc.color, boxShadow: `0 0 8px ${loc.color}`, flexShrink: 0 }} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ color: "#111827", fontSize: 14, fontWeight: 700 }}>{loc.name}</div>
+                    <div style={{ color: "#374151", fontSize: 12, marginTop: 2 }}>{loc.degree}</div>
+                    <div style={{ color: "#6b7280", fontSize: 11, marginTop: 1 }}>{loc.years} · {loc.location}</div>
+                </div>
+                <img src={loc.imgPath} alt={loc.name} style={{ width: "clamp(80px, 30%, 140px)", objectFit: "contain", flexShrink: 1 }} />
+            </button>
+
+            {activeId === loc.id && (
+                <div style={{
+                    background: "#ffffff",
+                    border: `1px solid ${loc.color}`,
+                    borderTop: "none",
+                    borderRadius: "0 0 14px 14px",
+                    padding: "14px 16px",
+                    animation: "fadeIn 0.25s ease",
+                }}>
+                    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
+                        {loc.highlights.map((h) => (
+                            <span key={h} style={{
+                                background: `${loc.color}18`,
+                                color: loc.color,
+                                border: `1px solid ${loc.color}44`,
+                                borderRadius: 20,
+                                padding: "3px 8px",
+                                fontSize: 10,
+                                fontWeight: 500,
+                            }}>{h}</span>
+                        ))}
+                    </div>
+                    <div style={{ borderTop: "1px solid #d1d5db", paddingTop: 10 }}>
+                        <div style={{ color: loc.color, fontSize: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 5 }}>
+                            Capstone Project
+                        </div>
+                        <div style={{ color: "#111827", fontSize: 12, fontWeight: 600 }}>
+                            {loc.Capstone}
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+
     return (
         <section id="education" className="section-padding w-full">
             <div className="w-full md:px-10 px-5">
-                <TitleHeader title="Education" subtitle="My Academic Journey" />
+                <TitleHeader title="Education" subtitle="My Academic Journey - Across the Globe" />
 
-                <div className="edu-layout" style={{ animation: "floatUp 0.7s ease both" }}>
+                <div className="edu-layout">
 
-                    {/* LEFT — Cards */}
-                    <div className="edu-left" style={{ animation: "floatUp 0.9s ease 0.4s both" }}>
-                        <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%" }}>
-                            {locations.map((loc) => (
-                                <div key={loc.id} style={{ display: "flex", flexDirection: "column" }}>
-                                    <button
-                                        onClick={() => handlePinClick(loc.id)}
-                                        style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: 14,
-                                            background: "#f8f9fc",
-                                            border: `1px solid ${activeId === loc.id ? loc.color : "#d1d5db"}`,
-                                            borderRadius: activeId === loc.id ? "14px 14px 0 0" : 14,
-                                            padding: "14px 20px",
-                                            cursor: "pointer",
-                                            transition: "all 0.25s ease",
-                                            boxShadow: activeId === loc.id ? `0 6px 24px ${loc.color}33` : "0 1px 4px rgba(0,0,0,0.06)",
-                                            width: "100%",
-                                            textAlign: "left",
-                                        }}
-                                    >
-                                        <div style={{
-                                            width: 9, height: 9, borderRadius: "50%",
-                                            background: loc.color,
-                                            boxShadow: `0 0 8px ${loc.color}`,
-                                            flexShrink: 0,
-                                        }} />
-                                        <div style={{ flex: 1 }}>
-                                            <div style={{ color: "#111827", fontSize: 14, fontWeight: 700 }}>{loc.name}</div>
-                                            <div style={{ color: "#374151", fontSize: 12, marginTop: 2 }}>{loc.degree}</div>
-                                            <div style={{ color: "#6b7280", fontSize: 11, marginTop: 1 }}>{loc.years} · {loc.location}</div>
-                                        </div>
-                                        <img src={loc.imgPath} alt={loc.name} style={{ width: 180, objectFit: "contain", flexShrink: 0 }} />
-                                    </button>
-
-                                    {activeId === loc.id && (
-                                        <div style={{
-                                            background: "#ffffff",
-                                            border: `1px solid ${loc.color}`,
-                                            borderTop: "none",
-                                            borderRadius: "0 0 14px 14px",
-                                            padding: "16px 20px",
-                                            animation: "fadeIn 0.25s ease",
-                                        }}>
-                                            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
-                                                {loc.highlights.map((h) => (
-                                                    <span key={h} style={{
-                                                        background: `${loc.color}18`,
-                                                        color: loc.color,
-                                                        border: `1px solid ${loc.color}44`,
-                                                        borderRadius: 20,
-                                                        padding: "3px 10px",
-                                                        fontSize: 11,
-                                                        fontWeight: 500,
-                                                    }}>{h}</span>
-                                                ))}
-                                            </div>
-                                            <div style={{ borderTop: "1px solid #d1d5db", paddingTop: 12 }}>
-                                                <div style={{ color: loc.color, fontSize: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 6 }}>
-                                                    Capstone Project
-                                                </div>
-                                                <div style={{ color: "#111827", fontSize: 13, fontWeight: 600, marginBottom: 4 }}>
-                                                    {loc.Capstone}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                    {/* LEFT — UF */}
+                    <div className="edu-col">
+                        {renderCard(locations[0])}
                     </div>
 
-                    {/* RIGHT — Globe */}
-                    <div className="edu-right" style={{ animation: "floatUp 0.9s ease 0.2s both" }}>
+                    {/* CENTER — Globe */}
+                    <div className="edu-globe" style={{ animation: "floatUp 0.9s ease 0.2s both" }}>
                         <div ref={globeContainerRef} style={{
                             width: "100%",
-                            height: 460,
+                            height: 400,
                             borderRadius: 24,
                             overflow: "hidden",
                             position: "relative",
@@ -391,6 +381,11 @@ export default function EducationGlobe() {
                                 </div>
                             )}
                         </div>
+                    </div>
+
+                    {/* RIGHT — VIT */}
+                    <div className="edu-col">
+                        {renderCard(locations[1])}
                     </div>
 
                 </div>
