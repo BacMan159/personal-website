@@ -1,28 +1,28 @@
-import React, {useEffect, useState} from 'react'
-import {navLinks, socialImgs} from "../constants/index.js";
+import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import { navLinks, socialImgs } from "../constants/index.js";
 
 const NavBar = () => {
-
     const [scrolled, setScrolled] = useState(false);
 
+    const handleScroll = useCallback(() => {
+        setScrolled(window.scrollY > 10);
+    }, []);
+
     useEffect(() => {
-        const handleScroll = () => {
-            const isScrolled = window.scrollY > 10;
-            setScrolled(isScrolled);
-        }
-
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [])
+    }, [handleScroll]);
 
-    const scrollToSection = (e, id) => {
+    const scrollToSection = useCallback((e, id) => {
         e.preventDefault();
         const target = document.getElementById(id);
         if (!target) return;
         const offset = 130;
         const top = target.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top, behavior: 'smooth' });
-    };
+    }, []);
+
+    const linkedin = useMemo(() => socialImgs.find(s => s.name === 'linkedin'), []);
 
     return (
         <header className={`navbar ${scrolled ? 'scrolled' : 'not-scrolled'}`}>
@@ -44,11 +44,11 @@ const NavBar = () => {
                     </ul>
                 </nav>
 
-                {socialImgs.filter(s => s.name === 'linkedin').map(s => (
-                    <a key={s.name} className="icon" target="_blank" rel="noopener noreferrer" href={s.url}>
-                        <img src={s.imgPath} alt="LinkedIn" />
+                {linkedin && (
+                    <a className="icon" target="_blank" rel="noopener noreferrer" href={linkedin.url}>
+                        <img src={linkedin.imgPath} alt="LinkedIn" />
                     </a>
-                ))}
+                )}
             </div>
         </header>
     )

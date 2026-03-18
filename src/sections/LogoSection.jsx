@@ -1,13 +1,13 @@
 import React from 'react'
 import { skills } from "../constants/index.js";
 
-const SkillTag = ({ name }) => (
+const SkillTag = React.memo(({ name }) => (
     <div className="flex-none flex-center marquee-item">
         <span className="px-5 py-2 rounded-full border border-black-50 bg-black-100 text-white-50 font-medium text-sm md:text-base whitespace-nowrap">
             {name}
         </span>
     </div>
-)
+))
 
 const LogoSection = () => {
     const mid = Math.ceil(skills.length / 2);

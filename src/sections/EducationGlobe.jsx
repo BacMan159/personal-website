@@ -63,8 +63,8 @@ function GlobePin({ location, isActive, onClick }) {
             <mesh
                 position={[0, 0.13, 0]}
                 onClick={(e) => { e.stopPropagation(); onClick(location.id); }}
-                onPointerOver={() => document.body.style.cursor = "pointer"}
-                onPointerOut={() => document.body.style.cursor = "default"}
+                onPointerOver={() => document.body.classList.add('cursor-pointer')}
+                onPointerOut={() => document.body.classList.remove('cursor-pointer')}
             >
                 <sphereGeometry args={[0.055, 16, 16]} />
                 <meshStandardMaterial
