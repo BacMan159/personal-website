@@ -96,29 +96,12 @@ function GlobePin({ location, isActive, onClick }) {
                     zIndexRange={[100, 0]}
                     style={{ pointerEvents: "none" }}
                 >
-                    <div style={{
-                        background: "rgba(14, 14, 16, 0.96)",
-                        border: `1px solid ${location.color}`,
-                        borderRadius: 12,
-                        padding: "14px 18px",
-                        minWidth: 200,
-                        boxShadow: `0 8px 32px ${location.color}55`,
-                        backdropFilter: "blur(12px)",
-                        animation: "fadeIn 0.25s ease",
-                    }}>
-                        <img src={location.logoPath} alt={location.name} style={{ width: 28, height: 28, objectFit: "contain", marginBottom: 4 }} />
-                        <div style={{ color: location.color, fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", marginBottom: 4 }}>
-                            {location.years}
-                        </div>
-                        <div style={{ color: "#ffffff", fontSize: 14, fontWeight: 700, lineHeight: 1.3, marginBottom: 2 }}>
-                            {location.degree}
-                        </div>
-                        <div style={{ color: "#d9ecff", fontSize: 12, marginBottom: 8 }}>
-                            {location.name}
-                        </div>
-                        <div style={{ color: "#839cb5", fontSize: 11, marginBottom: 10 }}>
-                            📍 {location.location}
-                        </div>
+                    <div className="edu-pin-tooltip" style={{ "--edu-color": location.color }}>
+                        <img src={location.logoPath} alt={location.name} className="edu-pin-logo" />
+                        <div className="edu-pin-years">{location.years}</div>
+                        <div className="edu-pin-degree">{location.degree}</div>
+                        <div className="edu-pin-name">{location.name}</div>
+                        <div className="edu-pin-location">📍 {location.location}</div>
                     </div>
                 </Html>
             )}
@@ -167,7 +150,6 @@ function GlobeMesh({ activeId, onPinClick }) {
     useFrame(() => {
         if (!globeRef.current) return;
 
-        // Recalculate target rotation when active pin changes
         if (activeId !== prevActiveId.current) {
             prevActiveId.current = activeId;
             if (activeId !== null) {
@@ -179,7 +161,6 @@ function GlobeMesh({ activeId, onPinClick }) {
             }
         }
 
-        // Smoothly lerp toward target rotation
         globeRef.current.rotation.y = THREE.MathUtils.lerp(
             globeRef.current.rotation.y,
             targetRotY.current,
@@ -264,62 +245,30 @@ export default function EducationGlobe() {
     };
 
     const renderCard = (loc) => (
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div className="edu-card-wrapper" style={{ "--edu-color": loc.color }}>
             <button
                 onClick={() => handlePinClick(loc.id)}
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 14,
-                    background: "#f8f9fc",
-                    border: `1px solid ${activeId === loc.id ? loc.color : "#d1d5db"}`,
-                    borderRadius: activeId === loc.id ? "14px 14px 0 0" : 14,
-                    padding: "14px 20px",
-                    cursor: "pointer",
-                    transition: "all 0.25s ease",
-                    boxShadow: activeId === loc.id ? `0 6px 24px ${loc.color}33` : "0 1px 4px rgba(0,0,0,0.06)",
-                    width: "100%",
-                    textAlign: "left",
-                }}
+                className={`edu-card-btn${activeId === loc.id ? " is-active" : ""}`}
             >
-                <div style={{ width: 9, height: 9, borderRadius: "50%", background: loc.color, boxShadow: `0 0 8px ${loc.color}`, flexShrink: 0 }} />
-                <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ color: "#111827", fontSize: 14, fontWeight: 700 }}>{loc.name}</div>
-                    <div style={{ color: "#374151", fontSize: 12, marginTop: 2 }}>{loc.degree}</div>
-                    <div style={{ color: "#6b7280", fontSize: 11, marginTop: 1 }}>{loc.years} · {loc.location}</div>
+                <div className="edu-card-dot" />
+                <div className="edu-card-text">
+                    <div className="edu-card-name">{loc.name}</div>
+                    <div className="edu-card-degree">{loc.degree}</div>
+                    <div className="edu-card-meta">{loc.years} · {loc.location}</div>
                 </div>
-                <img src={loc.imgPath} alt={loc.name} style={{ width: "clamp(80px, 30%, 140px)", objectFit: "contain", flexShrink: 1 }} />
+                <img src={loc.imgPath} alt={loc.name} className="edu-card-img" />
             </button>
 
             {activeId === loc.id && (
-                <div style={{
-                    background: "#ffffff",
-                    border: `1px solid ${loc.color}`,
-                    borderTop: "none",
-                    borderRadius: "0 0 14px 14px",
-                    padding: "14px 16px",
-                    animation: "fadeIn 0.25s ease",
-                }}>
-                    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
+                <div className="edu-card-expand">
+                    <div className="edu-highlights">
                         {loc.highlights.map((h) => (
-                            <span key={h} style={{
-                                background: `${loc.color}18`,
-                                color: loc.color,
-                                border: `1px solid ${loc.color}44`,
-                                borderRadius: 20,
-                                padding: "3px 8px",
-                                fontSize: 10,
-                                fontWeight: 500,
-                            }}>{h}</span>
+                            <span key={h} className="edu-highlight-tag">{h}</span>
                         ))}
                     </div>
-                    <div style={{ borderTop: "1px solid #d1d5db", paddingTop: 10 }}>
-                        <div style={{ color: loc.color, fontSize: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 5 }}>
-                            Capstone Project
-                        </div>
-                        <div style={{ color: "#111827", fontSize: 12, fontWeight: 600 }}>
-                            {loc.Capstone}
-                        </div>
+                    <div className="edu-capstone">
+                        <div className="edu-capstone-label">Capstone Project</div>
+                        <div className="edu-capstone-text">{loc.Capstone}</div>
                     </div>
                 </div>
             )}
@@ -339,16 +288,8 @@ export default function EducationGlobe() {
                     </div>
 
                     {/* CENTER — Globe */}
-                    <div className="edu-globe" style={{ animation: "floatUp 0.9s ease 0.2s both" }}>
-                        <div ref={globeContainerRef} style={{
-                            width: "100%",
-                            height: 400,
-                            borderRadius: 24,
-                            overflow: "hidden",
-                            position: "relative",
-                            border: "1px solid #1c1c21",
-                            boxShadow: "0 30px 80px rgba(0,0,0,0.6)",
-                        }}>
+                    <div className="edu-globe">
+                        <div ref={globeContainerRef} className="edu-globe-container">
                             {canvasReady ? (
                                 <Canvas
                                     camera={{ position: [0, 0, 5.5], fov: 42 }}
@@ -359,24 +300,11 @@ export default function EducationGlobe() {
                                     <Scene activeId={activeId} onPinClick={handlePinClick} />
                                 </Canvas>
                             ) : (
-                                <div style={{ width: "100%", height: "100%", background: "#060b18", borderRadius: 24 }} />
+                                <div className="edu-globe-placeholder" />
                             )}
 
                             {!activeId && (
-                                <div style={{
-                                    position: "absolute",
-                                    bottom: 16,
-                                    left: "50%",
-                                    transform: "translateX(-50%)",
-                                    background: "rgba(14, 14, 16, 0.8)",
-                                    border: "1px solid #1c1c21",
-                                    borderRadius: 20,
-                                    padding: "6px 16px",
-                                    color: "#839cb5",
-                                    fontSize: 12,
-                                    backdropFilter: "blur(8px)",
-                                    whiteSpace: "nowrap",
-                                }}>
+                                <div className="edu-globe-hint">
                                     🌐 Drag to rotate · Click a pin to view details
                                 </div>
                             )}

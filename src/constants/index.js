@@ -310,8 +310,8 @@ const educationLocations = [
         logoPath: "/images/edu-logo2.png",
         lat: 29.6516,
         lng: -82.3248,
-        color: "#003087",       // UF Blue
-        accentDark: "#FA4616",  // UF Orange
+        color: "#FA4616",       // UF Orange
+        accentDark: "#003087",  // UF Blue
         highlights: ["Machine Learning", "Distributed Systems", "Analysis of Algorithms", "Advanced Data Structures", "Computer Networks"],
         Capstone: "Implementation of real-time Object Detection using YOLOv3 (CNN) trained on the COCO dataset (80 classes)",
     },
