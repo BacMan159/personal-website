@@ -85,7 +85,7 @@ function GlobePin({ location, isActive, onClick }) {
             {/* Base ring shadow */}
             <mesh rotation={[-Math.PI / 2, 0, 0]}>
                 <ringGeometry args={[0.028, 0.048, 32]} />
-                <meshBasicMaterial color={color} transparent opacity={isActive ? 0.6 : 0.3} side={THREE.DoubleSide} />
+                <meshBasicMaterial color={color} transparent={true} opacity={isActive ? 0.6 : 0.3} side={THREE.DoubleSide} />
             </mesh>
 
             {isActive && (
@@ -124,7 +124,7 @@ function GlobeArc({ loc1, loc2 }) {
 
     return (
         <mesh ref={tubeRef} geometry={geometry}>
-            <meshBasicMaterial color="#C8972B" transparent opacity={0.7} />
+            <meshBasicMaterial color="#C8972B" transparent={true} opacity={0.7} />
         </mesh>
     );
 }
@@ -181,12 +181,12 @@ function GlobeMesh({ activeId, onPinClick }) {
 
             <mesh>
                 <sphereGeometry args={[GLOBE_RADIUS + 0.002, 24, 24]} />
-                <meshBasicMaterial color="#1c1c21" wireframe transparent opacity={0.15} />
+                <meshBasicMaterial color="#1c1c21" wireframe={true} transparent={true} opacity={0.15} />
             </mesh>
 
             <mesh>
                 <sphereGeometry args={[GLOBE_RADIUS + 0.08, 32, 32]} />
-                <meshBasicMaterial color="#1a4a8a" transparent opacity={0.06} side={THREE.BackSide} />
+                <meshBasicMaterial color="#1a4a8a" transparent={true} opacity={0.06} side={THREE.BackSide} />
             </mesh>
 
             <GlobeArc loc1={locations[0]} loc2={locations[1]} />
