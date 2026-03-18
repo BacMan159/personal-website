@@ -10,6 +10,9 @@ const SkillTag = ({ name }) => (
 )
 
 const LogoSection = () => {
+    const mid = Math.ceil(skills.length / 2);
+    const offsetSkills = [...skills.slice(mid), ...skills.slice(0, mid)];
+
     return (
         <div className="md:my-20 my-10 relative">
             <div className="gradient-edge" />
@@ -21,6 +24,16 @@ const LogoSection = () => {
                         <SkillTag key={skill} name={skill} />
                     ))}
                     {skills.map((skill) => (
+                        <SkillTag key={`${skill}-copy`} name={skill} />
+                    ))}
+                </div>
+            </div>
+            <div className="marquee h-20">
+                <div className="marquee-box">
+                    {offsetSkills.map((skill) => (
+                        <SkillTag key={skill} name={skill} />
+                    ))}
+                    {offsetSkills.map((skill) => (
                         <SkillTag key={`${skill}-copy`} name={skill} />
                     ))}
                 </div>
