@@ -10,6 +10,9 @@ const navLinks = [
     {
         name: "Skills",
         link: "#skills",
+    },{
+        name: "Education",
+        link: "#education",
     },
     {
         name: "Contact",
@@ -39,41 +42,58 @@ const skills = [
     "JavaScript",
     "TypeScript",
     "React",
+    "Redux",
     "Angular",
     "Next.js",
     "Java",
     "Spring Boot",
+    "Hibernate",
     "Node.js",
+    "Express",
     "Python",
+    "Kotlin",
+    "HTML5",
+    "CSS3",
+    "Bootstrap",
     "AWS",
     "MongoDB",
     "DynamoDB",
+    "Redis",
+    "DB2",
+    "Redshift",
+    "Kafka",
+    "IBM MQ",
     "REST APIs",
+    "Microservices",
     "CI/CD",
     "Docker",
+    "Kubernetes",
     "Git",
     "Jenkins",
-    "Kotlin",
+    "SonarQube",
+    "Cypress",
+    "Mocha",
+    "JUnit",
     "ThreeJS",
     "React Three Fiber",
-    "GSAP"
+    "GSAP",
 ];
 
 const abilities = [
     {
         imgPath: "/images/seo.png",
         title: "Large-Scale Frontend Engineering",
-        desc: "I build frontends people actually use — at 30,000 feet.",
+        desc: "Built high-impact Angular & React UIs at scale — including a 43% device take rate and a 25-point lift in successful transactions in production.",
     },
     {
         imgPath: "/images/chat.png",
         title: "Cloud-Native & Serverless Architecture on AWS",
-        desc: "AWS runs through my entire career — Lambda, S3, EC2, API Gateway, DynamoDB, Redshift, CodePipeline",
+        desc: "AWS runs through my entire career — Lambda, S3, EC2, API Gateway, DynamoDB, Redshift, CodePipeline, and serverless architectures serving hundreds of millions of records.",
     },
     {
         imgPath: "/images/time.png",
         title: "Enterprise Java Integration & Backend Systems",
-        desc: "Experience working at large enterprises, consulting firms, and government-adjacent roles",
+        desc: "Deep experience in large enterprises, consulting firms, and government-adjacent roles — building event-driven Java/Spring Boot backends, IBM MQ pipelines, and SFTP automation handling 100,000+ files daily.",
     },
 ];
 
@@ -185,22 +205,22 @@ const expCards = [
         title: "Sr. Full Stack Developer – Delta Airlines",
         date: "September 2024 – Present",
         responsibilities: [
-            "Developed Angular components boosting engagement rates.",
-            "Led code repository migration with 20,000+ LOC.",
-            "Leading team to design management dashboard for aircraft servers.",
+            "Lead a team of developers designing and building a management dashboard that enables dynamic deployment of application builds to aircraft onboard servers, streamlining fleet-wide updates.",
+            "Developed Angular components for an updated onboard Wi-Fi UX that achieved a 43% device take rate and 24% customer engagement rate, exceeding the 2025 annual targets.",
+            "Executed a major code repository migration involving 20,000+ lines of code with zero production downtime.",
         ],
     },
     {
         review:
-            "Worked as a Senior Developer on system integrator tean for Ohio Medicaid systems, building scalable Java solutions and automation tools.",
+            "Worked as a Senior Developer on system integrator team for Ohio Medicaid systems, building scalable Java solutions and automation tools.",
         imgPath: "/images/exp6.png",
         logoPath: "/images/logo6.png",
         title: "Sr. Java Developer – Deloitte Consulting",
         date: "January 2024 – August 2024",
         responsibilities: [
-            "Developed custom Java interfaces between vendors.",
-            "Built automated SFTP transfer solution handling 100k+ files daily.",
-            "Created Python scripts to reconcile transactional data.",
+            "Engineered custom Java integrations between Ohio Department of Medicaid (ODM) and vendor systems including Aetna, Buckeye, DODD, and ODA as part of the statewide Medicaid system integration.",
+            "Architected and delivered an SFTP-based automated file transfer solution using Progress MOVEit, processing 100,000+ files per day with high reliability.",
+            "Implemented IBM MQ messaging for real-time data transfer between integrated systems, ensuring low-latency event-driven communication.",
         ],
     },
     {
@@ -211,9 +231,9 @@ const expCards = [
         title: "Java Developer – RiceFW Technologies",
         date: "July 2023 – December 2023",
         responsibilities: [
-            "Developed backend APIs with Next.js & Jenkins API.",
-            "Built React UI for repository and pipeline management.",
-            "Maintained CI/CD pipelines and SonarQube integration.",
+            "Owned the end-to-end development lifecycle of an internal project management tool — from stakeholder requirements gathering through design, implementation, and delivery.",
+            "Built a Next.js/TypeScript backend with REST APIs, DAOs, and database entities to support repository management, pipeline visibility, and code quality reporting.",
+            "Developed a React UI with Jenkins API integration for real-time CI/CD pipeline visibility and SonarQube code quality reporting, achieving 90%+ unit and integration test coverage.",
         ],
     },
     {
@@ -224,9 +244,9 @@ const expCards = [
         title: "Full Stack Developer – Delta Airlines",
         date: "February 2022 – July 2023",
         responsibilities: [
-            "Designed framework for dynamic onboard Wi-Fi content updates.",
-            "Integrated Angular UI with AMEX, Paramount+, T-Mobile APIs.",
-            "Built AWS Lambdas to connect onboard servers and ground APIs.",
+            "Designed a content framework for on-the-fly onboard Wi-Fi offer updates using Atomic Design Methodology in Angular, deployed across 25 flight tails with a roadmap for 500+ tails.",
+            "Built AWS Lambda functions connecting the onboard server, client, and ground APIs from Delta's Loyalty, Retail, and Payments teams for a seamless in-flight experience.",
+            "Delivered a responsive online check-in application with Cypress/Mocha automation tests, increasing successful transactions from 63% to 88% in production.",
         ],
     },
     {
@@ -237,9 +257,8 @@ const expCards = [
         title: "Java Developer – CloudData Technology",
         date: "May 2021 – February 2022",
         responsibilities: [
-            "Designed baseline architecture for cloud storage.",
-            "Researched distributed infrastructure solutions.",
-            "Developed core storage modules with TypeScript & Kotlin.",
+            "Researched distributed infrastructure solutions and authored technical documentation on popular architectures.",
+            "Designed a cloud storage architecture in Kotlin and TypeScript to serve as a reusable baseline for future client engagements.",
         ],
     },
     {
@@ -250,9 +269,9 @@ const expCards = [
         title: "Software Development Engineer – Amazon",
         date: "July 2020 – May 2021",
         responsibilities: [
-            "Built automation framework to onboard device warranty configurations.",
-            "Developed warranty platform with React, Node, Lambda, DynamoDB.",
-            "Provided support for legacy system managing 700M+ warranties.",
+            "Designed an automation framework for onboarding device warranty configurations to the web catalog, reducing SLA from 3 weeks to seconds by leveraging existing internal tooling.",
+            "Built a new multi-year warranty management platform with a React UI and Node.js backend, replacing a legacy system that managed 700M+ warranties.",
+            "Supported client teams migrating from the legacy system to a new serverless architecture built on Lambda, API Gateway, DynamoDB, and Redshift.",
         ],
     },
     {
@@ -263,9 +282,9 @@ const expCards = [
         title: "Infrastructure Software Engineer – JPMorgan Chase",
         date: "July 2016 – May 2018",
         responsibilities: [
-            "Designed microservices with Spring Boot and Java.",
-            "Built REST APIs for storage management across 7000+ apps.",
-            "Developed AWS S3 interface tool for non-technical teams.",
+            "Designed and built RESTful microservices in Java/Spring Boot to manage storage resources for 7,000+ internal applications, with session management via Redis.",
+            "Developed an interactive tool enabling non-technical teams to manage enterprise-grade AWS S3 storage (Dell EMC).",
+            "Achieved 95% unit test coverage following Test-Driven Development (TDD) using JUnit.",
         ],
     },
 ];
@@ -278,6 +297,39 @@ const expLogos = [
     { name: "CloudData Technology", imgPath: "/images/logo3.png" },
     { name: "Amazon", imgPath: "/images/logo2.png" },
     { name: "JPMorgan Chase", imgPath: "/images/logo1.png" },
+];
+
+const educationLocations = [
+    {
+        id: 1,
+        name: "University of Florida",
+        degree: "M.S. in Computer Science",
+        years: "2018 – 2020",
+        location: "Gainesville, FL, USA",
+        imgPath: "/images/edu2.png",
+        logoPath: "/images/edu-logo2.png",
+        lat: 29.6516,
+        lng: -82.3248,
+        color: "#003087",       // UF Blue
+        accentDark: "#FA4616",  // UF Orange
+        highlights: ["Machine Learning", "Distributed Systems", "Analysis of Algorithms", "Advanced Data Structures", "Computer Networks"],
+        Capstone: "Implementation of Object recognition CNNs using a YOLOv3 model trained on COCO dataset",
+    },
+    {
+        id: 2,
+        name: "VIT University",
+        degree: "B.Tech in Information Technology",
+        years: "2012 – 2016",
+        location: "Vellore, India",
+        imgPath: "/images/edu1.png",
+        logoPath: "/images/edu-logo1.png",
+        lat: 12.9165,
+        lng: 79.1325,
+        color: "#003FA5",       // VIT Blue
+        accentDark: "#C8972B",  // VIT Gold
+        highlights: ["Data Structures and algorithms", "Object Oriented Programing Concepts", "Database Management Systems", "Computer Architecture"],
+        Capstone: "Package carrying rover with GPS routing, RFID recognition for package release",
+    },
 ];
 
 const socialImgs = [
@@ -299,4 +351,5 @@ export {
     techStackIcons,
     techStackImgs,
     navLinks,
+    educationLocations,
 };

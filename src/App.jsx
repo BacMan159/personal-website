@@ -7,6 +7,7 @@ import TechStack from "./sections/TechStack.jsx";
 import Contact from "./sections/Contact.jsx";
 import Footer from "./sections/Footer.jsx";
 import LogoSection from "./sections/LogoSection.jsx";
+import EducationGlobe from "./sections/EducationGlobe.jsx";
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
             <ExperienceSection />
             <TechStack />
             <LogoSection />
+            <EducationGlobe />
             <Contact />
             <Footer />
         </main>

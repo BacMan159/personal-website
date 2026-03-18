@@ -469,3 +469,46 @@ section {
 .card:hover::before {
     opacity: 1;
 }
+
+/* ─── Education Globe ──────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes floatUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.edu-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    margin-top: calc(var(--spacing) * 16);
+}
+
+.edu-left {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    align-items: center;
+}
+
+.edu-right {
+    width: 100%;
+    max-width: 600px;
+    flex-shrink: 0;
+}
+
+@media (min-width: 1024px) {
+    .edu-layout { flex-direction: row; align-items: center; justify-content: center; }
+    .edu-left { align-items: flex-start; flex: 1; min-width: 0; }
+    .edu-right { width: 480px; max-width: 480px; }
+}
