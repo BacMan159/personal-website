@@ -94,7 +94,7 @@ function GlobePin({ location, isActive, onClick }) {
                     center
                     distanceFactor={4}
                     zIndexRange={[100, 0]}
-                    style={{ pointerEvents: "none" }}
+                    className="pointer-events-none"
                 >
                     <div className="edu-pin-tooltip" style={{ "--edu-color": location.color }}>
                         <img src={location.logoPath} alt={location.name} className="edu-pin-logo" />
@@ -293,7 +293,7 @@ export default function EducationGlobe() {
                             {canvasReady ? (
                                 <Canvas
                                     camera={{ position: [0, 0, 5.5], fov: 42 }}
-                                    style={{ background: "transparent" }}
+                                    className="bg-transparent"
                                     gl={{ antialias: true, alpha: true }}
                                     dpr={[1, 1.5]}
                                 >
