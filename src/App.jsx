@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import Hero from "./sections/Hero.jsx";
 import NavBar from "./components/NavBar.jsx";
 import AnimatedCounter from "./components/AnimatedCounter.jsx";
+import PageLoader from "./components/PageLoader.jsx";
 
 const FeatureCards      = lazy(() => import("./sections/FeatureCards.jsx"));
 const ExperienceSection = lazy(() => import("./sections/ExperienceSection.jsx"));
@@ -17,7 +18,7 @@ const App = () => {
             <NavBar />
             <Hero />
             <AnimatedCounter />
-            <Suspense fallback={null}>
+            <Suspense fallback={<PageLoader />}>
                 <FeatureCards />
                 <ExperienceSection />
                 <TechStack />
