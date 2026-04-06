@@ -1,34 +1,37 @@
-import { RoundedBox, Text, Float, MeshTransmissionMaterial } from "@react-three/drei";
+import { useMemo } from "react";
+import { RoundedBox, Text, Float } from "@react-three/drei";
 
 function MacButton({ color, position }) {
     return (
         <mesh position={position}>
-            <circleGeometry args={[0.08, 32]} />
+            <circleGeometry args={[0.08, 16]} />
             <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.6} />
         </mesh>
     );
 }
 
 export function GlassIDE({ groupRef, scale, position, rotation }) {
+    const codeLines = useMemo(() =>
+        Array.from({ length: 8 }, (_, i) => ({
+            width: 3.5 - Math.random(),
+            x: 0.5 + Math.random() * 0.3,
+            y: 1 - i * 0.35,
+        })),
+    []);
+
     return (
         <group scale={scale} position={position} rotation={rotation}>
             <Float speed={2} rotationIntensity={0.15} floatIntensity={0.4}>
                 <group ref={groupRef}>
                     {/* Glass Outer Panel */}
-                    <RoundedBox args={[6, 3.5, 0.25]} radius={0.25} smoothness={6}>
-                        <MeshTransmissionMaterial
-                            thickness={0.8}
-                            roughness={0.25}
-                            transmission={1}
-                            ior={1.2}
-                            chromaticAberration={0.05}
-                            backside
-                            samples={8}
-                            resolution={512}
+                    <RoundedBox args={[6, 3.5, 0.25]} radius={0.25} smoothness={4}>
+                        <meshStandardMaterial
                             color="#a5f3fc"
-                            distortion={0.1}
-                            distortionScale={0.2}
-                            temporalDistortion={0.1}
+                            transparent = {true}
+                            opacity={0.18}
+                            roughness={0.05}
+                            metalness={0.1}
+                            depthWrite={false}
                         />
                     </RoundedBox>
 
@@ -83,12 +86,12 @@ export function GlassIDE({ groupRef, scale, position, rotation }) {
                     ))}
 
                     {/* Code lines */}
-                    {Array.from({ length: 8 }).map((_, i) => (
+                    {codeLines.map((line, i) => (
                         <RoundedBox
                             key={i}
-                            args={[3.5 - Math.random(), 0.12, 0.02]}
+                            args={[line.width, 0.12, 0.02]}
                             radius={0.05}
-                            position={[0.5 + Math.random() * 0.3, 1 - i * 0.35, 0.3]}
+                            position={[line.x, line.y, 0.3]}
                         >
                             <meshStandardMaterial color="#475569" />
                         </RoundedBox>

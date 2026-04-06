@@ -37,7 +37,7 @@ const HeroExperience = () => {
         </Suspense>
 
         <EffectComposer>
-          <Bloom intensity={0.6} luminanceThreshold={0.3} />
+          <Bloom intensity={0.4} luminanceThreshold={0.4} mipmapBlur />
         </EffectComposer>
       </Canvas>
   );
