@@ -30,7 +30,7 @@ const HeroExperience = () => {
         <Suspense fallback={null}>
           <Particles />
           <GlassIDE
-            scale={isMobile ? 1 : isTablet ? 1 : 1.5}
+            scale={isMobile ? 0.8 : isTablet ? 1 : 1.5}
             position={isMobile ? [0, -1.5, 0] : isTablet ? [0, -1, 0] : [0, -1, 0]}
             rotation={[0, -Math.PI / 8, 0]}
           />
