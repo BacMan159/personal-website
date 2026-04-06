@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
 import { navLinks, socialImgs } from "../constants/index.js";
 
 const NavBar = () => {
@@ -23,6 +25,13 @@ const NavBar = () => {
     }, []);
 
     const linkedin = useMemo(() => socialImgs.find(s => s.name === 'linkedin'), []);
+
+    useGSAP(() => {
+        gsap.fromTo('.navbar',
+            { y: -60, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out', force3D: true, clearProps: 'transform,opacity' }
+        );
+    }, []);
 
     return (
         <header className={`navbar ${scrolled ? 'scrolled' : 'not-scrolled'}`}>
