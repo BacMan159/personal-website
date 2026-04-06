@@ -20,17 +20,6 @@ const navLinks = [
     },
 ];
 
-const words = [
-    { text: "Ideas", imgPath: "/images/ideas.svg" },
-    { text: "Concepts", imgPath: "/images/concepts.svg" },
-    { text: "Designs", imgPath: "/images/designs.svg" },
-    { text: "Code", imgPath: "/images/code.svg" },
-    { text: "Ideas", imgPath: "/images/ideas.svg" },
-    { text: "Concepts", imgPath: "/images/concepts.svg" },
-    { text: "Designs", imgPath: "/images/designs.svg" },
-    { text: "Code", imgPath: "/images/code.svg" },
-];
-
 const counterItems = [
     { value: 8, suffix: "+", label: "Years of Experience" },
     { value: 6, suffix: "", label: "Domains" },
@@ -119,81 +108,6 @@ const techStackImgs = [
         imgPath: "/images/logos/three.png",
     },
 
-];
-
-const techStackIcons = [
-    {
-        name: "JavaScript",
-        modelPath: "/models/javascript-transformed.glb",
-        scale: 1,
-        rotation: [0, 0, 0],
-    },
-    {
-        name: "TypeScript",
-        modelPath: "/models/typescript-transformed.glb",
-        scale: 1,
-        rotation: [0, 0, 0],
-    },
-    {
-        name: "Java",
-        modelPath: "/models/java-transformed.glb",
-        scale: 1,
-        rotation: [0, 0, 0],
-    },
-    {
-        name: "Angular",
-        modelPath: "/models/angular-transformed.glb",
-        scale: 1,
-        rotation: [0, 0, 0],
-    },
-    {
-        name: "React",
-        modelPath: "/models/react_logo-transformed.glb",
-        scale: 1,
-        rotation: [0, 0, 0],
-    },
-    {
-        name: "Next.js",
-        modelPath: "/models/nextjs-transformed.glb",
-        scale: 1,
-        rotation: [0, 0, 0],
-    },
-    {
-        name: "Node.js",
-        modelPath: "/models/node-transformed.glb",
-        scale: 5,
-        rotation: [0, -Math.PI / 2, 0],
-    },
-    {
-        name: "AWS",
-        modelPath: "/models/aws-transformed.glb",
-        scale: 0.8,
-        rotation: [0, 0, 0],
-    },
-    {
-        name: "Python",
-        modelPath: "/models/python-transformed.glb",
-        scale: 0.8,
-        rotation: [0, 0, 0],
-    },
-    {
-        name: "Spring Boot",
-        modelPath: "/models/springboot-transformed.glb",
-        scale: 1,
-        rotation: [0, 0, 0],
-    },
-    {
-        name: "MongoDB",
-        modelPath: "/models/mongodb-transformed.glb",
-        scale: 1,
-        rotation: [0, 0, 0],
-    },
-    {
-        name: "DynamoDB",
-        modelPath: "/models/dynamodb-transformed.glb",
-        scale: 1,
-        rotation: [0, 0, 0],
-    },
 ];
 
 const expCards = [
@@ -335,20 +249,18 @@ const educationLocations = [
 const socialImgs = [
     {
         name: "linkedin",
-        url: "https://www.linkedin.com/bhasanth/",
+        url: "https://www.linkedin.com/in/bhasanth/",
         imgPath: "/images/linkedin.png",
     },
 ];
 
 export {
-    words,
     abilities,
     skills,
     counterItems,
     expCards,
     expLogos,
     socialImgs,
-    techStackIcons,
     techStackImgs,
     navLinks,
     educationLocations,

@@ -33,7 +33,7 @@ const Hero = () => {
 
             <div className="hero-layout">
                 {/* Hero Text */}
-                <header className="flex flex-col justify-center md:w-full w-screen md:px-20 px-5">
+                <header className="relative z-10 flex flex-col justify-center md:w-full w-screen md:px-20 px-5">
                     <div className="flex flex-col gap-7">
                         <p className="hero-description text-white-50 md:text-xl relative z-10 pointer-events-none">With over 8 years of experience in building scalable, cloud-native applications across aviation, healthcare, e-commerce, and financial services </p>
                         <div className="hero-cta flex items-stretch gap-5">
