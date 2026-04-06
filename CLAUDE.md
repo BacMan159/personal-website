@@ -33,7 +33,7 @@ React 19 + Vite single-page personal portfolio. Styling is **Tailwind CSS v4** (
 **3D rendering** — three independent R3F `<Canvas>` scenes:
 
 - `HeroExperience` (`src/components/HeroModels/`) — renders a procedural `IDEModel` (built from `@react-three/drei` primitives: `RoundedBox`, `Text`, `Float`) with `HeroLights` and `Particles`. `OrbitControls` limits azimuth to ±20° for a subtle 3D feel. Responsive scale/position via `react-responsive`. **Note:** `Room.jsx` is the original GLB-based model that `IDEModel` replaced; `Room.jsx` still exists but is unused.
-- `AvatarExperience` (`src/components/HeroModels/`) — animated GLB avatar (`/public/models/Avatar.glb`) with FBX animations (`/public/animations/`). Plays wave on load then cross-fades to idle via `useGLTF` + `useFBX` + `useAnimations`.
+- `AvatarExperience` (`src/components/HeroModels/`) — animated GLB avatar (`/public/models/Avatar.glb`) with FBX animations (`/public/animations/`). Plays wave on load then cross-fades to idle via `useGLTF` + `useFBX` + `useAnimations`. **Note:** Currently unmounted (removed from Hero; file exists but is unused).
 - `ContactExperience` (`src/components/ContactModels/`) — 3D computer model in the contact section.
 - `EducationGlobe` (`src/sections/EducationGlobe.jsx`) — custom interactive globe built entirely from Three.js primitives (no library). Uses `IntersectionObserver` to defer mounting the `<Canvas>` until the section scrolls into view. Earth texture: `/public/textures/earth-map.jpg`. Location data (lat/lng, colors) drives pin placement via spherical coordinate math in `latLngToVec3`.
 
