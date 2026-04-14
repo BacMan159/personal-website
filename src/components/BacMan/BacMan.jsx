@@ -10,7 +10,6 @@ const SUGGESTIONS = [
   "What's Bhasanth's current role?",
   "Tell me about his AI patent",
   "What's his tech stack?",
-  "Is he open to new roles?",
   "Describe his key projects",
 ]
 
@@ -79,11 +78,10 @@ const AvatarPanel = memo(() => (
 
 // ─── Main widget ──────────────────────────────────────────────────────────────
 const BacMan = () => {
-  const [open,            setOpen]            = useState(false)
-  const [closing,         setClosing]         = useState(false)
-  const [input,           setInput]           = useState('')
-  const [showSuggestions, setShowSuggestions] = useState(true)
-  const { messages, loading, send }           = useChat()
+  const [open,    setOpen]    = useState(false)
+  const [closing, setClosing] = useState(false)
+  const [input,   setInput]   = useState('')
+  const { messages, loading, send } = useChat()
 
   const bottomRef = useRef(null)
   const inputRef  = useRef(null)
@@ -120,7 +118,6 @@ const BacMan = () => {
       const content = (text ?? input).trim()
       if (!content || loading) return
       setInput('')
-      setShowSuggestions(false)
       await send(content)
     },
     [input, loading, send]
@@ -269,7 +266,7 @@ const BacMan = () => {
           <div
             className="relative flex flex-col md:flex-row
                        w-full max-w-[1100px] mx-4
-                       h-[calc(100vh-48px)] max-h-[780px]
+                       h-[calc(100dvh-48px)] max-h-[780px]
                        bg-[#0e0720] border border-violet-500/15 rounded-2xl overflow-hidden"
           >
 
@@ -277,7 +274,7 @@ const BacMan = () => {
             <AvatarPanel />
 
             {/* ── RIGHT: Chat panel ── */}
-            <div className="flex flex-col flex-1 min-w-0">
+            <div className="flex flex-col flex-1 min-w-0 min-h-0">
 
               {/* Header (visible on mobile — avatar panel hidden) */}
               <div className="flex-shrink-0 flex items-center gap-3 px-5 py-4
@@ -338,8 +335,8 @@ const BacMan = () => {
                   </div>
                 )}
 
-                {/* Suggestion chips — shown until first user message */}
-                {showSuggestions && messages.length === 1 && (
+                {/* Suggestion chips — shown after every assistant response */}
+                {!loading && messages.at(-1)?.role === 'assistant' && !messages.at(-1)?.streaming && (
                   <div className="flex flex-wrap gap-2 pl-8 mt-1 bacman-msg">
                     {SUGGESTIONS.map((s) => (
                       <button
