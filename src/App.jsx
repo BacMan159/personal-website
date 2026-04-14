@@ -3,6 +3,7 @@ import Hero from "./sections/Hero.jsx";
 import NavBar from "./components/NavBar.jsx";
 import AnimatedCounter from "./components/AnimatedCounter.jsx";
 import PageLoader from "./components/PageLoader.jsx";
+import BacMan from './components/BacMan/BacMan.jsx';
 
 const FeatureCards      = lazy(() => import("./sections/FeatureCards.jsx"));
 const ExperienceSection = lazy(() => import("./sections/ExperienceSection.jsx"));
@@ -26,6 +27,7 @@ const App = () => {
                 <EducationGlobe />
                 <Contact />
                 <Footer />
+                <BacMan />
             </Suspense>
         </main>
     )

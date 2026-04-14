@@ -20,6 +20,9 @@ The contact form uses EmailJS and requires a `.env` file with:
 - `VITE_APP_EMAILJS_TEMPLATE_ID`
 - `VITE_APP_EMAILJS_PUBLIC_KEY`
 
+For local BacMan development, add to `.env.local`:
+- `VITE_API_URL=http://localhost:3001` — overrides the default `https://api.bhasanth.tech` API base. In production this env var is unset so requests go to the live API.
+
 ## Architecture
 
 React 19 + Vite single-page personal portfolio. Styling is **Tailwind CSS v4** (configured via `@tailwindcss/vite` plugin — no `tailwind.config.js`; custom utilities live in CSS files directly).
@@ -33,9 +36,16 @@ React 19 + Vite single-page personal portfolio. Styling is **Tailwind CSS v4** (
 **3D rendering** — three independent R3F `<Canvas>` scenes:
 
 - `HeroExperience` (`src/components/HeroModels/`) — renders a procedural `IDEModel` (built from `@react-three/drei` primitives: `RoundedBox`, `Text`, `Float`) with `HeroLights` and `Particles`. `OrbitControls` limits azimuth to ±20° for a subtle 3D feel. Responsive scale/position via `react-responsive`. **Note:** `Room.jsx` is the original GLB-based model that `IDEModel` replaced; `Room.jsx` still exists but is unused.
-- `AvatarExperience` (`src/components/HeroModels/`) — animated GLB avatar (`/public/models/Avatar.glb`) with FBX animations (`/public/animations/`). Plays wave on load then cross-fades to idle via `useGLTF` + `useFBX` + `useAnimations`. **Note:** Currently unmounted (removed from Hero; file exists but is unused).
+- `AvatarExperience` (`src/components/HeroModels/`) — animated GLB avatar (`/public/models/Avatar.glb`) with FBX animations (`/public/animations/`). Plays wave on load then cross-fades to idle via `useGLTF` + `useFBX` + `useAnimations`. **Note:** Removed from `Hero` but re-used by the BacMan chat widget (see below).
 - `ContactExperience` (`src/components/ContactModels/`) — 3D computer model in the contact section.
 - `EducationGlobe` (`src/sections/EducationGlobe.jsx`) — custom interactive globe built entirely from Three.js primitives (no library). Uses `IntersectionObserver` to defer mounting the `<Canvas>` until the section scrolls into view. Earth texture: `/public/textures/earth-map.jpg`. Location data (lat/lng, colors) drives pin placement via spherical coordinate math in `latLngToVec3`.
+
+**BacMan AI chat widget** (`src/components/BacMan/`) — floating fixed-position chat overlay powered by Claude via AWS Bedrock. Three files:
+- `BacMan.jsx` — the full widget: a bubble button (bottom-right) that expands into a fullscreen split-panel overlay with a 3D avatar on the left and a chat log on the right. Both canvases are `lazy()`-loaded to avoid blocking paint.
+- `BacManBubbleCanvas.jsx` — lightweight R3F canvas for the bubble button, crops `Avatar` to head/shoulders. No OrbitControls.
+- `hooks/useChat.js` — streams responses from `POST ${API_BASE}/api/chat` via SSE (`event: done` / `event: error` / `data:` lines). Keeps last 8 non-streaming messages as history (excludes welcome). Includes a module-level `sessionCache` Map that serves first-turn (no-history) responses instantly from memory within the same browser tab.
+
+> The `/api/chat` backend lives at `api.bhasanth.tech` — a **separate repo/deployment** not in this directory.
 
 **Animations**: GSAP with `@gsap/react` (`useGSAP` hook). `ScrollTrigger` is registered globally — used in `TechStack` and other sections for scroll-based entrance animations.
 
