@@ -248,6 +248,7 @@ const BacMan = () => {
         className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95"
         style={{
           visibility: (open || closing) ? 'visible' : 'hidden',
+          opacity:    (!open && !closing) ? 0 : undefined,
           pointerEvents: (open || closing) ? 'auto' : 'none',
           transformOrigin: 'calc(100% - 64px) calc(100% - 64px)',
           animation: (open || closing)
