@@ -1,11 +1,11 @@
 import { useState, useCallback, useRef } from 'react'
 
-// Option A — separate API repo deployed to api.bhasanth.tech
+// Option A — separate API repo deployed to api.bhasanth.com
 // Set VITE_API_URL in your portfolio's .env.local for local dev:
 //   VITE_API_URL=http://localhost:3000
-// In production Vercel sets nothing — falls back to api.bhasanth.tech
+// In production Vercel sets nothing — falls back to api.bhasanth.com
 const API_BASE =
-    import.meta.env.VITE_API_URL ?? 'https://api.bhasanth.tech'
+    import.meta.env.VITE_API_URL ?? 'https://api.bhasanth.com'
 
 const WELCOME = {
     id:      'welcome',

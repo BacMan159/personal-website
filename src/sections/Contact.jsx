@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import TitleHeader from "../components/TitleHeader";
 import ContactExperience from "../components/ContactModels/ContactExperience";
+import Reveal from "../components/Reveal.jsx";
 
 const Contact = () => {
     const formRef = useRef(null);
@@ -41,13 +42,15 @@ const Contact = () => {
     return (
         <section id="contact" className="flex-center section-padding">
             <div className="w-full h-full md:px-10 px-5">
-                <TitleHeader
-                    title="Get in Touch"
-                    subtitle="💬 Have questions or ideas? Let’s talk! 🚀"
-                />
+                <Reveal>
+                    <TitleHeader
+                        title="Get in Touch"
+                        subtitle="💬 Have questions or ideas? Let’s talk! 🚀"
+                    />
+                </Reveal>
                 <div className="grid-12-cols mt-16">
-                    <div className="xl:col-span-5">
-                        <div className="flex-center card-border rounded-xl p-10">
+                    <Reveal className="xl:col-span-5">
+                        <div className="flex-center bl-card p-10">
                             <form
                                 ref={formRef}
                                 onSubmit={handleSubmit}
@@ -92,25 +95,30 @@ const Contact = () => {
                                     />
                                 </div>
 
-                                <button type="submit" disabled={loading}>
-                                    <div className="cta-button group">
-                                        <div className="bg-circle" />
-                                        <p className="text">
-                                            {loading ? "Sending..." : "Send Message"}
-                                        </p>
-                                        <div className="arrow-wrapper">
-                                            <img src="/images/arrow-down.svg" alt="arrow" className="rotate-180" />
-                                        </div>
-                                    </div>
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="bl-cta self-center gap-2 disabled:opacity-50"
+                                >
+                                    {loading ? "Sending..." : "Send Message"}
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M22 2L11 13" />
+                                        <path d="M22 2l-7 20-4-9-9-4 20-7z" />
+                                    </svg>
                                 </button>
                             </form>
                         </div>
-                    </div>
-                    <div className="xl:col-span-7 min-h-96">
-                        <div className="bg-[#cd7c2e] w-full h-full hover:cursor-grab rounded-3xl overflow-hidden">
-                            <ContactExperience />
-                        </div>
-                    </div>
+                    </Reveal>
                 </div>
             </div>
         </section>

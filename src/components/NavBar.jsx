@@ -1,65 +1,170 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import { navLinks, socialImgs } from "../constants/index.js";
+import React, { useEffect, useState, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import ThemeToggle from './ThemeToggle.jsx'
+import { getLenis } from '../hooks/useLenis.js'
+
+const LINKS = [
+    { name: 'About', id: 'hero' },
+    { name: 'Experience', id: 'experience' },
+    { name: 'Projects', id: 'projects' },
+    { name: 'Skills', id: 'skills' },
+    { name: 'Contact', id: 'contact' },
+]
 
 const NavBar = () => {
-    const [scrolled, setScrolled] = useState(false);
-
-    const handleScroll = useCallback(() => {
-        setScrolled(window.scrollY > 10);
-    }, []);
+    const [scrolled, setScrolled] = useState(false)
+    const [open, setOpen] = useState(false)
 
     useEffect(() => {
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [handleScroll]);
+        const onScroll = () => setScrolled(window.scrollY > 10)
+        onScroll()
+        window.addEventListener('scroll', onScroll, { passive: true })
+        return () => window.removeEventListener('scroll', onScroll)
+    }, [])
 
-    const scrollToSection = useCallback((e, id) => {
-        e.preventDefault();
-        const target = document.getElementById(id);
-        if (!target) return;
-        const offset = 130;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: 'smooth' });
-    }, []);
-
-    const linkedin = useMemo(() => socialImgs.find(s => s.name === 'linkedin'), []);
-
-    useGSAP(() => {
-        gsap.fromTo('.navbar',
-            { y: -60, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out', force3D: true, clearProps: 'transform,opacity' }
-        );
-    }, []);
+    const scrollTo = useCallback((id) => {
+        const el = document.getElementById(id)
+        if (!el) return
+        const lenis = getLenis()
+        if (lenis) {
+            lenis.scrollTo(el, { offset: -80, duration: 1.4 })
+        } else {
+            const top = el.getBoundingClientRect().top + window.scrollY - 80
+            window.scrollTo({ top, behavior: 'smooth' })
+        }
+        setOpen(false)
+    }, [])
 
     return (
-        <header className={`navbar ${scrolled ? 'scrolled' : 'not-scrolled'}`}>
-            <div className="inner">
-                <a className="logo" href="#hero" onClick={(e) => scrollToSection(e, 'hero')}>
-                    Bhasanth
+        <header className="fixed top-0 left-0 w-full z-50 px-4 md:px-6 pt-4">
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+                <a
+                    href="#hero"
+                    onClick={(e) => { e.preventDefault(); scrollTo('hero') }}
+                    className="text-2xl font-extrabold tracking-tight px-4 py-2 rounded-full"
+                    style={{
+                        color: '#FF1744',
+                        background: scrolled ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.35)',
+                        backdropFilter: 'blur(12px)',
+                        WebkitBackdropFilter: 'blur(12px)',
+                        border: '1px solid var(--border-base)',
+                        transition: 'background-color 250ms ease',
+                    }}
+                >
+                    BL
                 </a>
 
-                <nav className="desktop">
-                    <ul>
-                        {navLinks.map(({ link, name }) => (
-                            <li key={name} className="group">
-                                <a href={link} onClick={(e) => scrollToSection(e, link.slice(1))}>
-                                    <span>{name}</span>
-                                    <span className="underline"/>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
+                <nav
+                    className="hidden lg:flex items-center gap-1 px-2 py-1.5 rounded-full"
+                    style={{
+                        background: scrolled ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.35)',
+                        backdropFilter: 'blur(12px)',
+                        WebkitBackdropFilter: 'blur(12px)',
+                        border: '1px solid var(--border-base)',
+                        transition: 'background-color 250ms ease',
+                    }}
+                >
+                    {LINKS.map((l) => (
+                        <button
+                            key={l.id}
+                            onClick={() => scrollTo(l.id)}
+                            className="text-sm font-medium px-4 py-2 rounded-full transition-colors"
+                            style={{ color: 'var(--text-secondary)' }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.color = '#FF1744'
+                                e.currentTarget.style.background = 'rgba(255,23,68,0.1)'
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.color = 'var(--text-secondary)'
+                                e.currentTarget.style.background = 'transparent'
+                            }}
+                        >
+                            {l.name}
+                        </button>
+                    ))}
                 </nav>
 
-                {linkedin && (
-                    <a className="icon" target="_blank" rel="noopener noreferrer" href={linkedin.url}>
-                        <img src={linkedin.imgPath} alt="LinkedIn" />
+                <div
+                    className="flex items-center gap-2 px-2 py-1.5 rounded-full"
+                    style={{
+                        background: scrolled ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.35)',
+                        backdropFilter: 'blur(12px)',
+                        WebkitBackdropFilter: 'blur(12px)',
+                        border: '1px solid var(--border-base)',
+                        transition: 'background-color 250ms ease',
+                    }}
+                >
+                    <a
+                        href="https://www.linkedin.com/in/bhasanth/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn"
+                        className="flex items-center justify-center w-9 h-9 rounded-full transition-colors"
+                        style={{
+                            background: 'transparent',
+                            color: '#FF1744',
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,23,68,0.1)' }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.23 0z" />
+                        </svg>
                     </a>
-                )}
+                    <ThemeToggle />
+                    <button
+                        type="button"
+                        onClick={() => setOpen((v) => !v)}
+                        className="lg:hidden flex items-center justify-center w-9 h-9 rounded-full"
+                        aria-label="Menu"
+                        style={{
+                            background: 'transparent',
+                            color: '#FF1744',
+                        }}
+                    >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                            {open ? (
+                                <path d="M6 6l12 12M18 6L6 18" />
+                            ) : (
+                                <>
+                                    <path d="M3 6h18" />
+                                    <path d="M3 12h18" />
+                                    <path d="M3 18h18" />
+                                </>
+                            )}
+                        </svg>
+                    </button>
+                </div>
             </div>
+
+            <AnimatePresence>
+                {open && (
+                    <motion.div
+                        key="drawer"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: 'easeOut' }}
+                        className="lg:hidden overflow-hidden"
+                        style={{ background: 'rgba(0,0,0,0.95)', borderTop: '1px solid var(--border-base)' }}
+                    >
+                        <div className="flex flex-col px-5 py-4 gap-3">
+                            {LINKS.map((l) => (
+                                <button
+                                    key={l.id}
+                                    onClick={() => scrollTo(l.id)}
+                                    className="text-left text-base py-2"
+                                    style={{ color: 'var(--text-secondary)' }}
+                                >
+                                    {l.name}
+                                </button>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </header>
     )
 }
+
 export default NavBar
