@@ -13,7 +13,6 @@ export default defineConfig({
                 manualChunks: {
                     'vendor-react': ['react', 'react-dom'],
                     'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
-                    'vendor-gsap': ['gsap', '@gsap/react'],
                 },
             },
         },
