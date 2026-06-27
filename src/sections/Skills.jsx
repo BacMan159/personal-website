@@ -28,7 +28,7 @@ const CERTS = [
 
 const SkillTag = React.memo(({ name }) => (
     <div className="flex-none flex-center marquee-item">
-        <span className="bl-pill" style={{ padding: '8px 18px', fontSize: '14px', whiteSpace: 'nowrap' }}>
+        <span className="bl-pill !py-2 !px-[18px] !text-sm whitespace-nowrap">
             {name}
         </span>
     </div>
@@ -68,7 +68,7 @@ const Skills = () => {
                                 src={c.badge}
                                 alt={c.name}
                                 loading="lazy"
-                                style={{ width: 160, height: 160, objectFit: 'contain' }}
+                                className="w-24 h-24 md:w-40 md:h-40 object-contain"
                             />
                         </motion.a>
                     ))}

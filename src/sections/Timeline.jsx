@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock.js'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { useGlowAngle } from '../hooks/useGlowAngle.js'
+import Reveal from '../components/Reveal.jsx'
 
 const ENTRIES = [
     {
@@ -75,15 +76,28 @@ const Card = ({ entry, onOpen }) => {
     const cardRef = useRef(null)
     const { ref: glowRef, onMouseMove } = useGlowAngle()
 
+    const isSmallScreen = typeof window !== 'undefined' && window.innerWidth < 768
+
     const { scrollYProgress } = useScroll({
         target: cardRef,
         offset: ['start end', 'end start'],
     })
 
-    const x = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [-240, -80, 0, -80, -240])
-    // Fully visible + scaled up only when centered; dims + shrinks as card moves away
-    const opacity = useTransform(scrollYProgress, [0, 0.3, 0.5, 0.7, 1], [0, 0.35, 1, 0.35, 0])
-    const scale = useTransform(scrollYProgress, [0, 0.4, 0.5, 0.6, 1], [0.88, 0.96, 1.06, 0.96, 0.88])
+    const x = useTransform(
+        scrollYProgress,
+        [0, 0.25, 0.5, 0.75, 1],
+        isSmallScreen ? [0, 0, 0, 0, 0] : [-240, -80, 0, -80, -240],
+    )
+    const opacity = useTransform(
+        scrollYProgress,
+        [0, 0.3, 0.5, 0.7, 1],
+        isSmallScreen ? [0, 1, 1, 1, 0] : [0, 0.35, 1, 0.35, 0],
+    )
+    const scale = useTransform(
+        scrollYProgress,
+        [0, 0.4, 0.5, 0.6, 1],
+        isSmallScreen ? [1, 1, 1, 1, 1] : [0.88, 0.96, 1.06, 0.96, 0.88],
+    )
 
     return (
         <motion.button
@@ -104,7 +118,7 @@ const Card = ({ entry, onOpen }) => {
             <div className="relative z-10 mt-1 text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
                 {entry.role}
             </div>
-            <div className="relative z-10 mt-1 text-sm" style={{ color: '#FF1744' }}>
+            <div className="relative z-10 mt-1 text-sm" style={{ color: 'var(--accent)' }}>
                 {entry.company}
             </div>
         </motion.button>
@@ -119,20 +133,12 @@ const Timeline = () => {
     return (
         <section id="experience" className="bl-stage section-padding">
             <div className="max-w-6xl mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    className="mb-10"
-                >
-                    <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-                        Experience
-                    </h2>
-                    <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                        Click any role for details.
-                    </p>
-                </motion.div>
+                <Reveal as="h2" className="text-3xl md:text-4xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
+                    Experience
+                </Reveal>
+                <Reveal as="p" delay={0.05} className="text-sm mb-10" style={{ color: 'var(--text-muted)' }}>
+                    Click any role for details.
+                </Reveal>
 
                 <div className="flex flex-col gap-10">
                     {ENTRIES.map((e) => (
@@ -159,12 +165,12 @@ const Timeline = () => {
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
                             transition={{ duration: 0.25, ease: 'easeOut' }}
                             onClick={(e) => e.stopPropagation()}
-                            className="bl-card p-6 md:p-8 max-w-2xl w-full relative"
+                            className="bl-card p-6 md:p-8 max-w-2xl w-full relative max-h-[88vh] overflow-y-auto"
                         >
                             <button
                                 onClick={() => setOpen(null)}
-                                className="absolute top-4 right-4 text-2xl leading-none"
-                                style={{ color: '#FF1744' }}
+                                className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center text-2xl leading-none"
+                                style={{ color: 'var(--accent)' }}
                                 aria-label="Close"
                             >
                                 ×
@@ -175,7 +181,7 @@ const Timeline = () => {
                             <h3 className="mt-2 text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
                                 {open.role}
                             </h3>
-                            <div className="mt-1 text-base" style={{ color: '#FF1744' }}>
+                            <div className="mt-1 text-base" style={{ color: 'var(--accent)' }}>
                                 {open.company}
                             </div>
                             <ul className="mt-5 space-y-2 list-disc pl-5" style={{ color: 'var(--text-secondary)' }}>

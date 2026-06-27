@@ -30,7 +30,7 @@ const ProjectCard = ({ p, i, onClick }) => {
             {featured && (
                 <span
                     className="relative z-10 self-start mb-3 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider"
-                    style={{ background: 'rgba(255,23,68,0.15)', color: '#FF1744', border: '1px solid #FF1744' }}
+                    style={{ background: 'rgba(255,23,68,0.15)', color: 'var(--accent)', border: '1px solid var(--accent)' }}
                 >
                     ★ Featured
                 </span>
@@ -55,7 +55,7 @@ const ProjectCard = ({ p, i, onClick }) => {
                 ))}
             </div>
             {clickable && (
-                <div className="relative z-10 mt-4 text-sm font-medium" style={{ color: '#FF1744' }}>
+                <div className="relative z-10 mt-4 text-sm font-medium" style={{ color: 'var(--accent)' }}>
                     View architecture →
                 </div>
             )}
@@ -158,13 +158,13 @@ const Projects = () => {
                                     <button
                                         onClick={() => setShowEAS(false)}
                                         aria-label="Close"
-                                        className="w-9 h-9 rounded-full flex items-center justify-center text-xl leading-none flex-shrink-0 transition-colors"
+                                        className="w-11 h-11 rounded-full flex items-center justify-center text-xl leading-none flex-shrink-0 transition-colors"
                                         style={{
                                             background: 'var(--bg-surface)',
-                                            color: '#FF1744',
+                                            color: 'var(--accent)',
                                             border: '1px solid var(--border-base)',
                                         }}
-                                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#FF1744' }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)' }}
                                         onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-base)' }}
                                     >
                                         ×
