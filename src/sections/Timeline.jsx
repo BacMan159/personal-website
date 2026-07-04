@@ -156,8 +156,7 @@ const Timeline = () => {
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
                         onClick={() => setOpen(null)}
-                        className="fixed inset-0 z-[300] flex items-center justify-center px-4"
-                        style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}
+                        className="bl-modal-backdrop fixed inset-0 z-[300] flex items-center justify-center px-4"
                     >
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -165,12 +164,11 @@ const Timeline = () => {
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
                             transition={{ duration: 0.25, ease: 'easeOut' }}
                             onClick={(e) => e.stopPropagation()}
-                            className="bl-card p-6 md:p-8 max-w-2xl w-full relative max-h-[88vh] overflow-y-auto"
+                            className="bl-modal-panel p-6 md:p-8 max-w-2xl w-full relative max-h-[88vh] overflow-y-auto rounded-2xl"
                         >
                             <button
                                 onClick={() => setOpen(null)}
-                                className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center text-2xl leading-none"
-                                style={{ color: 'var(--accent)' }}
+                                className="bl-modal-close absolute top-4 right-4 w-11 h-11 rounded-full flex items-center justify-center text-2xl leading-none"
                                 aria-label="Close"
                             >
                                 ×

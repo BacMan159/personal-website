@@ -59,7 +59,7 @@ const ThemeToggle = () => {
             style={{
                 background: 'var(--bg-elevated)',
                 border: '1px solid var(--border-base)',
-                color: '#FF1744',
+                color: 'var(--accent)',
             }}
         >
             {theme === 'dark' ? <SunIcon /> : <MoonIcon />}

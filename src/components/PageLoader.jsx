@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 const PARTICLE_COUNT = 80
-const ACCENT = '#FF1744'
+const ACCENT = 'var(--accent)'
 
 const PageLoader = ({ onDone }) => {
     const canvasRef = useRef(null)
@@ -67,7 +67,7 @@ const PageLoader = ({ onDone }) => {
                 if (p.y < 0 || p.y > h) p.vy *= -1
                 ctx.beginPath()
                 ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-                ctx.fillStyle = `rgba(255, 23, 68, ${p.a})`
+                ctx.fillStyle = `rgba(10, 132, 255, ${p.a})`
                 ctx.fill()
             }
 
@@ -80,7 +80,7 @@ const PageLoader = ({ onDone }) => {
                     const d2 = dx * dx + dy * dy
                     if (d2 < 120 * 120) {
                         const alpha = (1 - d2 / (120 * 120)) * 0.25
-                        ctx.strokeStyle = `rgba(255, 23, 68, ${alpha})`
+                        ctx.strokeStyle = `rgba(10, 132, 255, ${alpha})`
                         ctx.lineWidth = 0.5
                         ctx.beginPath()
                         ctx.moveTo(a.x, a.y)

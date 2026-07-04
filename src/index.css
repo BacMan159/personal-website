@@ -5,16 +5,17 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-    --gradient: radial-gradient(circle, #ffb968 0%, #ff8c00 100%);
+    --gradient: radial-gradient(circle, #6FD3FF 0%, #0A84FF 100%);
 
-    --bg-primary: #0A0000;
-    --bg-surface: #111111;
-    --bg-elevated: #1A1A1A;
-    --accent: #FF1744;
+    --bg-primary: #050914;
+    --bg-surface: #0B1220;
+    --bg-elevated: #131C2E;
+    --accent: #0A84FF;
+    --accent-2: #5AC8FA;
     --text-primary: #FFFFFF;
     --text-secondary: #EBEBEB;
     --text-muted: #888888;
-    --border-base: #222222;
+    --border-base: #1C2C42;
 }
 
 :root.light {
@@ -50,14 +51,14 @@ section {
     --color-blue-50: #839cb5;
     --color-blue-100: #2d2d38;
 
-    --color-bl-bg: #000000;
-    --color-bl-surface: #111111;
-    --color-bl-elevated: #1A1A1A;
-    --color-bl-accent: #FF1744;
+    --color-bl-bg: #050914;
+    --color-bl-surface: #0B1220;
+    --color-bl-elevated: #131C2E;
+    --color-bl-accent: #0A84FF;
     --color-bl-text: #FFFFFF;
     --color-bl-text2: #EBEBEB;
     --color-bl-muted: #888888;
-    --color-bl-border: #222222;
+    --color-bl-border: #1C2C42;
 }
 
 @layer utilities {
@@ -130,7 +131,17 @@ section {
     }
 
     .hero-badge {
-        @apply bg-black-200 py-2 px-4 rounded-full w-fit text-sm md:text-base text-nowrap;
+        @apply py-2 px-4 rounded-full w-fit text-sm md:text-base text-nowrap;
+        background: rgba(10, 132, 255, 0.10);
+        color: var(--text-primary);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(12px) saturate(150%);
+        -webkit-backdrop-filter: blur(12px) saturate(150%);
+    }
+
+    :root.light .hero-badge {
+        background: rgba(255, 255, 255, 0.45);
+        border-color: rgba(10, 132, 255, 0.16);
     }
 
     .hero-3d-layout {
@@ -327,10 +338,12 @@ section {
         input,
         textarea {
             @apply w-full px-5 py-3 md:text-base text-sm;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-base);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px) saturate(160%);
+            -webkit-backdrop-filter: blur(16px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             color: var(--text-primary);
-            transition: border-color 200ms ease;
+            transition: border-color 200ms ease, background-color 200ms ease;
         }
 
         input {
@@ -359,6 +372,17 @@ section {
                 @apply inline-block;
             }
         }
+    }
+
+    :root.light form input,
+    :root.light form textarea {
+        background: rgba(255, 255, 255, 0.5);
+        border-color: rgba(10, 132, 255, 0.18);
+    }
+
+    :root.light form input:focus,
+    :root.light form textarea:focus {
+        background: rgba(255, 255, 255, 0.65);
     }
 
     .footer {
@@ -590,10 +614,9 @@ section {
     align-items: center;
     gap: 14px;
     background:
-        radial-gradient(120% 80% at 0% 0%, rgba(255, 23, 68, 0.08) 0%, transparent 55%),
+        radial-gradient(120% 80% at 0% 0%, rgba(90, 200, 250, 0.08) 0%, transparent 55%),
         linear-gradient(160deg, rgba(20, 14, 8, 0.32) 0%, rgba(8, 8, 8, 0.38) 100%);
     backdrop-filter: blur(12px) saturate(150%);
-    -webkit-backdrop-filter: blur(12px) saturate(150%);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     padding: 14px 20px;
@@ -616,7 +639,7 @@ section {
 
 :root.light .edu-card-btn {
     background:
-        radial-gradient(120% 80% at 0% 0%, rgba(255, 23, 68, 0.06) 0%, transparent 55%),
+        radial-gradient(120% 80% at 0% 0%, rgba(90, 200, 250, 0.06) 0%, transparent 55%),
         linear-gradient(160deg, rgba(255, 255, 255, 0.42) 0%, rgba(245, 245, 245, 0.45) 100%);
     border-color: rgba(0, 0, 0, 0.06);
     box-shadow:
@@ -647,10 +670,9 @@ section {
 /* ── Expand panel ── */
 .edu-card-expand {
     background:
-        radial-gradient(120% 80% at 0% 0%, rgba(255, 23, 68, 0.05) 0%, transparent 55%),
+        radial-gradient(120% 80% at 0% 0%, rgba(90, 200, 250, 0.05) 0%, transparent 55%),
         linear-gradient(160deg, rgba(20, 14, 8, 0.36) 0%, rgba(8, 8, 8, 0.42) 100%);
     backdrop-filter: blur(12px) saturate(150%);
-    -webkit-backdrop-filter: blur(12px) saturate(150%);
     border: 1px solid var(--edu-color);
     border-top: none;
     border-radius: 0 0 14px 14px;
@@ -660,7 +682,7 @@ section {
 
 :root.light .edu-card-expand {
     background:
-        radial-gradient(120% 80% at 0% 0%, rgba(255, 23, 68, 0.04) 0%, transparent 55%),
+        radial-gradient(120% 80% at 0% 0%, rgba(90, 200, 250, 0.04) 0%, transparent 55%),
         linear-gradient(160deg, rgba(255, 255, 255, 0.5) 0%, rgba(245, 245, 245, 0.55) 100%);
 }
 
@@ -789,6 +811,47 @@ body.cursor-pointer { cursor: pointer; }
     pointer-events: none;
 }
 
+/* Blue glassmorphism backdrop — diagonal gradient + floating blurred orbs,
+   sits behind the particle canvas so glass surfaces have color to refract. */
+.bl-glass-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: linear-gradient(135deg, #050914 0%, #0A1B33 40%, #0A2A57 72%, #123B6E 100%);
+}
+
+:root.light .bl-glass-backdrop {
+    background: linear-gradient(135deg, #EAF6FF 0%, #CFE9FF 45%, #A9D8FF 75%, #8FCBFF 100%);
+}
+
+.bl-glass-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    background: radial-gradient(circle at 35% 35%, rgba(90, 200, 250, 0.55), rgba(10, 132, 255, 0.15) 70%, transparent 100%);
+    animation: bl-orb-float 18s ease-in-out infinite;
+    will-change: transform;
+}
+
+:root.light .bl-glass-orb {
+    background: radial-gradient(circle at 35% 35%, rgba(10, 132, 255, 0.35), rgba(90, 200, 250, 0.12) 70%, transparent 100%);
+}
+
+.bl-glass-orb:nth-of-type(1) { width: 420px; height: 420px; top: -8%; left: -6%; animation-delay: 0s; }
+.bl-glass-orb:nth-of-type(2) { width: 320px; height: 320px; top: 20%; right: -8%; animation-delay: -6s; }
+.bl-glass-orb:nth-of-type(3) { width: 260px; height: 260px; bottom: 5%; left: 15%; animation-delay: -12s; }
+.bl-glass-orb:nth-of-type(4) { width: 200px; height: 200px; bottom: 30%; right: 20%; animation-delay: -3s; }
+
+@keyframes bl-orb-float {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(3%, -4%, 0) scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bl-glass-orb { animation: none; }
+}
+
 .bl-stage {
     position: relative;
     z-index: 1;
@@ -803,66 +866,99 @@ body.cursor-pointer { cursor: pointer; }
 .bl-pill {
     display: inline-flex;
     align-items: center;
-    background: rgba(255, 23, 68, 0.08);
-    color: var(--accent);
-    border: 1px solid rgba(255, 23, 68, 0.28);
+    background: rgba(10, 132, 255, 0.10);
+    border: 1px solid rgba(10, 132, 255, 0.30);
     backdrop-filter: blur(8px) saturate(140%);
-    -webkit-backdrop-filter: blur(8px) saturate(140%);
     border-radius: 999px;
     padding: 4px 12px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 200;
 }
 
 :root.light .bl-pill {
-    background: rgba(255, 23, 68, 0.10);
-    border-color: rgba(255, 23, 68, 0.35);
+    background: rgba(10, 132, 255, 0.12);
+    border-color: rgba(10, 132, 255, 0.35);
 }
 
 .bl-card {
     position: relative;
     isolation: isolate;
     background:
-        radial-gradient(120% 80% at 0% 0%, rgba(255, 23, 68, 0.08) 0%, transparent 55%),
-        radial-gradient(100% 80% at 100% 100%, rgba(255, 23, 68, 0.05) 0%, transparent 55%),
-        linear-gradient(160deg, rgba(20, 14, 8, 0.32) 0%, rgba(8, 8, 8, 0.38) 100%);
-    backdrop-filter: blur(12px) saturate(150%);
-    -webkit-backdrop-filter: blur(12px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+        radial-gradient(120% 80% at 0% 0%, rgba(90, 200, 250, 0.14) 0%, transparent 55%),
+        radial-gradient(100% 80% at 100% 100%, rgba(10, 132, 255, 0.08) 0%, transparent 55%),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 100%);
+    backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 1rem;
     box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+        0 20px 50px rgba(3, 25, 60, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04);
     transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
 }
 
 .bl-card:hover {
-    border-color: rgba(255, 23, 68, 0.5);
+    border-color: rgba(10, 132, 255, 0.55);
     box-shadow:
-        0 25px 60px rgba(0, 0, 0, 0.5),
-        0 0 40px rgba(255, 23, 68, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        0 25px 60px rgba(3, 25, 60, 0.55),
+        0 0 40px rgba(10, 132, 255, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 :root.light .bl-card {
     background:
-        radial-gradient(120% 80% at 0% 0%, rgba(255, 23, 68, 0.06) 0%, transparent 55%),
-        radial-gradient(100% 80% at 100% 100%, rgba(255, 23, 68, 0.04) 0%, transparent 55%),
-        linear-gradient(160deg, rgba(255, 255, 255, 0.42) 0%, rgba(245, 245, 245, 0.45) 100%);
-    border-color: rgba(0, 0, 0, 0.06);
+        radial-gradient(120% 80% at 0% 0%, rgba(90, 200, 250, 0.16) 0%, transparent 55%),
+        radial-gradient(100% 80% at 100% 100%, rgba(10, 132, 255, 0.08) 0%, transparent 55%),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.48) 0%, rgba(245, 250, 255, 0.5) 100%);
+    border-color: rgba(10, 132, 255, 0.14);
     box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.10),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6),
-        inset 0 0 0 1px rgba(0, 0, 0, 0.03);
+        0 20px 50px rgba(10, 60, 130, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.4);
 }
 
 :root.light .bl-card:hover {
-    border-color: rgba(255, 23, 68, 0.5);
+    border-color: rgba(10, 132, 255, 0.5);
     box-shadow:
-        0 25px 60px rgba(0, 0, 0, 0.14),
-        0 0 40px rgba(255, 23, 68, 0.10),
-        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        0 25px 60px rgba(10, 60, 130, 0.14),
+        0 0 40px rgba(10, 132, 255, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Navbar glass pills */
+.bl-nav-pill {
+    background: rgba(10, 132, 255, 0.10);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 8px 24px rgba(3, 25, 60, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: background-color 250ms ease;
+}
+
+.bl-nav-pill.is-scrolled {
+    background: rgba(10, 132, 255, 0.18);
+}
+
+:root.light .bl-nav-pill {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: rgba(10, 132, 255, 0.16);
+    box-shadow: 0 8px 24px rgba(10, 60, 130, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+:root.light .bl-nav-pill.is-scrolled {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.bl-nav-drawer {
+    background: rgba(5, 9, 20, 0.85);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+:root.light .bl-nav-drawer {
+    background: rgba(255, 255, 255, 0.75);
+    border-top-color: rgba(10, 132, 255, 0.16);
 }
 
 .bl-cta {
@@ -870,7 +966,7 @@ body.cursor-pointer { cursor: pointer; }
     align-items: center;
     justify-content: center;
     background: var(--accent);
-    color: #000;
+    color: #fff;
     font-weight: 600;
     border-radius: 999px;
     padding: 12px 32px;
@@ -911,17 +1007,16 @@ body.cursor-pointer { cursor: pointer; }
     position: relative;
     isolation: isolate;
     background:
-        radial-gradient(120% 80% at 0% 0%, rgba(255, 23, 68, 0.10) 0%, transparent 55%),
-        radial-gradient(100% 80% at 100% 100%, rgba(255, 23, 68, 0.06) 0%, transparent 55%),
-        linear-gradient(160deg, rgba(20, 14, 8, 0.28) 0%, rgba(8, 8, 8, 0.32) 100%);
-    backdrop-filter: blur(14px) saturate(150%);
-    -webkit-backdrop-filter: blur(14px) saturate(150%);
+        radial-gradient(120% 80% at 0% 0%, rgba(90, 200, 250, 0.16) 0%, transparent 55%),
+        radial-gradient(100% 80% at 100% 100%, rgba(10, 132, 255, 0.10) 0%, transparent 55%),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(24px) saturate(150%);
     border-radius: 28px;
     box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.55),
-        0 0 80px rgba(255, 23, 68, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.07),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+        0 30px 80px rgba(3, 25, 60, 0.55),
+        0 0 80px rgba(10, 132, 255, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
 /* Rotating conic-gradient ring */
@@ -933,12 +1028,12 @@ body.cursor-pointer { cursor: pointer; }
     border-radius: inherit;
     background: conic-gradient(
         from var(--bl-frost-angle),
-        rgba(255, 23, 68, 0)   0deg,
-        rgba(255, 23, 68, 0.85) 60deg,
-        rgba(255, 23, 68, 0)   140deg,
-        rgba(255, 23, 68, 0)   220deg,
-        rgba(255, 23, 68, 0.55) 300deg,
-        rgba(255, 23, 68, 0)   360deg
+        rgba(10, 132, 255, 0)   0deg,
+        rgba(90, 200, 250, 0.85) 60deg,
+        rgba(10, 132, 255, 0)   140deg,
+        rgba(10, 132, 255, 0)   220deg,
+        rgba(10, 132, 255, 0.55) 300deg,
+        rgba(10, 132, 255, 0)   360deg
     );
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -949,15 +1044,15 @@ body.cursor-pointer { cursor: pointer; }
     z-index: -1;
 }
 
-/* Soft orange aurora behind the panel */
+/* Soft blue aurora behind the panel */
 .bl-frosted::after {
     content: '';
     position: absolute;
     inset: -40px;
     border-radius: inherit;
     background:
-        radial-gradient(40% 40% at 20% 30%, rgba(255, 23, 68, 0.18) 0%, transparent 70%),
-        radial-gradient(50% 50% at 80% 70%, rgba(213, 0, 0, 0.12) 0%, transparent 70%);
+        radial-gradient(40% 40% at 20% 30%, rgba(90, 200, 250, 0.22) 0%, transparent 70%),
+        radial-gradient(50% 50% at 80% 70%, rgba(10, 132, 255, 0.16) 0%, transparent 70%);
     filter: blur(28px);
     pointer-events: none;
     z-index: -2;
@@ -971,18 +1066,102 @@ body.cursor-pointer { cursor: pointer; }
 
 :root.light .bl-frosted {
     background:
-        radial-gradient(120% 80% at 0% 0%, rgba(255, 23, 68, 0.06) 0%, transparent 55%),
-        radial-gradient(100% 80% at 100% 100%, rgba(255, 23, 68, 0.04) 0%, transparent 55%),
-        linear-gradient(160deg, rgba(255, 255, 255, 0.32) 0%, rgba(245, 245, 245, 0.36) 100%);
+        radial-gradient(120% 80% at 0% 0%, rgba(90, 200, 250, 0.14) 0%, transparent 55%),
+        radial-gradient(100% 80% at 100% 100%, rgba(10, 132, 255, 0.08) 0%, transparent 55%),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.4) 0%, rgba(245, 250, 255, 0.44) 100%);
     box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.10),
-        0 0 80px rgba(255, 23, 68, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6),
-        inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+        0 30px 80px rgba(10, 60, 130, 0.10),
+        0 0 80px rgba(10, 132, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.4);
 }
 
 @media (prefers-reduced-motion: reduce) {
     .bl-frosted::before { animation: none; }
     .bl-frosted::after  { animation: none; }
+}
+
+/* ── Modal chrome (chat + architecture popups) ── */
+.bl-modal-backdrop {
+    background: radial-gradient(120% 90% at 50% 0%, rgba(10, 132, 255, 0.14) 0%, transparent 60%), rgba(3, 8, 20, 0.7);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+}
+
+.bl-modal-panel {
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(90, 200, 250, 0.14) 0%, transparent 55%),
+        radial-gradient(100% 80% at 100% 100%, rgba(10, 132, 255, 0.08) 0%, transparent 55%),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 100%);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+        0 30px 80px rgba(3, 25, 60, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+:root.light .bl-modal-panel {
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(90, 200, 250, 0.16) 0%, transparent 55%),
+        radial-gradient(100% 80% at 100% 100%, rgba(10, 132, 255, 0.08) 0%, transparent 55%),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.5) 0%, rgba(245, 250, 255, 0.52) 100%);
+    border-color: rgba(10, 132, 255, 0.14);
+    box-shadow:
+        0 30px 80px rgba(10, 60, 130, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.bl-modal-header {
+    background: rgba(10, 132, 255, 0.08);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+:root.light .bl-modal-header {
+    background: rgba(255, 255, 255, 0.3);
+    border-bottom-color: rgba(10, 132, 255, 0.14);
+}
+
+.bl-modal-close {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: var(--accent);
+    transition: border-color 200ms ease, background-color 200ms ease;
+}
+
+.bl-modal-close:hover {
+    border-color: var(--accent);
+    background: rgba(10, 132, 255, 0.16);
+}
+
+:root.light .bl-modal-close {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: rgba(10, 132, 255, 0.16);
+}
+
+.bl-chat-bubble-user {
+    background: linear-gradient(135deg, rgba(90, 200, 250, 0.9), rgba(10, 132, 255, 0.9));
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    color: #fff;
+}
+
+.bl-chat-bubble-assistant {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-secondary);
+}
+
+:root.light .bl-chat-bubble-assistant {
+    background: rgba(255, 255, 255, 0.45);
+    border-color: rgba(10, 132, 255, 0.14);
+    color: var(--text-secondary);
 }
 

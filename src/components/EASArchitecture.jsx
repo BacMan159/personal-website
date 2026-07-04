@@ -139,7 +139,7 @@ export default function App() {
 
   return (
     <div className="eas-arch" style={{
-      background: `radial-gradient(ellipse at 30% 20%, rgba(255, 23, 68, 0.06) 0%, #000000 70%)`,
+      background: `radial-gradient(ellipse at 30% 20%, rgba(10, 132, 255, 0.06) 0%, #000000 70%)`,
       display: "flex",
       flexDirection: "column",
       alignItems: "center",

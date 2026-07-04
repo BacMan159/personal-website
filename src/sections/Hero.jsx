@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { motion, AnimatePresence } from 'framer-motion'
 import { useBacManChat } from '../hooks/useBacManChat.js'
-import { useGlowAngle } from '../hooks/useGlowAngle.js'
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock.js'
+import { useGlowAngle } from '../hooks/useGlowAngle.js'
 
 const StatCard = ({ s }) => {
     const { ref, onMouseMove } = useGlowAngle()
@@ -18,10 +18,10 @@ const StatCard = ({ s }) => {
             className="card bl-card p-6"
         >
             <div className="glow" />
-            <div className="relative z-10 font-bold" style={{ fontSize: '40px', color: '#FF1744' }}>
+            <div className="relative z-10 font-bold" style={{ fontSize: '40px', color: 'var(--text-primary)' }}>
                 {s.value}
             </div>
-            <div className="relative z-10 mt-1 text-sm" style={{ color: 'var(--text-muted)' }}>
+            <div className="relative z-10 mt-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
                 {s.label}
             </div>
         </motion.div>
@@ -100,7 +100,7 @@ const Hero = () => {
                     className="font-bold"
                     style={{ fontSize: 'clamp(48px, 7vw, 80px)', lineHeight: 1.05, color: 'var(--text-primary)' }}
                 >
-                    Hi, I'm <span style={{ background: 'linear-gradient(90deg, #FF1744, #FF5252)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', color: 'transparent' }}>Bhasanth</span>
+                    Hi, I'm <span style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-2))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', color: 'transparent' }}>Bhasanth</span>
                 </motion.h1>
 
                 <motion.p
@@ -110,7 +110,7 @@ const Hero = () => {
                     className="mt-4 text-base"
                     style={{ letterSpacing: '0.12em' }}
                 >
-                    Senior Full Stack Developer <span style={{ color: '#FF1744'}}>/</span> AI Engineer
+                    Senior Full Stack Developer <span style={{ color: 'var(--accent)'}}>/</span> AI Engineer
                 </motion.p>
 
                 <motion.div
@@ -126,20 +126,13 @@ const Hero = () => {
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Ask Bac-Man about Bhasanth..."
                             className="flex-1 px-4 py-3 rounded-full outline-none"
-                            style={{
-                                background: 'var(--bg-elevated)',
-                                color: 'var(--text-primary)',
-                                border: '1px solid var(--border-base)',
-                            }}
-                            onFocus={(e) => (e.target.style.borderColor = '#FF1744')}
-                            onBlur={(e) => (e.target.style.borderColor = 'var(--border-base)')}
                             disabled={streaming}
                         />
                         <button
                             type="submit"
                             disabled={streaming || !input.trim()}
                             className="px-5 py-3 rounded-full font-semibold disabled:opacity-50"
-                            style={{ background: '#FF1744', color: '#000' }}
+                            style={{ background: 'var(--accent)', color: '#fff' }}
                         >
                             Ask
                         </button>
@@ -151,7 +144,7 @@ const Hero = () => {
             <div className="min-h-screen flex flex-col items-center justify-center px-5 md:px-10 pb-20">
               <div className="bl-frosted w-full max-w-5xl px-6 md:px-10 py-10 md:py-14 flex flex-col items-center text-center">
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full"> 
                       {STATS.map((s) => (
                           <StatCard key={s.label} s={s} />
                       ))}
@@ -213,8 +206,7 @@ const Hero = () => {
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.25 }}
                             onClick={closeChat}
-                            className="fixed inset-0 z-[1000] flex items-center justify-center px-4 py-6"
-                            style={{ background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}
+                            className="bl-modal-backdrop fixed inset-0 z-[1000] flex items-center justify-center px-4 py-6"
                         >
                             <motion.div
                                 key="bacman-panel"
@@ -223,27 +215,17 @@ const Hero = () => {
                                 exit={{ opacity: 0, scale: 0.96, y: 16 }}
                                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="bl-frosted relative w-full max-w-2xl flex flex-col"
+                                className="bl-modal-panel relative w-full max-w-2xl flex flex-col rounded-[28px]"
                                 style={{ height: 'min(80vh, 720px)' }}
                             >
-                                <div
-                                    className="flex items-center justify-between px-5 md:px-6 py-4 flex-shrink-0"
-                                    style={{ borderBottom: '1px solid var(--border-base)' }}
-                                >
+                                <div className="bl-modal-header flex items-center justify-between px-5 md:px-6 py-4 flex-shrink-0 rounded-t-[28px]">
                                     <h3 className="text-base md:text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                                        Chat with <span style={{ color: '#FF1744' }}>Bac-Man</span>
+                                        Chat with <span style={{ color: 'var(--accent)' }}>Bac-Man</span>
                                     </h3>
                                     <button
                                         onClick={closeChat}
                                         aria-label="Close chat"
-                                        className="w-9 h-9 rounded-full flex items-center justify-center text-xl leading-none transition-colors"
-                                        style={{
-                                            background: 'var(--bg-elevated)',
-                                            color: '#FF1744',
-                                            border: '1px solid var(--border-base)',
-                                        }}
-                                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#FF1744' }}
-                                        onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-base)' }}
+                                        className="bl-modal-close w-9 h-9 rounded-full flex items-center justify-center text-xl leading-none"
                                     >
                                         ×
                                     </button>
@@ -273,13 +255,6 @@ const Hero = () => {
                                         onChange={(e) => setInput(e.target.value)}
                                         placeholder="Ask a follow-up..."
                                         className="flex-1 px-4 py-3 rounded-full outline-none"
-                                        style={{
-                                            background: 'var(--bg-elevated)',
-                                            color: 'var(--text-primary)',
-                                            border: '1px solid var(--border-base)',
-                                        }}
-                                        onFocus={(e) => (e.target.style.borderColor = '#FF1744')}
-                                        onBlur={(e) => (e.target.style.borderColor = 'var(--border-base)')}
                                         disabled={streaming}
                                         autoFocus
                                     />
@@ -287,7 +262,7 @@ const Hero = () => {
                                         type="submit"
                                         disabled={streaming || !input.trim()}
                                         className="px-5 py-3 rounded-full font-semibold disabled:opacity-50"
-                                        style={{ background: '#FF1744', color: '#000' }}
+                                        style={{ background: 'var(--accent)', color: '#fff' }}
                                     >
                                         Ask
                                     </button>
@@ -304,15 +279,12 @@ const Hero = () => {
 
 const ChatTurn = ({ q, a, error, streaming }) => (
     <div className="flex flex-col gap-2">
-        <div className="self-end max-w-[85%] rounded-2xl px-4 py-2.5 text-sm" style={{ background: '#FF1744', color: '#000' }}>
+        <div className="bl-chat-bubble-user self-end max-w-[85%] rounded-2xl px-4 py-2.5 text-sm">
             {q}
         </div>
-        <div
-            className="self-start max-w-[90%] rounded-2xl px-4 py-3 text-sm leading-relaxed"
-            style={{ background: 'var(--bg-elevated)', color: 'var(--text-secondary)', border: '1px solid var(--border-base)' }}
-        >
+        <div className="bl-chat-bubble-assistant self-start max-w-[90%] rounded-2xl px-4 py-3 text-sm leading-relaxed">
             {error ? (
-                <span style={{ color: '#FF1744' }}>{error}</span>
+                <span style={{ color: 'var(--accent)' }}>{error}</span>
             ) : (
                 <span style={{ whiteSpace: 'pre-wrap' }}>{a}</span>
             )}

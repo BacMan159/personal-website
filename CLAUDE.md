@@ -27,7 +27,9 @@ For local BacMan development, add to `.env.local`:
 
 ## Architecture
 
-React 19 + Vite single-page personal portfolio. Styling is **Tailwind CSS v4** (configured via `@tailwindcss/vite` plugin — no `tailwind.config.js`; custom utilities live in `src/index.css` directly).
+React 19 + Vite single-page personal portfolio. Styling is **Tailwind CSS v4** (configured via `@tailwindcss/vite` plugin — no `tailwind.config.js`; custom utilities live in `src/index.css` directly). `vite.config.js` manually splits `vendor-react` and `vendor-three` chunks via `build.rollupOptions.output.manualChunks`.
+
+Note: `README.md` and `DESIGN.md` describe an older architecture (GSAP, `EducationGlobe`, `AnimatedCounter`, etc.) that no longer matches this codebase — treat this CLAUDE.md and the code itself as the source of truth instead.
 
 **Page structure** (`src/App.jsx`): All sections are eagerly loaded — `NavBar → Hero → Timeline → Projects → Skills → Contact → Footer`. UI chrome mounts around them: `PageLoader`, `ScrollProgress`, `CustomCursor`, `HeroBackground`.
 

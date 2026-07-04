@@ -378,9 +378,9 @@ function ParticleField({ shapeBlendRef }) {
                     linePositions[o + 3] = aArr[jx]
                     linePositions[o + 4] = aArr[jx + 1]
                     linePositions[o + 5] = aArr[jx + 2]
-                    const cr = alpha
-                    const cg = 0.09 * alpha
-                    const cb = 0.27 * alpha
+                    const cr = 0.35 * alpha
+                    const cg = 0.78 * alpha
+                    const cb = alpha
                     lineColors[o]     = cr; lineColors[o + 1] = cg; lineColors[o + 2] = cb
                     lineColors[o + 3] = cr; lineColors[o + 4] = cg; lineColors[o + 5] = cb
                     seg++
@@ -408,7 +408,7 @@ function ParticleField({ shapeBlendRef }) {
                     size={0.04}
                     map={circleTexture}
                     alphaMap={circleTexture}
-                    color={new THREE.Color('#FF1744')}
+                    color={new THREE.Color('#0A84FF')}
                     transparent={true}
                     opacity={0.85}
                     sizeAttenuation={true}
@@ -424,7 +424,7 @@ function ParticleField({ shapeBlendRef }) {
                     size={0.028}
                     map={circleTexture}
                     alphaMap={circleTexture}
-                    color={new THREE.Color('#FF5252')}
+                    color={new THREE.Color('#5AC8FA')}
                     transparent={true}
                     opacity={0.7}
                     sizeAttenuation={true}
@@ -506,6 +506,12 @@ const HeroBackground = () => {
     return (
         <>
             <div className="bl-bg-fixed" aria-hidden="true">
+                <div className="bl-glass-backdrop">
+                    <div className="bl-glass-orb" />
+                    <div className="bl-glass-orb" />
+                    <div className="bl-glass-orb" />
+                    <div className="bl-glass-orb" />
+                </div>
                 <Canvas
                     camera={{ position: [0, 0, 3.6], fov: 62, near: 0.1, far: 20 }}
                     dpr={[1, 1.5]}
@@ -531,11 +537,11 @@ const HeroBackground = () => {
                         top: 80,
                         right: 12,
                         background: 'rgba(0,0,0,0.75)',
-                        color: '#FF5252',
+                        color: '#5AC8FA',
                         font: '11px/1.4 ui-monospace, SFMono-Regular, monospace',
                         padding: '8px 10px',
                         whiteSpace: 'pre',
-                        border: '1px solid #FF1744',
+                        border: '1px solid #0A84FF',
                         borderRadius: 6,
                         pointerEvents: 'none',
                         zIndex: 1000,

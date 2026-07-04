@@ -30,7 +30,7 @@ const ProjectCard = ({ p, i, onClick }) => {
             {featured && (
                 <span
                     className="relative z-10 self-start mb-3 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider"
-                    style={{ background: 'rgba(255,23,68,0.15)', color: 'var(--accent)', border: '1px solid var(--accent)' }}
+                    style={{ background: 'rgba(10,132,255,0.15)', color: 'var(--accent)', border: '1px solid var(--accent)' }}
                 >
                     ★ Featured
                 </span>
@@ -126,8 +126,7 @@ const Projects = () => {
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.2 }}
                             onClick={() => setShowEAS(false)}
-                            className="fixed inset-0 z-[1000] flex items-center justify-center px-4 py-6"
-                            style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)' }}
+                            className="bl-modal-backdrop fixed inset-0 z-[1000] flex items-center justify-center px-4 py-6"
                         >
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.96, y: 20 }}
@@ -135,20 +134,9 @@ const Projects = () => {
                                 exit={{ opacity: 0, scale: 0.96, y: 20 }}
                                 transition={{ duration: 0.25, ease: 'easeOut' }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="relative w-full max-w-7xl max-h-[92vh] flex flex-col overflow-hidden rounded-2xl"
-                                style={{
-                                    background: 'var(--bg-surface)',
-                                    border: '1px solid var(--border-base)',
-                                    boxShadow: '0 30px 80px rgba(0,0,0,0.55), 0 0 60px rgba(255,23,68,0.10)',
-                                }}
+                                className="bl-modal-panel relative w-full max-w-7xl max-h-[92vh] flex flex-col overflow-hidden rounded-2xl"
                             >
-                                <div
-                                    className="flex items-center justify-between px-5 md:px-6 py-3 md:py-4 flex-shrink-0"
-                                    style={{
-                                        background: 'var(--bg-elevated)',
-                                        borderBottom: '1px solid var(--border-base)',
-                                    }}
-                                >
+                                <div className="bl-modal-header flex items-center justify-between px-5 md:px-6 py-3 md:py-4 flex-shrink-0">
                                     <h3
                                         className="text-base md:text-lg font-semibold truncate"
                                         style={{ color: 'var(--text-primary)' }}
@@ -158,20 +146,13 @@ const Projects = () => {
                                     <button
                                         onClick={() => setShowEAS(false)}
                                         aria-label="Close"
-                                        className="w-11 h-11 rounded-full flex items-center justify-center text-xl leading-none flex-shrink-0 transition-colors"
-                                        style={{
-                                            background: 'var(--bg-surface)',
-                                            color: 'var(--accent)',
-                                            border: '1px solid var(--border-base)',
-                                        }}
-                                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)' }}
-                                        onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-base)' }}
+                                        className="bl-modal-close w-11 h-11 rounded-full flex items-center justify-center text-xl leading-none flex-shrink-0"
                                     >
                                         ×
                                     </button>
                                 </div>
 
-                                <div data-lenis-prevent className="flex-1 overflow-auto" style={{ background: 'var(--bg-primary)' }}>
+                                <div data-lenis-prevent className="flex-1 overflow-auto">
                                     <Suspense
                                         fallback={
                                             <div

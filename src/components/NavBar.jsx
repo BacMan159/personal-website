@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import ThemeToggle from './ThemeToggle.jsx'
+import { AnimatePresence } from 'framer-motion'
+import React, { useCallback, useEffect, useState } from 'react'
 import { getLenis } from '../hooks/useLenis.js'
+import ThemeToggle from './ThemeToggle.jsx'
 
 const LINKS = [
     { name: 'About', id: 'hero' },
@@ -41,28 +41,14 @@ const NavBar = () => {
                 <a
                     href="#hero"
                     onClick={(e) => { e.preventDefault(); scrollTo('hero') }}
-                    className="text-2xl font-extrabold tracking-tight px-4 py-2 rounded-full"
-                    style={{
-                        color: '#FF1744',
-                        background: scrolled ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.35)',
-                        backdropFilter: 'blur(12px)',
-                        WebkitBackdropFilter: 'blur(12px)',
-                        border: '1px solid var(--border-base)',
-                        transition: 'background-color 250ms ease',
-                    }}
+                    className={`bl-nav-pill text-2xl font-extrabold tracking-tight px-4 py-2 rounded-full ${scrolled ? 'is-scrolled' : ''}`}
+                    style={{ color: 'var(--text-secondary)' }}
                 >
                     BL
                 </a>
 
                 <nav
-                    className="hidden lg:flex items-center gap-1 px-2 py-1.5 rounded-full"
-                    style={{
-                        background: scrolled ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.35)',
-                        backdropFilter: 'blur(12px)',
-                        WebkitBackdropFilter: 'blur(12px)',
-                        border: '1px solid var(--border-base)',
-                        transition: 'background-color 250ms ease',
-                    }}
+                    className={`bl-nav-pill hidden lg:flex items-center gap-1 px-2 py-1.5 rounded-full ${scrolled ? 'is-scrolled' : ''}`}
                 >
                     {LINKS.map((l) => (
                         <button
@@ -71,8 +57,8 @@ const NavBar = () => {
                             className="text-sm font-medium px-4 py-2 rounded-full transition-colors"
                             style={{ color: 'var(--text-secondary)' }}
                             onMouseEnter={(e) => {
-                                e.currentTarget.style.color = '#FF1744'
-                                e.currentTarget.style.background = 'rgba(255,23,68,0.1)'
+                                e.currentTarget.style.color = 'var(--accent)'
+                                e.currentTarget.style.background = 'rgba(10, 132, 255,0.1)'
                             }}
                             onMouseLeave={(e) => {
                                 e.currentTarget.style.color = 'var(--text-secondary)'
@@ -85,14 +71,7 @@ const NavBar = () => {
                 </nav>
 
                 <div
-                    className="flex items-center gap-2 px-2 py-1.5 rounded-full"
-                    style={{
-                        background: scrolled ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.35)',
-                        backdropFilter: 'blur(12px)',
-                        WebkitBackdropFilter: 'blur(12px)',
-                        border: '1px solid var(--border-base)',
-                        transition: 'background-color 250ms ease',
-                    }}
+                    className={`bl-nav-pill flex items-center gap-2 px-2 py-1.5 rounded-full ${scrolled ? 'is-scrolled' : ''}`}
                 >
                     <a
                         href="https://www.linkedin.com/in/bhasanth/"
@@ -102,9 +81,9 @@ const NavBar = () => {
                         className="flex items-center justify-center w-9 h-9 rounded-full transition-colors"
                         style={{
                             background: 'transparent',
-                            color: '#FF1744',
+                            color: 'var(--text-secondary)',
                         }}
-                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,23,68,0.1)' }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(10, 132, 255,0.1)' }}
                         onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
                     >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -119,7 +98,7 @@ const NavBar = () => {
                         aria-label="Menu"
                         style={{
                             background: 'transparent',
-                            color: '#FF1744',
+                            color: 'var(--text-secondary)',
                         }}
                     >
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -145,8 +124,7 @@ const NavBar = () => {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.25, ease: 'easeOut' }}
-                        className="lg:hidden overflow-hidden"
-                        style={{ background: 'rgba(0,0,0,0.95)', borderTop: '1px solid var(--border-base)' }}
+                        className="bl-nav-drawer lg:hidden overflow-hidden"
                     >
                         <div className="flex flex-col px-5 py-4 gap-3">
                             {LINKS.map((l) => (
