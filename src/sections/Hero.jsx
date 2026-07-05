@@ -92,13 +92,13 @@ const Hero = () => {
     return (
         <section id="hero" className="relative bl-stage">
             <div className="min-h-screen flex flex-col items-center justify-center px-5 md:px-10">
-              <div className="bl-frosted bl-frosted-circle w-full max-w-2xl px-10 md:px-16 flex flex-col items-center justify-center text-center">
+              <div className="bl-frosted bl-frosted-circle w-full max-w-2xl px-6 py-10 md:px-16 md:py-0 flex flex-col items-center justify-center text-center">
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, ease: 'easeOut' }}
                     className="font-bold"
-                    style={{ fontSize: 'clamp(48px, 7vw, 80px)', lineHeight: 1.05, color: 'var(--text-primary)' }}
+                    style={{ fontSize: 'clamp(36px, 10vw, 80px)', lineHeight: 1.05, color: 'var(--text-primary)' }}
                 >
                     Hi, I'm <span style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-2))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', color: 'transparent' }}>Bhasanth</span>
                 </motion.h1>
@@ -107,8 +107,8 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
-                    className="mt-4 text-base"
-                    style={{ letterSpacing: '0.12em' }}
+                    className="mt-3 md:mt-4 text-sm md:text-base"
+                    style={{ letterSpacing: '0.08em' }}
                 >
                     Senior Full Stack Developer <span style={{ color: 'var(--accent)'}}>/</span> AI Engineer
                 </motion.p>
@@ -117,7 +117,7 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
-                    className="mt-12 w-full max-w-2xl"
+                    className="mt-6 md:mt-12 w-full max-w-2xl"
                 >
                     <form onSubmit={onSubmit} className="flex items-center gap-2">
                         <input

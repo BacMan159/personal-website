@@ -1,7 +1,7 @@
-import React from 'react'
 import { motion } from 'framer-motion'
-import { skills } from '../constants/index.js'
+import React from 'react'
 import Reveal from '../components/Reveal.jsx'
+import { skills } from '../constants/index.js'
 
 const CERTS = [
     {
@@ -41,14 +41,14 @@ const Skills = () => {
     return (
         <section id="skills" className="bl-stage section-padding">
             <div className="max-w-6xl mx-auto">
-                <Reveal as="h2" className="text-3xl md:text-4xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
-                    Skills
-                </Reveal>
-                <Reveal as="p" delay={0.05} className="text-sm mb-10" style={{ color: 'var(--text-muted)' }}>
-                    Tools and Credentials
-                </Reveal>
+                <div className="flex justify-center md:justify-start mb-10">
+                    <Reveal as="h2" className="bl-card !rounded-full inline-block px-8 py-3 md:px-10 md:py-4 text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                        Skills
+                    </Reveal>
+                </div>
 
-                <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+                <div className="bl-card px-6 py-10 md:px-14 md:py-14">
+                    <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
                     {CERTS.map((c, i) => (
                         <motion.a
                             key={c.name}
@@ -76,7 +76,7 @@ const Skills = () => {
 
             </div>
 
-            <div className="relative mt-16 w-screen left-1/2 -translate-x-1/2">
+            <div className="relative mt-16 -mx-5 md:-mx-10">
                     <div className="marquee h-20">
                         <div className="marquee-box">
                             {skills.map((skill) => (
@@ -97,6 +97,7 @@ const Skills = () => {
                             ))}
                         </div>
                     </div>
+            </div>
             </div>
         </section>
     )

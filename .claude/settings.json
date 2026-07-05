@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs -r kill)",
+      "Bash(npx eslint *)",
+      "Bash(curl -s http://localhost:5174/ -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(pkill -f \"vite\")",
+      "Bash(grep -n \"h1,\\\\|h2 {\")",
+      "Bash(grep -n \"::placeholder\\\\|input,\\\\|form input\\\\|input {\" src/index.css)"
+    ]
+  }
+}

@@ -97,12 +97,11 @@ const Projects = () => {
     return (
         <section id="projects" className="bl-stage section-padding">
             <div className="max-w-6xl mx-auto">
-                <Reveal as="h2" className="text-3xl md:text-4xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
-                    Projects
-                </Reveal>
-                <Reveal as="p" delay={0.05} className="text-sm mb-10" style={{ color: 'var(--text-muted)' }}>
-                    Selected things I've built.
-                </Reveal>
+                <div className="flex justify-center md:justify-start mb-10">
+                    <Reveal as="h2" className="bl-card !rounded-full inline-block px-8 py-3 md:px-10 md:py-4 text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                        Projects
+                    </Reveal>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {PROJECTS.map((p, i) => (

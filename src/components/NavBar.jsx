@@ -1,4 +1,4 @@
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getLenis } from '../hooks/useLenis.js'
 import ThemeToggle from './ThemeToggle.jsx'

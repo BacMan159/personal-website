@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -14,8 +15,9 @@
     --accent-2: #5AC8FA;
     --text-primary: #FFFFFF;
     --text-secondary: #EBEBEB;
-    --text-muted: #888888;
+    --text-muted: #bbbbbb;
     --border-base: #1C2C42;
+    --font-playfair: "Playfair Display", "Playfair Display Fallback";
 }
 
 :root.light {
@@ -42,8 +44,20 @@ section {
     width: 100dvw;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-playfair);
+    font-style: italic;
+    font-weight: 800;
+}
+
 @theme {
     --font-sans: "Inter", "Mona Sans", sans-serif;
+    --font-playfair: "Playfair Display", "Playfair Display Fallback";
     --color-white-50: #d9ecff;
     --color-black-50: #1c1c21;
     --color-black-100: #0e0e10;
@@ -484,7 +498,7 @@ section {
 
 /* marquee */
 .marquee {
-    width: 100dvw;
+    width: 100%;
     overflow: hidden;
     position: relative;
 }
@@ -1062,6 +1076,16 @@ body.cursor-pointer { cursor: pointer; }
 .bl-frosted-circle {
     border-radius: 50%;
     aspect-ratio: 1 / 1;
+}
+
+/* On narrow screens a forced 1:1 circle wastes vertical space and crams
+   the heading/subtitle/input into the curved corners. Fall back to a
+   compact rounded card instead. */
+@media (max-width: 767px) {
+    .bl-frosted-circle {
+        aspect-ratio: unset;
+        border-radius: 32px;
+    }
 }
 
 :root.light .bl-frosted {

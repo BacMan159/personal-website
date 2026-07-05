@@ -1,6 +1,6 @@
-import React, { useMemo, useRef, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { EffectComposer, DepthOfField } from '@react-three/postprocessing'
+import { DepthOfField, EffectComposer } from '@react-three/postprocessing'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 const PARTICLE_COUNT = 2000
@@ -24,10 +24,10 @@ const SECTION_KEYFRAMES = [
       start: { pos: [2.3, 2.2, 0.01], target: [0, 0, 0], fov: 50, focus: 2.3, shape: 'scatter' },
       end:   { pos: [2.4, 0.3, 1.8], target: [0, 0, 0], fov: 60, focus: 2.4, shape: 'scatter' } },
     { id: 'skills',
-      start: { pos: [0.1, 2, 0.1], target: [0, 0, 0], fov: 60, focus: 1.8, shape: 'grid' },
-      end:   { pos: [0.1, 2, 0.1], target: [0, 0, 0], fov: 60, focus: 1.8, shape: 'grid' } },
+      start: { pos: [0, 0.5, 0], target: [0, 0, 0], fov: 90, focus: 0, shape: 'grid' },
+      end:   { pos: [0, 2.8, 0], target: [0, 0, 0], fov: 45, focus: 0, shape: 'grid' } },
     { id: 'contact',
-      start: { pos: [-1.5, 1, 2.7], target: [-1.5, 1, 0], fov: 60, focus: 3.7, shape: 'sphere' },
+      start: { pos: [0, 0, 2.2], target: [0, 0, 0], fov: 45, focus: 0, shape: 'sphere' },
       end:   { pos: [-1.5, 1, 2.7], target: [-1.5, 1, 0], fov: 60, focus: 3.7, shape: 'sphere' } },
 ]
 
@@ -211,7 +211,23 @@ function ScrollCamera({ focusRef, shapeBlendRef }) {
     return null
 }
 
+function useIsLightTheme() {
+    const [isLight, setIsLight] = useState(
+        () => typeof document !== 'undefined' && document.documentElement.classList.contains('light')
+    )
+    useEffect(() => {
+        const root = document.documentElement
+        const observer = new MutationObserver(() => {
+            setIsLight(root.classList.contains('light'))
+        })
+        observer.observe(root, { attributes: true, attributeFilter: ['class'] })
+        return () => observer.disconnect()
+    }, [])
+    return isLight
+}
+
 function ParticleField({ shapeBlendRef }) {
+    const isLight = useIsLightTheme()
     const orangeRef = useRef(null)
     const whiteRef = useRef(null)
     const groupRef = useRef(null)
@@ -240,6 +256,32 @@ function ParticleField({ shapeBlendRef }) {
 
     const liveA = useMemo(() => new Float32Array(shapesA.sphere), [shapesA])
     const liveB = useMemo(() => new Float32Array(shapesB.sphere), [shapesB])
+
+    const makeColorVariations = (hex, count, jitter = 0.06) => {
+        const base = new THREE.Color(hex)
+        const hsl = { h: 0, s: 0, l: 0 }
+        base.getHSL(hsl)
+        const colors = new Float32Array(count * 3)
+        const c = new THREE.Color()
+        for (let i = 0; i < count; i++) {
+            const h = hsl.h + (Math.random() - 0.5) * jitter * 0.5
+            const s = Math.min(1, Math.max(0, hsl.s + (Math.random() - 0.5) * jitter))
+            const l = Math.min(1, Math.max(0, hsl.l + (Math.random() - 0.5) * jitter))
+            c.setHSL(h, s, l)
+            colors[i * 3] = c.r
+            colors[i * 3 + 1] = c.g
+            colors[i * 3 + 2] = c.b
+        }
+        return colors
+    }
+    const colorA = useMemo(
+        () => makeColorVariations(isLight ? '#0057D9' : '#0A84FF', PARTICLE_COUNT),
+        [isLight]
+    )
+    const colorB = useMemo(
+        () => makeColorVariations(isLight ? '#0A84FF' : '#5AC8FA', PARTICLE_COUNT),
+        [isLight]
+    )
 
     const circleTexture = useMemo(() => {
         const size = 64
@@ -403,12 +445,13 @@ function ParticleField({ shapeBlendRef }) {
             <points ref={orangeRef}>
                 <bufferGeometry>
                     <bufferAttribute attach="attributes-position" args={[liveA, 3]} count={PARTICLE_COUNT} />
+                    <bufferAttribute attach="attributes-color" args={[colorA, 3]} count={PARTICLE_COUNT} />
                 </bufferGeometry>
                 <pointsMaterial
                     size={0.04}
                     map={circleTexture}
                     alphaMap={circleTexture}
-                    color={new THREE.Color('#0A84FF')}
+                    vertexColors={true}
                     transparent={true}
                     opacity={0.85}
                     sizeAttenuation={true}
@@ -419,12 +462,13 @@ function ParticleField({ shapeBlendRef }) {
             <points ref={whiteRef}>
                 <bufferGeometry>
                     <bufferAttribute attach="attributes-position" args={[liveB, 3]} count={PARTICLE_COUNT} />
+                    <bufferAttribute attach="attributes-color" args={[colorB, 3]} count={PARTICLE_COUNT} />
                 </bufferGeometry>
                 <pointsMaterial
                     size={0.028}
                     map={circleTexture}
                     alphaMap={circleTexture}
-                    color={new THREE.Color('#5AC8FA')}
+                    vertexColors={true}
                     transparent={true}
                     opacity={0.7}
                     sizeAttenuation={true}
@@ -440,7 +484,7 @@ function ParticleField({ shapeBlendRef }) {
                 <lineBasicMaterial
                     vertexColors={true}
                     transparent={true}
-                    opacity={0.6}
+                    opacity={0}
                     blending={THREE.AdditiveBlending}
                     depthWrite={false}
                 />

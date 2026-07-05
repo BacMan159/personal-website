@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import TitleHeader from "../components/TitleHeader";
 import ContactExperience from "../components/ContactModels/ContactExperience";
 import Reveal from "../components/Reveal.jsx";
 
@@ -42,13 +41,12 @@ const Contact = () => {
     return (
         <section id="contact" className="flex-center section-padding">
             <div className="w-full h-full md:px-10 px-5">
-                <Reveal>
-                    <TitleHeader
-                        title="Get in Touch"
-                        subtitle="💬 Have questions or ideas? Let’s talk! 🚀"
-                    />
-                </Reveal>
-                <div className="grid-12-cols mt-16">
+                <div className="flex justify-center md:justify-start mb-10">
+                    <Reveal as="h2" className="bl-card !rounded-full inline-block px-8 py-3 md:px-10 md:py-4 text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                        Get in Touch
+                    </Reveal>
+                </div>
+                <div className="grid-12-cols mt-6">
                     <Reveal className="xl:col-span-5">
                         <div className="flex-center bl-card p-10">
                             <form
