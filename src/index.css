@@ -30,10 +30,13 @@
     --border-base: #E5E5E5;
 }
 
-html,
-body {
+html {
     width: 100dvw;
     overflow-x: hidden;
+}
+
+body {
+    width: 100dvw;
     background-color: var(--bg-primary);
     color: var(--text-primary);
     font-family: "Inter", "Mona Sans", sans-serif;
@@ -295,10 +298,6 @@ h6 {
         @apply border border-black-50 bg-black-100;
     }
 
-    .marquee-item {
-        @apply flex-none;
-    }
-
     .timeline-wrapper {
         @apply absolute top-0 xl:left-[35.5vw] md:left-10 left-5 h-full flex justify-center;
     }
@@ -495,35 +494,6 @@ h6 {
             rgba(255, 255, 255, 0) 100%
     );
 }
-
-/* marquee */
-.marquee {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-}
-.marquee-box {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    width: 200%;
-    height: 100%;
-    position: absolute;
-    overflow: hidden;
-    animation: marquee 60s linear infinite;
-}
-.marquee-item {
-    float: left;
-}
-@keyframes marquee {
-    0% {
-        left: 0;
-    }
-    100% {
-        left: -100%;
-    }
-}
-/* marquee end */
 
 .card {
     --start: 0;
@@ -782,7 +752,6 @@ body.cursor-pointer { cursor: pointer; }
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
-    .marquee-box { animation: none; }
 }
 
 /* ─── BL Redesign — global utilities ──────────────────────────── */
@@ -937,6 +906,17 @@ body.cursor-pointer { cursor: pointer; }
         0 25px 60px rgba(10, 60, 130, 0.14),
         0 0 40px rgba(10, 132, 255, 0.12),
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.bl-timeline-logo {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+:root.light .bl-timeline-logo {
+    background: rgba(255, 255, 255, 0.75);
+    border-color: rgba(10, 132, 255, 0.14);
 }
 
 /* Navbar glass pills */

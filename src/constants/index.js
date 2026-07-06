@@ -73,6 +73,35 @@ const skills = [
     "GSAP",
 ];
 
+const skillCategoryMap = [
+    {
+        title: "Frontend",
+        icon: "frontend",
+        names: ["JavaScript", "TypeScript", "React", "Redux", "Angular", "Next.js", "HTML5", "CSS3", "Bootstrap", "ThreeJS", "React Three Fiber", "GSAP"],
+    },
+    {
+        title: "Backend & Cloud",
+        icon: "backend",
+        names: ["Java", "Spring Boot", "Hibernate", "Node.js", "Express", "Python", "Kotlin", "AWS", "REST APIs", "Microservices"],
+    },
+    {
+        title: "Data & Messaging",
+        icon: "data",
+        names: ["MongoDB", "DynamoDB", "Redis", "DB2", "Redshift", "Kafka", "IBM MQ"],
+    },
+    {
+        title: "DevOps & Quality",
+        icon: "devops",
+        names: ["CI/CD", "Docker", "Kubernetes", "Git", "Jenkins", "SonarQube", "Cypress", "Mocha", "JUnit"],
+    },
+];
+
+const skillCategories = skillCategoryMap.map(({ title, icon, names }) => ({
+    title,
+    icon,
+    items: skills.filter((skill) => names.includes(skill)),
+}));
+
 const abilities = [
     {
         imgPath: "/images/seo.png",
@@ -262,6 +291,7 @@ const socialImgs = [
 export {
     abilities,
     skills,
+    skillCategories,
     counterItems,
     expCards,
     expLogos,

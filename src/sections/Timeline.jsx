@@ -3,74 +3,24 @@ import { useBodyScrollLock } from '../hooks/useBodyScrollLock.js'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { useGlowAngle } from '../hooks/useGlowAngle.js'
 import Reveal from '../components/Reveal.jsx'
+import { expCards } from '../constants/index.js'
 
-const ENTRIES = [
-    {
-        company: 'Delta Airlines',
-        role: 'Sr. Full Stack Developer',
-        dates: 'Feb 2023 – Present',
-        location: 'Boston, MA',
-        bullets: [
-            'Lead frontend modernization across Delta digital properties using Angular and React.',
-            'Architected microservices on AWS (Lambda, API Gateway, DynamoDB) handling millions of daily transactions.',
-            'Drove a 25-point lift in successful customer transactions through UX and performance work.',
-        ],
-    },
-    {
-        company: 'Deloitte',
-        role: 'Sr. Java Developer',
-        dates: 'Aug 2022 – Jan 2023',
-        bullets: [
-            'Built Spring Boot microservices for federal health initiatives.',
-            'Designed event-driven Kafka pipelines for compliance reporting.',
-        ],
-    },
-    {
-        company: 'RiceFW Technologies',
-        role: 'Java Developer',
-        dates: 'Jul 2021 – Jul 2022',
-        bullets: [
-            'Delivered enterprise integrations using Java, Spring, and IBM MQ.',
-            'Automated SFTP file pipelines processing 100k+ files daily.',
-        ],
-    },
-    {
-        company: 'Delta Airlines',
-        role: 'Full Stack Developer',
-        dates: 'Dec 2020 – Dec 2022',
-        bullets: [
-            'Shipped self-service tools used by airport operations teams.',
-            'Migrated legacy on-prem services to AWS serverless.',
-        ],
-    },
-    {
-        company: 'CloudData Technology',
-        role: 'Java Developer',
-        dates: 'May 2021 – Feb 2022',
-        bullets: [
-            'Implemented data ingestion services across Redshift and DynamoDB.',
-            'Optimized Java/Spring Boot batch jobs for nightly ETL.',
-        ],
-    },
-    {
-        company: 'Amazon',
-        role: 'Software Development Engineer',
-        dates: 'Jul 2019 – Sep 2019',
-        bullets: [
-            'Internship within the retail platform org.',
-            'Built internal tooling consumed by tier-1 services.',
-        ],
-    },
-    {
-        company: 'JPMorgan Chase',
-        role: 'Infrastructure Software Engineer',
-        dates: 'Jul 2018 – Jul 2019',
-        bullets: [
-            'Built infrastructure automation for trading platforms.',
-            'Worked across Java, Python, and Linux observability.',
-        ],
-    },
-]
+const splitTitle = (title) => {
+    const [role, company] = title.split(' – ')
+    return { role, company: company ?? '' }
+}
+
+const ENTRIES = expCards.map((c) => {
+    const { role, company } = splitTitle(c.title)
+    return {
+        role,
+        company,
+        dates: c.date,
+        review: c.review,
+        logoPath: c.logoPath,
+        bullets: c.responsibilities,
+    }
+})
 
 const Card = ({ entry, onOpen }) => {
     const cardRef = useRef(null)
@@ -109,17 +59,34 @@ const Card = ({ entry, onOpen }) => {
             style={{ x, opacity, scale }}
             onMouseMove={onMouseMove}
             onClick={() => onOpen(entry)}
-            className="card bl-card p-5 cursor-pointer text-left w-full"
+            className="card bl-card p-4 cursor-pointer text-left w-full"
         >
             <div className="glow" />
-            <div className="relative z-10 text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
-                {entry.dates}
-            </div>
-            <div className="relative z-10 mt-1 text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                {entry.role}
-            </div>
-            <div className="relative z-10 mt-1 text-sm" style={{ color: 'var(--accent)' }}>
-                {entry.company}
+            <div className="relative z-10 flex items-center gap-3.5">
+                <div className="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden bl-timeline-logo">
+                    <img
+                        src={entry.logoPath}
+                        alt={`${entry.company} logo`}
+                        width={40}
+                        height={40}
+                        className="w-full h-full object-contain p-1"
+                        onError={(e) => { e.currentTarget.style.display = 'none' }}
+                    />
+                </div>
+                <div className="min-w-0 flex-1">
+                    <div className="text-base font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
+                        {entry.role}
+                    </div>
+                    <div className="mt-0.5 text-sm truncate" style={{ color: 'var(--accent)' }}>
+                        {entry.company}
+                    </div>
+                    <div className="mt-1 text-[11px] uppercase tracking-wider truncate" style={{ color: 'var(--text-muted)' }}>
+                        {entry.dates}
+                    </div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 self-center" style={{ color: 'var(--text-muted)' }}>
+                    <path d="M9 6l6 6-6 6" />
+                </svg>
             </div>
         </motion.button>
     )
@@ -132,14 +99,16 @@ const Timeline = () => {
 
     return (
         <section id="experience" className="bl-stage section-padding">
-            <div className="max-w-6xl mx-auto">
-                <div className="flex justify-center md:justify-start mb-10">
-                    <Reveal as="h2" className="bl-card !rounded-full inline-block px-8 py-3 md:px-10 md:py-4 text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                        Experience
-                    </Reveal>
+            <div className="max-w-6xl mx-auto min-w-0 w-full lg:flex lg:gap-12">
+                <div className="mb-10 lg:mb-0 lg:shrink-0 lg:w-64">
+                    <div className="flex justify-center md:justify-start lg:sticky lg:top-[50vh] lg:-translate-y-1/2">
+                        <Reveal as="h2" className="bl-card !rounded-full inline-block px-8 py-3 md:px-10 md:py-4 text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                            Experience
+                        </Reveal>
+                    </div>
                 </div>
 
-                <div className="flex flex-col gap-10">
+                <div className="flex flex-col gap-10 lg:flex-1 lg:max-w-2xl">
                     {ENTRIES.map((e) => (
                         <Card key={`${e.company}-${e.dates}`} entry={e} onOpen={setOpen} />
                     ))}
@@ -172,18 +141,43 @@ const Timeline = () => {
                             >
                                 ×
                             </button>
-                            <div className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
-                                {open.dates} {open.location ? `· ${open.location}` : ''}
+
+                            <div className="flex items-start gap-4 pr-12">
+                                <div className="shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center overflow-hidden bl-timeline-logo">
+                                    <img
+                                        src={open.logoPath}
+                                        alt={`${open.company} logo`}
+                                        width={56}
+                                        height={56}
+                                        className="w-full h-full object-contain p-1.5"
+                                        onError={(e) => { e.currentTarget.style.display = 'none' }}
+                                    />
+                                </div>
+                                <div className="min-w-0">
+                                    <div className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+                                        {open.dates}
+                                    </div>
+                                    <h3 className="mt-1 text-xl md:text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                                        {open.role}
+                                    </h3>
+                                    <div className="mt-0.5 text-base" style={{ color: 'var(--accent)' }}>
+                                        {open.company}
+                                    </div>
+                                </div>
                             </div>
-                            <h3 className="mt-2 text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                                {open.role}
-                            </h3>
-                            <div className="mt-1 text-base" style={{ color: 'var(--accent)' }}>
-                                {open.company}
-                            </div>
-                            <ul className="mt-5 space-y-2 list-disc pl-5" style={{ color: 'var(--text-secondary)' }}>
+
+                            {open.review && (
+                                <p className="mt-5 text-sm italic leading-relaxed border-l-2 pl-4" style={{ color: 'var(--text-secondary)', borderColor: 'var(--accent)' }}>
+                                    {open.review}
+                                </p>
+                            )}
+
+                            <ul className="mt-5 space-y-3">
                                 {open.bullets.map((b) => (
-                                    <li key={b}>{b}</li>
+                                    <li key={b} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: 'var(--accent)' }} />
+                                        <span>{b}</span>
+                                    </li>
                                 ))}
                             </ul>
                         </motion.div>
