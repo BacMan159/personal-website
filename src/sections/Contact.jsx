@@ -39,8 +39,8 @@ const Contact = () => {
     };
 
     return (
-        <section id="contact" className="flex-center section-padding">
-            <div className="w-full h-full md:px-10 px-5">
+        <section id="contact" className="bl-stage section-padding">
+            <div className="max-w-6xl mx-auto w-full">
                 <div className="flex justify-center md:justify-start mb-10">
                     <Reveal as="h2" className="bl-card !rounded-full inline-block px-8 py-3 md:px-10 md:py-4 text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
                         Get in Touch

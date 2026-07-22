@@ -99,7 +99,7 @@ const Timeline = () => {
 
     return (
         <section id="experience" className="bl-stage section-padding">
-            <div className="max-w-6xl mx-auto min-w-0 w-full lg:flex lg:gap-12">
+            <div className="max-w-6xl mx-auto min-w-0 w-full lg:flex lg:gap-24">
                 <div className="mb-10 lg:mb-0 lg:shrink-0 lg:w-64">
                     <div className="flex justify-center md:justify-start lg:sticky lg:top-[50vh] lg:-translate-y-1/2">
                         <Reveal as="h2" className="bl-card !rounded-full inline-block px-8 py-3 md:px-10 md:py-4 text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
@@ -108,7 +108,7 @@ const Timeline = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-10 lg:flex-1 lg:max-w-2xl">
+                <div className="flex flex-col gap-10 lg:flex-none lg:w-[30vw] lg:max-w-2xl lg:min-w-[22rem]">
                     {ENTRIES.map((e) => (
                         <Card key={`${e.company}-${e.dates}`} entry={e} onOpen={setOpen} />
                     ))}

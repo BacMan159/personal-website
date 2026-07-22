@@ -152,8 +152,8 @@ h6 {
         background: rgba(10, 132, 255, 0.10);
         color: var(--text-primary);
         border: 1px solid rgba(255, 255, 255, 0.14);
-        backdrop-filter: blur(12px) saturate(150%);
         -webkit-backdrop-filter: blur(12px) saturate(150%);
+        backdrop-filter: blur(12px) saturate(150%);
     }
 
     :root.light .hero-badge {
@@ -352,8 +352,8 @@ h6 {
         textarea {
             @apply w-full px-5 py-3 md:text-base text-sm;
             background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px) saturate(160%);
             -webkit-backdrop-filter: blur(16px) saturate(160%);
+            backdrop-filter: blur(16px) saturate(160%);
             border: 1px solid rgba(255, 255, 255, 0.16);
             color: var(--text-primary);
             transition: border-color 200ms ease, background-color 200ms ease;
@@ -922,8 +922,8 @@ body.cursor-pointer { cursor: pointer; }
 /* Navbar glass pills */
 .bl-nav-pill {
     background: rgba(10, 132, 255, 0.10);
-    backdrop-filter: blur(16px) saturate(160%);
     -webkit-backdrop-filter: blur(16px) saturate(160%);
+    backdrop-filter: blur(16px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow: 0 8px 24px rgba(3, 25, 60, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     transition: background-color 250ms ease;
@@ -945,8 +945,8 @@ body.cursor-pointer { cursor: pointer; }
 
 .bl-nav-drawer {
     background: rgba(5, 9, 20, 0.85);
-    backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
     border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
@@ -1088,8 +1088,8 @@ body.cursor-pointer { cursor: pointer; }
 /* ── Modal chrome (chat + architecture popups) ── */
 .bl-modal-backdrop {
     background: radial-gradient(120% 90% at 50% 0%, rgba(10, 132, 255, 0.14) 0%, transparent 60%), rgba(3, 8, 20, 0.7);
-    backdrop-filter: blur(10px) saturate(140%);
     -webkit-backdrop-filter: blur(10px) saturate(140%);
+    backdrop-filter: blur(10px) saturate(140%);
 }
 
 .bl-modal-panel {
@@ -1097,8 +1097,8 @@ body.cursor-pointer { cursor: pointer; }
         radial-gradient(120% 80% at 0% 0%, rgba(90, 200, 250, 0.14) 0%, transparent 55%),
         radial-gradient(100% 80% at 100% 100%, rgba(10, 132, 255, 0.08) 0%, transparent 55%),
         linear-gradient(160deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 100%);
-    backdrop-filter: blur(24px) saturate(160%);
     -webkit-backdrop-filter: blur(24px) saturate(160%);
+    backdrop-filter: blur(24px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow:
         0 30px 80px rgba(3, 25, 60, 0.5),
@@ -1119,8 +1119,8 @@ body.cursor-pointer { cursor: pointer; }
 
 .bl-modal-header {
     background: rgba(10, 132, 255, 0.08);
-    backdrop-filter: blur(16px) saturate(150%);
     -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
@@ -1131,8 +1131,8 @@ body.cursor-pointer { cursor: pointer; }
 
 .bl-modal-close {
     background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px) saturate(150%);
     -webkit-backdrop-filter: blur(12px) saturate(150%);
+    backdrop-filter: blur(12px) saturate(150%);
     border: 1px solid rgba(255, 255, 255, 0.16);
     color: var(--accent);
     transition: border-color 200ms ease, background-color 200ms ease;
@@ -1150,15 +1150,15 @@ body.cursor-pointer { cursor: pointer; }
 
 .bl-chat-bubble-user {
     background: linear-gradient(135deg, rgba(90, 200, 250, 0.9), rgba(10, 132, 255, 0.9));
-    backdrop-filter: blur(12px) saturate(150%);
     -webkit-backdrop-filter: blur(12px) saturate(150%);
+    backdrop-filter: blur(12px) saturate(150%);
     color: #fff;
 }
 
 .bl-chat-bubble-assistant {
     background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(16px) saturate(150%);
     -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
     border: 1px solid rgba(255, 255, 255, 0.12);
     color: var(--text-secondary);
 }
