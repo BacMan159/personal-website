@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 import { useBacManChat } from '../hooks/useBacManChat.js'
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock.js'
 import { useGlowAngle } from '../hooks/useGlowAngle.js'
+import { trackClick } from '../lib/track.js'
 
 const StatCard = ({ s }) => {
     const { ref, onMouseMove } = useGlowAngle()
@@ -32,7 +33,7 @@ const STATS = [
     { value: '8+', label: 'Years' },
     { value: '6', label: 'Domains' },
     { value: '8', label: 'Clients' },
-    { value: '100%', label: 'Satisfaction' },
+    { value: '100%', label: 'On Time Delivery' },
 ]
 
 const Hero = () => {
@@ -73,6 +74,7 @@ const Hero = () => {
         e.preventDefault()
         const q = input.trim()
         if (!q || streaming) return
+        trackClick('chat_ask', messages.length === 0 ? 'first' : 'followup')
         const history = messages.flatMap((m) => [
             { role: 'user', content: m.q },
             { role: 'assistant', content: m.a || '' },
@@ -100,7 +102,7 @@ const Hero = () => {
                     className="font-bold"
                     style={{ fontSize: 'clamp(36px, 10vw, 80px)', lineHeight: 1.05, color: 'var(--text-primary)' }}
                 >
-                    Hi, I'm <span style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-2))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', color: 'transparent' }}>Bhasanth</span>
+                    Hi, I'm <span className="bl-name-highlight"><span style={{ background: 'var(--bl-name-gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', color: 'transparent' }}>Bhasanth</span></span>
                 </motion.h1>
 
                 <motion.p

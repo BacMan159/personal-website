@@ -8,6 +8,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev       # Start development server (Vite)
 npm run build     # Production build
 npm run preview   # Preview production build
+npm run build:photo    # Build photo.bhasanth.com (gallery + /admin) into dist-photo/
+npm run preview:photo  # Preview dist-photo/
 npm run lint      # Run ESLint
 ```
 
@@ -58,6 +60,8 @@ Note: `README.md` and `DESIGN.md` describe an older architecture (GSAP, `Educati
 - `useGlowAngle.js` — tracks pointer angle for glow card effects
 - `useBacManChat.js` — reusable SSE chat hook (for hero chat input); streams from `POST ${API_BASE}/api/chat`
 
+**Analytics** (`src/lib/track.js`): cookie-free view/click tracking, sent in batches with `navigator.sendBeacon` to `POST ${API_BASE}/api/track`, which stores the events in DynamoDB (see `bhasanth-api`). `initTracking()` runs once from `App.jsx`. It records a page view, one `section` view per `section[id]` per session, and auto-captures outbound links, `mailto:` and `download` links. To track another click, add `data-track="event_name"` (lowercase, `[a-z0-9_.:-]`) and an optional `data-track-label` to the element, or call `trackClick(name, label)`. Tracking is off in `npm run dev` unless `VITE_ENABLE_TRACKING=true`, and off when the browser sends Do Not Track.
+
 **UI components** (`src/components/`):
 
 - `CustomCursor` — replaces the default OS cursor
@@ -81,6 +85,14 @@ Note: `README.md` and `DESIGN.md` describe an older architecture (GSAP, `Educati
 - `BacMan/hooks/useChat.js` — SSE streaming hook; keeps last 8 messages as history; module-level `sessionCache` Map for instant first-turn replay within the same tab.
 
 > The `/api/chat` backend lives at `api.bhasanth.com` — a **separate repo/deployment** not in this directory.
+
+**Photography subdomain + admin console** (`photo.bhasanth.com`): a separate static build from the same codebase with two pages — the gallery (`photo.html` → `src/photo/main.jsx` → `PhotoGallery.jsx`) and the admin console (`admin/index.html` → `src/photo/admin.jsx` → `AdminConsole.jsx`, served at `/admin/`, `noindex`). Both call `bhasanth-api` through `src/photo/api.js` (`GET/POST/DELETE /api/photos`, `POST /api/photos/upload-url`, `GET /api/stats`).
+
+- `AdminConsole.jsx` — one token gate (`ADMIN_SECRET`, kept in `localStorage` as `bl-admin`) and tabs from the URL hash: `#analytics` → `AnalyticsPanel.jsx`, `#photos` → `PhotosPanel.jsx`. To add a section, add an entry to `TABS`; each panel gets `{ token, onUnauthorized }`.
+- `AnalyticsPanel.jsx` — site analytics (tiles, per-day bar chart with tooltip + table, top clicks / sections / referrers / countries / devices). Replaces the old `bhasanth-api/public/dashboard.html`. Labels come from public visitors: render as text only, never `dangerouslySetInnerHTML`.
+- `PhotosPanel.jsx` — upload, delete and reorder (HTML5 drag-and-drop plus ←/→ buttons for touch/keyboard; changes stay local until "Save order" sends `PUT /api/photos`). Prefills camera, lens (`LensModel`, dropped for phones), focal length and exposure settings from EXIF with `exifr` (`src/photo/exif.js`), resizes to 2400px JPEG in a canvas (which also strips EXIF/GPS from the file), PUTs it straight to S3 with a presigned URL, then saves the metadata. Title is optional; city is typed by hand. A category (`CATEGORIES` in `api.js`: wildlife, birds, landscape, astro, automobile, … — must match `PHOTO_CATEGORIES` in `bhasanth-api`) is required on upload and can be changed per photo in the grid (`PATCH /api/photos?id=`, saved immediately). The gallery shows filter pills for the categories that have photos; the selection is kept in the URL hash (`#birds`), and photos without a category appear only under All. The gallery is a JS masonry (`toColumns` in `PhotoGallery.jsx`: each photo goes in the shortest of 1/2/3 columns by its stored aspect ratio, so the saved order reads left to right). The gallery's EXIF overlay is hidden until hover / focus (cards are focusable so a tap shows it on touch). Images and a `gallery.json` list live in S3; nothing is in the repo.
+
+`npm run build:photo` runs `BUILD_TARGET=photo vite build` (output `dist-photo/`, no `publicDir`; `npm run preview:photo` serves it). It must stay in production mode — a custom Vite mode skips `.env.production`, so `.env.local`'s localhost `VITE_API_URL` would get baked into the deployed gallery and then `scripts/build-photo.mjs`, which renames `photo.html` to `index.html` and copies `bl.png`. Both sites are hosted on Hostinger: upload `dist/` to the main domain's `public_html` and `dist-photo/` to the subdomain's folder. In `npm run dev` the pages are at `/photo.html` and `/admin/`; with `.env.local`'s `VITE_API_URL=http://localhost:3001` they need `bhasanth-api` running locally. The NavBar camera icon links to the gallery. `manualChunks` is a function so the gallery doesn't pull in `vendor-three`.
 
 **Static assets**: All images, SVGs, `.glb` models, `.fbx` animations, and textures are in `/public/`. Referenced via root-relative paths (e.g. `/images/bg.png`, `/models/Avatar.glb`, `/animations/Idle.fbx`).
 

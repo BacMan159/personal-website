@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:photo": "BUILD_TARGET=photo vite build && node scripts/build-photo.mjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preview:photo": "BUILD_TARGET=photo vite preview"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -15,6 +17,7 @@
     "@react-three/fiber": "^9.3.0",
     "@react-three/postprocessing": "^3.0.4",
     "@tailwindcss/vite": "^4.1.13",
+    "exifr": "^7.1.3",
     "framer-motion": "^12.38.0",
     "lenis": "^1.3.23",
     "postprocessing": "^6.37.7",

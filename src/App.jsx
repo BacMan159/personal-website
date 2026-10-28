@@ -7,6 +7,7 @@ import ScrollProgress from "./components/ScrollProgress.jsx";
 import CustomCursor from "./components/CustomCursor.jsx";
 import { initThemeFromStorage } from "./components/ThemeToggle.jsx";
 import { useLenis } from "./hooks/useLenis.js";
+import { initTracking } from "./lib/track.js";
 import "lenis/dist/lenis.css";
 import Timeline from "./sections/Timeline.jsx";
 import Projects from "./sections/Projects.jsx";
@@ -17,6 +18,7 @@ import Footer from "./sections/Footer.jsx";
 const App = () => {
     const [loading, setLoading] = useState(true);
     useEffect(() => { initThemeFromStorage() }, []);
+    useEffect(() => { initTracking() }, []);
     useEffect(() => {
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
         window.scrollTo(0, 0)

@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import ContactExperience from "../components/ContactModels/ContactExperience";
 import Reveal from "../components/Reveal.jsx";
+import { trackClick } from "../lib/track.js";
 
 const Contact = () => {
     const formRef = useRef(null);
@@ -29,9 +30,11 @@ const Contact = () => {
                 import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
             );
 
+            trackClick("contact_submit", "success");
             // Reset form and stop loading
             setForm({ name: "", email: "", message: "" });
         } catch (error) {
+            trackClick("contact_submit", "error");
             console.error("EmailJS Error:", error); // Optional: show toast
         } finally {
             setLoading(false); // Always stop loading, even on error

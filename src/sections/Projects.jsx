@@ -17,6 +17,8 @@ const ProjectCard = ({ p, i, onClick }) => {
             onMouseMove={onMouseMove}
             onClick={onClick}
             role={clickable ? 'button' : undefined}
+            data-track={clickable ? 'project_open' : undefined}
+            data-track-label={clickable ? p.name : undefined}
             tabIndex={clickable ? 0 : undefined}
             onKeyDown={clickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } } : undefined}
             initial={{ opacity: 0, y: 48 }}

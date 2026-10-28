@@ -11,6 +11,8 @@ const LINKS = [
     { name: 'Contact', id: 'contact' },
 ]
 
+const PHOTO_URL = import.meta.env.DEV ? '/photo.html' : 'https://photo.bhasanth.com'
+
 const NavBar = () => {
     const [scrolled, setScrolled] = useState(false)
     const [open, setOpen] = useState(false)
@@ -54,6 +56,8 @@ const NavBar = () => {
                         <button
                             key={l.id}
                             onClick={() => scrollTo(l.id)}
+                            data-track="nav"
+                            data-track-label={l.id}
                             className="text-sm font-medium px-4 py-2 rounded-full transition-colors"
                             style={{ color: 'var(--text-secondary)' }}
                             onMouseEnter={(e) => {
@@ -91,6 +95,25 @@ const NavBar = () => {
                         </svg>
                     </a>
                     <ThemeToggle />
+                    <a
+                        href={PHOTO_URL}
+                        aria-label="Photography"
+                        title="Photography"
+                        data-track="nav"
+                        data-track-label="photography"
+                        className="flex items-center justify-center w-9 h-9 rounded-full transition-colors"
+                        style={{
+                            background: 'transparent',
+                            color: 'var(--text-secondary)',
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(10, 132, 255,0.1)' }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+                    >
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+                            <circle cx="12" cy="13" r="3.5" />
+                        </svg>
+                    </a>
                     <button
                         type="button"
                         onClick={() => setOpen((v) => !v)}
@@ -131,6 +154,8 @@ const NavBar = () => {
                                 <button
                                     key={l.id}
                                     onClick={() => scrollTo(l.id)}
+                                    data-track="nav"
+                                    data-track-label={l.id}
                                     className="text-left text-base py-2"
                                     style={{ color: 'var(--text-secondary)' }}
                                 >

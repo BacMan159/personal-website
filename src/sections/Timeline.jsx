@@ -59,6 +59,8 @@ const Card = ({ entry, onOpen }) => {
             style={{ x, opacity, scale }}
             onMouseMove={onMouseMove}
             onClick={() => onOpen(entry)}
+            data-track="experience_open"
+            data-track-label={entry.company}
             className="card bl-card p-4 cursor-pointer text-left w-full"
         >
             <div className="glow" />

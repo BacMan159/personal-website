@@ -1058,6 +1058,21 @@ body.cursor-pointer { cursor: pointer; }
     aspect-ratio: 1 / 1;
 }
 
+/* Hero name: the blue gradient text blends into the blue frosted card,
+   so outline it in the primary text color. */
+.bl-name-highlight {
+    --bl-name-gradient: linear-gradient(90deg, #DCEFFF, #8ED1FF);
+}
+
+/* The light-mode card is near-white, so keep the blue accent gradient there. */
+:root.light .bl-name-highlight {
+    --bl-name-gradient: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.bl-name-highlight > span {
+    -webkit-text-stroke: 0.015em var(ds);
+}
+
 /* On narrow screens a forced 1:1 circle wastes vertical space and crams
    the heading/subtitle/input into the curved corners. Fall back to a
    compact rounded card instead. */
@@ -1169,3 +1184,327 @@ body.cursor-pointer { cursor: pointer; }
     color: var(--text-secondary);
 }
 
+
+/* ─── Photo gallery (photo.bhasanth.com) ──────────────────────── */
+
+/* Masonry: PhotoGallery.jsx splits photos into 1 / 2 / 3 columns (640px / 1100px) by shortest column. */
+.bl-photo-grid {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+}
+
+.bl-photo-column {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.bl-photo-card {
+    position: relative;
+    margin: 0 0 1.25rem;
+    break-inside: avoid;
+    overflow: hidden;
+    border-radius: 18px;
+    border: 1px solid var(--border-base);
+    background: var(--bg-surface);
+    box-shadow: 0 12px 32px rgba(3, 25, 60, 0.25);
+    /* Safari drops overflow+border-radius clipping when a child is transformed (the zoomed img);
+       a new stacking context keeps the rounded corners. */
+    isolation: isolate;
+}
+
+.bl-photo-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 600ms ease;
+}
+
+/* Zoom only where hover is real; on touch a tap would trigger it as sticky hover. */
+@media (hover: hover) {
+    .bl-photo-card:hover img { transform: scale(1.03); }
+}
+
+.bl-photo-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* EXIF overlay: hidden until hover (desktop), focus (keyboard) or tap (touch focuses the card). */
+.bl-photo-overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 2rem 0.9rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    color: #FFFFFF;
+    background: linear-gradient(to top, rgba(5, 9, 20, 0.7) 0%, rgba(5, 9, 20, 0.35) 60%, rgba(5, 9, 20, 0) 100%);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 250ms ease, transform 250ms ease;
+    pointer-events: none;
+}
+
+.bl-photo-card:hover .bl-photo-overlay,
+.bl-photo-card:focus-within .bl-photo-overlay {
+    opacity: 1;
+    transform: none;
+}
+
+.bl-photo-title {
+    font-family: var(--font-playfair);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.15rem;
+}
+
+.bl-photo-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    line-height: 1.5;
+}
+
+.bl-photo-row .bl-photo-label {
+    flex: 0 0 4.25rem;
+    font-size: 0.6rem;
+    opacity: 0.85;
+}
+
+.bl-photo-label {
+    flex: 0 0 4.75rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+}
+
+.bl-photo-value {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: rgba(255, 255, 255, 0.85);
+    font-variant-numeric: tabular-nums;
+}
+
+.bl-photo-filter {
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-base);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.bl-photo-filter:hover { border-color: var(--accent); }
+
+.bl-photo-filter[aria-pressed="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #FFFFFF;
+}
+
+.bl-photo-skeleton {
+    animation: bl-photo-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes bl-photo-pulse {
+    50% { opacity: 0.5; }
+}
+
+/* ─── Photo admin (photo.bhasanth.com/admin) ──────────────────── */
+
+.bl-admin-panel {
+    padding: 1.5rem;
+    border-radius: 18px;
+    border: 1px solid var(--border-base);
+    background: var(--bg-surface);
+}
+
+.bl-admin-input {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-base);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.bl-admin-input:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.bl-admin-drop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 14rem;
+    padding: 0.75rem;
+    border-radius: 14px;
+    border: 1.5px dashed var(--border-base);
+    background: var(--bg-elevated);
+    text-align: center;
+    cursor: pointer;
+}
+
+.bl-admin-drop:hover { border-color: var(--accent); }
+
+.bl-admin-button {
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.bl-admin-button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ─── Admin console: tabs + analytics ─────────────────────────── */
+
+.bl-admin-tab {
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.bl-admin-tab[aria-current="page"] {
+    background: var(--accent);
+    color: #FFFFFF;
+}
+
+.bl-admin-seg {
+    display: inline-flex;
+    padding: 2px;
+    border-radius: 10px;
+    border: 1px solid var(--border-base);
+    background: var(--bg-surface);
+}
+
+.bl-admin-seg button {
+    padding: 0.3rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.bl-admin-seg button[aria-pressed="true"] {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.bl-admin-ghost {
+    padding: 0.35rem 0.8rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-base);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.bl-admin-card-title {
+    margin-bottom: 0.75rem;
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.bl-admin-tile-value {
+    margin-top: 2px;
+    font-size: 1.75rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-primary);
+}
+
+.bl-admin-track {
+    height: 6px;
+    margin-top: 4px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: rgba(10, 132, 255, 0.15);
+}
+
+.bl-admin-fill {
+    height: 100%;
+    min-width: 2px;
+    border-radius: 0 3px 3px 0;
+    background: var(--accent);
+}
+
+.bl-chart-axis { fill: var(--text-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.bl-chart-grid { stroke: var(--border-base); stroke-width: 1; opacity: 0.6; }
+.bl-chart-baseline { stroke: var(--border-base); stroke-width: 1; }
+.bl-chart-bar { fill: var(--accent); }
+.bl-chart-hit { outline: none; }
+.bl-chart-hit:focus-visible { stroke: var(--accent); stroke-width: 2; }
+
+.bl-chart-tip {
+    position: absolute;
+    pointer-events: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-base);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+    transform: translate(-50%, calc(-100% - 8px));
+}
+
+.bl-chart-tip strong { font-size: 14px; font-variant-numeric: tabular-nums; }
+
+.bl-chart-key {
+    display: inline-block;
+    width: 12px;
+    height: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
+    background: var(--accent);
+}
+
+.bl-admin-table { width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+.bl-admin-table th, .bl-admin-table td { padding: 6px 8px; text-align: right; border-bottom: 1px solid var(--border-base); color: var(--text-secondary); }
+.bl-admin-table th:first-child, .bl-admin-table td:first-child { text-align: left; }
+.bl-admin-table th { font-weight: 600; }
+
+.bl-admin-badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    min-width: 1.5rem;
+    padding: 0 0.4rem;
+    border-radius: 999px;
+    background: rgba(5, 9, 20, 0.7);
+    color: #FFFFFF;
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.bl-admin-arrow {
+    width: 2rem;
+    height: 1.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-base);
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.bl-admin-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
