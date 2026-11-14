@@ -275,11 +275,11 @@ function ParticleField({ shapeBlendRef }) {
         return colors
     }
     const colorA = useMemo(
-        () => makeColorVariations(isLight ? '#0057D9' : '#0A84FF', PARTICLE_COUNT),
+        () => makeColorVariations(isLight ? '#C2410C' : '#FF6B1A', PARTICLE_COUNT),
         [isLight]
     )
     const colorB = useMemo(
-        () => makeColorVariations(isLight ? '#0A84FF' : '#5AC8FA', PARTICLE_COUNT),
+        () => makeColorVariations(isLight ? '#E3261C' : '#E3261C', PARTICLE_COUNT),
         [isLight]
     )
 
@@ -581,11 +581,11 @@ const HeroBackground = () => {
                         top: 80,
                         right: 12,
                         background: 'rgba(0,0,0,0.75)',
-                        color: '#5AC8FA',
+                        color: '#E3261C',
                         font: '11px/1.4 ui-monospace, SFMono-Regular, monospace',
                         padding: '8px 10px',
                         whiteSpace: 'pre',
-                        border: '1px solid #0A84FF',
+                        border: '1px solid #FF6B1A',
                         borderRadius: 6,
                         pointerEvents: 'none',
                         zIndex: 1000,

@@ -32,7 +32,7 @@ const ProjectCard = ({ p, i, onClick }) => {
             {featured && (
                 <span
                     className="relative z-10 self-start mb-3 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider"
-                    style={{ background: 'rgba(10,132,255,0.15)', color: 'var(--accent)', border: '1px solid var(--accent)' }}
+                    style={{ background: 'rgba(255, 107, 26, 0.15)', color: 'var(--accent)', border: '1px solid var(--accent)' }}
                 >
                     ★ Featured
                 </span>

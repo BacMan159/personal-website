@@ -184,7 +184,7 @@ const PhotoGallery = () => {
                             background: 'transparent',
                             color: 'var(--text-secondary)',
                         }}
-                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(10, 132, 255,0.1)' }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 107, 26, 0.1)' }}
                         onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
                     >
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -202,7 +202,7 @@ const PhotoGallery = () => {
                         data-track-label="dev_profile"
                         className="flex items-center justify-center w-9 h-9 rounded-full transition-colors"
                         style={{ background: 'transparent', color: 'var(--text-secondary)' }}
-                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(10, 132, 255,0.1)' }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 107, 26, 0.1)' }}
                         onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
                     >
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

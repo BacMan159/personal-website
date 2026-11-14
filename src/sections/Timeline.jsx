@@ -1,5 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock.js'
+import { getLenis } from '../hooks/useLenis.js'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { useGlowAngle } from '../hooks/useGlowAngle.js'
 import Reveal from '../components/Reveal.jsx'
@@ -22,7 +24,9 @@ const ENTRIES = expCards.map((c) => {
     }
 })
 
-const Card = ({ entry, onOpen }) => {
+const entryKey = (e) => `${e.company}-${e.dates}`
+
+const Card = ({ entry, onOpen, onActive }) => {
     const cardRef = useRef(null)
     const { ref: glowRef, onMouseMove } = useGlowAngle()
 
@@ -46,8 +50,21 @@ const Card = ({ entry, onOpen }) => {
     const scale = useTransform(
         scrollYProgress,
         [0, 0.4, 0.5, 0.6, 1],
-        isSmallScreen ? [1, 1, 1, 1, 1] : [0.88, 0.96, 1.06, 0.96, 0.88],
+        isSmallScreen ? [1, 1, 1, 1, 1] : [0.71, 0.77, 0.85, 0.77, 0.71],
     )
+
+    // The card crossing the vertical middle of the viewport is the active one;
+    // none is active while the middle falls between cards.
+    useEffect(() => {
+        if (!onActive) return
+        const el = cardRef.current
+        const observer = new IntersectionObserver(
+            ([e]) => onActive(entry, e.isIntersecting),
+            { rootMargin: '-48% 0px -48% 0px' },
+        )
+        observer.observe(el)
+        return () => observer.disconnect()
+    }, [entry, onActive])
 
     return (
         <motion.button
@@ -58,7 +75,7 @@ const Card = ({ entry, onOpen }) => {
             }}
             style={{ x, opacity, scale }}
             onMouseMove={onMouseMove}
-            onClick={() => onOpen(entry)}
+            onClick={() => onOpen(entry, cardRef.current)}
             data-track="experience_open"
             data-track-label={entry.company}
             className="card bl-card p-4 cursor-pointer text-left w-full"
@@ -94,15 +111,75 @@ const Card = ({ entry, onOpen }) => {
     )
 }
 
+const Details = ({ entry, headerClassName = '', headingClassName = 'mt-1 text-xl md:text-2xl font-bold' }) => (
+    <>
+        <div className={`flex items-start gap-4 ${headerClassName}`}>
+            <div className="shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center overflow-hidden bl-timeline-logo">
+                <img
+                    src={entry.logoPath}
+                    alt={`${entry.company} logo`}
+                    width={56}
+                    height={56}
+                    className="w-full h-full object-contain p-1.5"
+                    onError={(e) => { e.currentTarget.style.display = 'none' }}
+                />
+            </div>
+            <div className="min-w-0">
+                <div className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+                    {entry.dates}
+                </div>
+                <h3 className={headingClassName} style={{ color: 'var(--text-primary)' }}>
+                    {entry.role}
+                </h3>
+                <div className="mt-0.5 text-base" style={{ color: 'var(--accent)' }}>
+                    {entry.company}
+                </div>
+            </div>
+        </div>
+
+        {entry.review && (
+            <p className="mt-5 text-sm italic leading-relaxed border-l-2 pl-4" style={{ color: 'var(--text-secondary)', borderColor: 'var(--accent)' }}>
+                {entry.review}
+            </p>
+        )}
+
+        <ul className="mt-5 space-y-3">
+            {entry.bullets.map((b) => (
+                <li key={b} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: 'var(--accent)' }} />
+                    <span>{b}</span>
+                </li>
+            ))}
+        </ul>
+    </>
+)
+
 const Timeline = () => {
     const [open, setOpen] = useState(null)
+    const [active, setActive] = useState(null)
+    // Desktop shows the active card's details in a fixed side panel instead of a modal.
+    const isDesktop = useMediaQuery({ minWidth: 1280 })
+
+    const handleActive = useCallback((entry, isActive) => {
+        setActive((prev) => {
+            if (isActive) return entry
+            return prev && entryKey(prev) === entryKey(entry) ? null : prev
+        })
+    }, [])
+
+    // Desktop: bring the clicked card to the middle, which makes it active.
+    const centerCard = useCallback((entry, el) => {
+        const lenis = getLenis()
+        if (!lenis) return setActive(entry)
+        lenis.scrollTo(el, { offset: -(window.innerHeight - el.offsetHeight) / 2 })
+    }, [])
 
     useBodyScrollLock(!!open)
 
     return (
         <section id="experience" className="bl-stage section-padding">
-            <div className="max-w-6xl mx-auto min-w-0 w-full lg:flex lg:gap-24">
-                <div className="mb-10 lg:mb-0 lg:shrink-0 lg:w-64">
+            <div className="max-w-6xl xl:max-w-7xl mx-auto min-w-0 w-full lg:flex lg:gap-24 xl:gap-16 xl:justify-center">
+                <div className="mb-10 lg:mb-0 lg:shrink-0 lg:w-64 xl:w-auto">
                     <div className="flex justify-center md:justify-start lg:sticky lg:top-[50vh] lg:-translate-y-1/2">
                         <Reveal as="h2" className="bl-card !rounded-full inline-block px-8 py-3 md:px-10 md:py-4 text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
                             Experience
@@ -110,11 +187,37 @@ const Timeline = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-10 lg:flex-none lg:w-[30vw] lg:max-w-2xl lg:min-w-[22rem]">
+                <div className="flex flex-col gap-10 lg:flex-none lg:w-[30vw] lg:max-w-2xl lg:min-w-[22rem] xl:w-[26rem] xl:min-w-0">
                     {ENTRIES.map((e) => (
-                        <Card key={`${e.company}-${e.dates}`} entry={e} onOpen={setOpen} />
+                        <Card
+                            key={entryKey(e)}
+                            entry={e}
+                            onOpen={isDesktop ? centerCard : setOpen}
+                            onActive={isDesktop ? handleActive : undefined}
+                        />
                     ))}
                 </div>
+
+                {isDesktop && (
+                    // The column only reserves the space; the panel is fixed to the viewport
+                    // (no left/right offset, so it keeps the column's horizontal position).
+                    <div className="shrink-0 w-[26rem]" aria-live="polite">
+                        <AnimatePresence mode="wait">
+                            {active && (
+                                <motion.div
+                                    key={entryKey(active)}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2, ease: 'easeOut' }}
+                                    className="bl-modal-panel fixed top-1/2 -translate-y-1/2 z-20 w-[26rem] p-6 rounded-2xl max-h-[80vh] overflow-y-auto"
+                                >
+                                    <Details entry={active} headingClassName="mt-1 text-xl font-bold" />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                )}
             </div>
 
             <AnimatePresence>
@@ -144,44 +247,7 @@ const Timeline = () => {
                                 ×
                             </button>
 
-                            <div className="flex items-start gap-4 pr-12">
-                                <div className="shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center overflow-hidden bl-timeline-logo">
-                                    <img
-                                        src={open.logoPath}
-                                        alt={`${open.company} logo`}
-                                        width={56}
-                                        height={56}
-                                        className="w-full h-full object-contain p-1.5"
-                                        onError={(e) => { e.currentTarget.style.display = 'none' }}
-                                    />
-                                </div>
-                                <div className="min-w-0">
-                                    <div className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
-                                        {open.dates}
-                                    </div>
-                                    <h3 className="mt-1 text-xl md:text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                                        {open.role}
-                                    </h3>
-                                    <div className="mt-0.5 text-base" style={{ color: 'var(--accent)' }}>
-                                        {open.company}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {open.review && (
-                                <p className="mt-5 text-sm italic leading-relaxed border-l-2 pl-4" style={{ color: 'var(--text-secondary)', borderColor: 'var(--accent)' }}>
-                                    {open.review}
-                                </p>
-                            )}
-
-                            <ul className="mt-5 space-y-3">
-                                {open.bullets.map((b) => (
-                                    <li key={b} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: 'var(--accent)' }} />
-                                        <span>{b}</span>
-                                    </li>
-                                ))}
-                            </ul>
+                            <Details entry={open} headerClassName="pr-12" />
                         </motion.div>
                     </motion.div>
                 )}

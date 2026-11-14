@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 
 const PARTICLE_COUNT = 80
 const ACCENT = 'var(--accent)'
+const ACCENT_2 = 'var(--accent-2)'
+const ORANGE_RGB = '255, 107, 26'
+const RED_RGB = '227, 38, 28'
 
 const PageLoader = ({ onDone }) => {
     const canvasRef = useRef(null)
@@ -52,6 +55,7 @@ const PageLoader = ({ onDone }) => {
             vy: (Math.random() - 0.5) * 0.6,
             r: Math.random() * 1.8 + 0.6,
             a: Math.random() * 0.6 + 0.2,
+            rgb: Math.random() < 0.35 ? RED_RGB : ORANGE_RGB,
         }))
 
         let rafId
@@ -67,7 +71,7 @@ const PageLoader = ({ onDone }) => {
                 if (p.y < 0 || p.y > h) p.vy *= -1
                 ctx.beginPath()
                 ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-                ctx.fillStyle = `rgba(10, 132, 255, ${p.a})`
+                ctx.fillStyle = `rgba(${p.rgb}, ${p.a})`
                 ctx.fill()
             }
 
@@ -80,7 +84,7 @@ const PageLoader = ({ onDone }) => {
                     const d2 = dx * dx + dy * dy
                     if (d2 < 120 * 120) {
                         const alpha = (1 - d2 / (120 * 120)) * 0.25
-                        ctx.strokeStyle = `rgba(10, 132, 255, ${alpha})`
+                        ctx.strokeStyle = `rgba(${a.rgb}, ${alpha})`
                         ctx.lineWidth = 0.5
                         ctx.beginPath()
                         ctx.moveTo(a.x, a.y)
@@ -116,7 +120,7 @@ const PageLoader = ({ onDone }) => {
             <div className="relative z-10 flex flex-col items-center">
                 <div
                     className="text-5xl md:text-5xl tabular-nums"
-                    style={{ color: ACCENT, textShadow: `0 0 24px ${ACCENT}` }}
+                    style={{ color: ACCENT, textShadow: `0 0 24px ${ACCENT}, 0 0 48px ${ACCENT_2}` }}
                 >
                     {progress}%
                 </div>
@@ -133,8 +137,8 @@ const PageLoader = ({ onDone }) => {
                         style={{
                             width: `${progress}%`,
                             height: '100%',
-                            background: ACCENT,
-                            boxShadow: `0 0 10px ${ACCENT}`,
+                            background: `linear-gradient(90deg, ${ACCENT}, ${ACCENT_2})`,
+                            boxShadow: `0 0 10px ${ACCENT_2}`,
                             transition: 'width 0.1s linear',
                         }}
                     />

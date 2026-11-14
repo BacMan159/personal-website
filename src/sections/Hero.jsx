@@ -134,7 +134,7 @@ const Hero = () => {
                             type="submit"
                             disabled={streaming || !input.trim()}
                             className="px-5 py-3 rounded-full font-semibold disabled:opacity-50"
-                            style={{ background: 'var(--accent)', color: '#fff' }}
+                            style={{ background: 'var(--accent)', color: 'var(--on-accent)' }}
                         >
                             Ask
                         </button>
@@ -264,7 +264,7 @@ const Hero = () => {
                                         type="submit"
                                         disabled={streaming || !input.trim()}
                                         className="px-5 py-3 rounded-full font-semibold disabled:opacity-50"
-                                        style={{ background: 'var(--accent)', color: '#fff' }}
+                                        style={{ background: 'var(--accent)', color: 'var(--on-accent)' }}
                                     >
                                         Ask
                                     </button>
