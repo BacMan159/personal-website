@@ -33,7 +33,7 @@ const STATS = [
     { value: '8+', label: 'Years' },
     { value: '6', label: 'Domains' },
     { value: '8', label: 'Clients' },
-    { value: '100%', label: 'On Time Delivery' },
+    { value: '5+', label: 'AI Projects Shipped' },
 ]
 
 const Hero = () => {

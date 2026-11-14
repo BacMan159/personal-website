@@ -1815,3 +1815,117 @@ body.cursor-pointer { cursor: pointer; }
 }
 
 .bl-admin-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ─── Photo subdomain palette (photo.bhasanth.com) ─────────────────
+   Soft Blue #BBDFED · Midnight Navy #002941 · Coral Orange #F27B6C.
+   `photo-theme` is set on <html> by src/photo/main.jsx and admin.jsx,
+   so the main site keeps its own palette. */
+:root.photo-theme {
+    --gradient: radial-gradient(circle, #FFB4A8 0%, #F27B6C 100%);
+    --bg-primary: #002941;
+    --bg-surface: #07344F;
+    --bg-elevated: #0E3F5D;
+    --accent: #F27B6C;
+    --accent-2: #BBDFED;
+    --on-accent: #002941;
+    --text-primary: #FFFFFF;
+    --text-secondary: #E3F1F7;
+    --text-muted: #9DC0D2;
+    --border-base: #1A4C6B;
+    --photo-accent-rgb: 242, 123, 108;
+    --photo-ink-rgb: 0, 41, 65;
+}
+
+:root.photo-theme.light {
+    --bg-primary: #EEF7FB;
+    --bg-surface: #DDEFF7;
+    --bg-elevated: #BBDFED;
+    --accent: #C94A3B;
+    --accent-2: #002941;
+    --on-accent: #FFFFFF;
+    --text-primary: #002941;
+    --text-secondary: #17425C;
+    --text-muted: #4B6B80;
+    --border-base: #BBDFED;
+}
+
+:root.photo-theme .bl-nav-pill {
+    background: rgba(var(--photo-accent-rgb), 0.10);
+    box-shadow: 0 8px 24px rgba(0, 16, 28, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+:root.photo-theme .bl-nav-pill.is-scrolled { background: rgba(var(--photo-accent-rgb), 0.18); }
+:root.photo-theme.light .bl-nav-pill {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(var(--photo-ink-rgb), 0.12);
+    box-shadow: 0 8px 24px rgba(var(--photo-ink-rgb), 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+:root.photo-theme.light .bl-nav-pill.is-scrolled { background: rgba(255, 255, 255, 0.7); }
+
+:root.photo-theme .bl-photo-card { box-shadow: 0 12px 32px rgba(var(--photo-ink-rgb), 0.25); }
+:root.photo-theme .bl-hero { box-shadow: 0 20px 48px rgba(var(--photo-ink-rgb), 0.3); }
+:root.photo-theme .bl-photo-overlay {
+    background: linear-gradient(to top, rgba(var(--photo-ink-rgb), 0.75) 0%, rgba(var(--photo-ink-rgb), 0.35) 60%, rgba(var(--photo-ink-rgb), 0) 100%);
+}
+:root.photo-theme .bl-hero-slide::after {
+    background: linear-gradient(to top, rgba(var(--photo-ink-rgb), 0.8) 0%, rgba(var(--photo-ink-rgb), 0.25) 35%, rgba(var(--photo-ink-rgb), 0) 60%);
+}
+:root.photo-theme .bl-hero-arrow,
+:root.photo-theme .bl-hero-pause { background: rgba(var(--photo-ink-rgb), 0.4); }
+:root.photo-theme .bl-hero-arrow:hover,
+:root.photo-theme .bl-hero-pause:hover,
+:root.photo-theme .bl-lightbox-button:hover { background: rgba(var(--photo-accent-rgb), 0.6); }
+:root.photo-theme .bl-lightbox { background: rgba(0, 20, 33, 0.97); }
+:root.photo-theme .bl-admin-track { background: rgba(var(--photo-accent-rgb), 0.15); }
+
+/* Main-site glass backdrop + orbs (HeroBackground.jsx), recoloured for the photo subdomain. */
+:root.photo-theme .bl-glass-backdrop {
+    background: linear-gradient(135deg, #001826 0%, #002941 40%, #0B3D5C 72%, #1F5A7A 100%);
+}
+:root.photo-theme.light .bl-glass-backdrop {
+    background: linear-gradient(135deg, #F4FAFD 0%, #E2F1F8 45%, #CFE8F3 75%, #BBDFED 100%);
+}
+:root.photo-theme .bl-glass-orb {
+    background: radial-gradient(circle at 35% 35%, rgba(var(--photo-accent-rgb), 0.45), rgba(187, 223, 237, 0.12) 70%, transparent 100%);
+}
+:root.photo-theme.light .bl-glass-orb {
+    background: radial-gradient(circle at 35% 35%, rgba(var(--photo-accent-rgb), 0.3), rgba(0, 41, 65, 0.08) 70%, transparent 100%);
+}
+
+/* Photo subdomain backdrop: colour glows + fading dot grid + film grain.
+   Fixed behind everything (z-index -1) so it never scrolls or catches clicks. */
+:root.photo-theme body::before,
+:root.photo-theme body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+:root.photo-theme body::before {
+    background:
+        radial-gradient(60rem 40rem at 85% -10%, rgba(var(--photo-accent-rgb), 0.16), transparent 60%),
+        radial-gradient(50rem 36rem at -10% 110%, rgba(187, 223, 237, 0.12), transparent 60%),
+        radial-gradient(circle at center, rgba(187, 223, 237, 0.10) 1px, transparent 1.5px) 0 0 / 22px 22px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0.35) 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0.35) 100%);
+}
+
+:root.photo-theme body::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+}
+
+:root.photo-theme.light body::before {
+    background:
+        radial-gradient(60rem 40rem at 85% -10%, rgba(var(--photo-accent-rgb), 0.18), transparent 60%),
+        radial-gradient(50rem 36rem at -10% 110%, rgba(187, 223, 237, 0.75), transparent 60%),
+        radial-gradient(circle at center, rgba(var(--photo-ink-rgb), 0.10) 1px, transparent 1.5px) 0 0 / 22px 22px;
+}
+
+:root.photo-theme.light body::after {
+    opacity: 0.12;
+    mix-blend-mode: multiply;
+    filter: invert(1);
+}

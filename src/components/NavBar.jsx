@@ -39,18 +39,19 @@ const NavBar = () => {
 
     return (
         <header className="fixed top-0 left-0 w-full z-50 px-4 md:px-6 pt-4">
-            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            {/* Equal 1fr side columns keep the links pill at the exact horizontal center, whatever the side pills' widths. */}
+            <div className="max-w-7xl mx-auto grid grid-cols-[1fr_auto_1fr] items-center gap-4">
                 <a
                     href="#hero"
                     onClick={(e) => { e.preventDefault(); scrollTo('hero') }}
-                    className={`bl-nav-pill text-2xl font-extrabold tracking-tight px-4 py-2 rounded-full ${scrolled ? 'is-scrolled' : ''}`}
+                    className={`bl-nav-pill justify-self-start text-2xl font-extrabold tracking-tight px-4 py-2 rounded-full ${scrolled ? 'is-scrolled' : ''}`}
                     style={{ color: 'var(--text-secondary)' }}
                 >
                     BL
                 </a>
 
                 <nav
-                    className={`bl-nav-pill hidden lg:flex items-center gap-1 px-2 py-1.5 rounded-full ${scrolled ? 'is-scrolled' : ''}`}
+                    className={`bl-nav-pill col-start-2 hidden lg:flex items-center gap-1 px-2 py-1.5 rounded-full ${scrolled ? 'is-scrolled' : ''}`}
                 >
                     {LINKS.map((l) => (
                         <button
@@ -75,7 +76,7 @@ const NavBar = () => {
                 </nav>
 
                 <div
-                    className={`bl-nav-pill flex items-center gap-2 px-2 py-1.5 rounded-full ${scrolled ? 'is-scrolled' : ''}`}
+                    className={`bl-nav-pill col-start-3 justify-self-end flex items-center gap-2 px-2 py-1.5 rounded-full ${scrolled ? 'is-scrolled' : ''}`}
                 >
                     <a
                         href="https://www.linkedin.com/in/bhasanth/"

@@ -7,6 +7,18 @@ import HeroCarousel from './HeroCarousel.jsx'
 import Lightbox from './Lightbox.jsx'
 import { PhotoTelemetry } from './PhotoDetails.jsx'
 
+// Glass gradient + blurred orbs from the main site's backdrop, without its three.js particle field.
+const GlassBackdrop = () => (
+    <div className="bl-bg-fixed" aria-hidden="true">
+        <div className="bl-glass-backdrop">
+            <div className="bl-glass-orb" />
+            <div className="bl-glass-orb" />
+            <div className="bl-glass-orb" />
+            <div className="bl-glass-orb" />
+        </div>
+    </div>
+)
+
 const MAIN_SITE = import.meta.env.DEV ? '/' : 'https://bhasanth.com'
 
 // Column count per breakpoint, widest first (matches the old CSS columns: 1 / 2 at 640px / 3 at 1100px).
@@ -164,7 +176,9 @@ const PhotoGallery = () => {
     )
 
     return (
-        <main className="bl-photo-page min-h-screen px-4 md:px-10 pb-20">
+        <>
+        <GlassBackdrop />
+        <main className="bl-photo-page relative z-[1] min-h-screen px-4 md:px-10 pb-20">
             <header className="max-w-7xl mx-auto flex items-center justify-between gap-4 pt-4">
                 <a
                     href={MAIN_SITE}
@@ -184,7 +198,7 @@ const PhotoGallery = () => {
                             background: 'transparent',
                             color: 'var(--text-secondary)',
                         }}
-                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 107, 26, 0.1)' }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = 'color-mix(in srgb, var(--accent) 14%, transparent)' }}
                         onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
                     >
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -202,7 +216,7 @@ const PhotoGallery = () => {
                         data-track-label="dev_profile"
                         className="flex items-center justify-center w-9 h-9 rounded-full transition-colors"
                         style={{ background: 'transparent', color: 'var(--text-secondary)' }}
-                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 107, 26, 0.1)' }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = 'color-mix(in srgb, var(--accent) 14%, transparent)' }}
                         onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
                     >
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -259,6 +273,7 @@ const PhotoGallery = () => {
                 )}
             </AnimatePresence>
         </main>
+        </>
     )
 }
 
