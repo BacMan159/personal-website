@@ -19,6 +19,9 @@ export const CATEGORIES = [
     { id: 'automobile', label: 'Automobile' },
 ]
 
+/** Alt text for a photo: its title, else city · camera. */
+export const photoAlt = (photo) => photo.title || [photo.city, photo.gear].filter(Boolean).join(' · ') || 'Photograph'
+
 export class UnauthorizedError extends Error {}
 
 async function request(path, { token, ...init } = {}) {
@@ -76,12 +79,12 @@ export async function reorderPhotos(token, ids) {
     return photos
 }
 
-/** Changes one photo's category. Returns the updated list. */
-export async function setPhotoCategory(token, id, category) {
+/** Changes one photo's `category` and/or `featured` flag (pass only the fields to change). Returns the updated list. */
+export async function updatePhoto(token, id, changes) {
     const { photos } = await request(`/api/photos?id=${encodeURIComponent(id)}`, {
         token,
         method: 'PATCH',
-        body: JSON.stringify({ category }),
+        body: JSON.stringify(changes),
     })
     return photos
 }

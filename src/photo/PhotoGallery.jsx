@@ -1,17 +1,13 @@
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect, useMemo, useState } from 'react'
 import ThemeToggle, { initThemeFromStorage } from '../components/ThemeToggle.jsx'
 import { initTracking } from '../lib/track.js'
-import { CATEGORIES, fetchPhotos } from './api.js'
+import { CATEGORIES, fetchPhotos, photoAlt } from './api.js'
+import HeroCarousel from './HeroCarousel.jsx'
+import Lightbox from './Lightbox.jsx'
+import { PhotoTelemetry } from './PhotoDetails.jsx'
 
 const MAIN_SITE = import.meta.env.DEV ? '/' : 'https://bhasanth.com'
-
-const TelemetryRow = ({ label, value }) => (
-    <div className="bl-photo-row">
-        <span className="bl-photo-label">{label}</span>
-        <span className="bl-photo-value">{value}</span>
-    </div>
-)
 
 // Column count per breakpoint, widest first (matches the old CSS columns: 1 / 2 at 640px / 3 at 1100px).
 const BREAKPOINTS = [[1100, 3], [640, 2]]
@@ -83,40 +79,60 @@ const CategoryFilter = ({ options, value, onChange }) => (
 
 const photoRatio = (p) => (p.width && p.height ? p.height / p.width : 3 / 4)
 
-const PhotoCard = ({ photo, index, columns }) => {
-    const { focal, aperture, shutter, iso } = photo.settings
-    const gear = [photo.gear, photo.lens].filter(Boolean).join(' · ')
-    const settings = [focal, aperture, shutter, iso && `ISO ${iso}`].filter(Boolean).join(' · ')
-    return (
-        <motion.figure
-            className="bl-photo-card"
-            tabIndex={0}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.5, delay: (index % columns) * 0.08, ease: 'easeOut' }}
-        >
-            <img
-                src={photo.url}
-                alt={photo.title || [photo.city, photo.gear].filter(Boolean).join(' · ') || 'Photograph'}
-                width={photo.width || undefined}
-                height={photo.height || undefined}
-                loading="lazy"
-                decoding="async"
-            />
-            <figcaption className="bl-photo-overlay">
-                {photo.title && <p className="bl-photo-title">{photo.title}</p>}
-                {gear && <TelemetryRow label="Gear" value={gear} />}
-                {photo.city && <TelemetryRow label="Location" value={photo.city} />}
-                {settings && <TelemetryRow label="Settings" value={settings} />}
-            </figcaption>
-        </motion.figure>
-    )
+/**
+ * Deters casual saving: no context menu ("Save image as…") or drag-to-desktop on photos. CSS adds
+ * -webkit-touch-callout: none for iOS long-press. It can't stop a determined visitor (the image URLs
+ * are public), only the one-click route.
+ */
+const useImageSaveGuard = () => {
+    useEffect(() => {
+        const block = (e) => { if (e.target instanceof HTMLImageElement) e.preventDefault() }
+        document.addEventListener('contextmenu', block)
+        document.addEventListener('dragstart', block)
+        return () => {
+            document.removeEventListener('contextmenu', block)
+            document.removeEventListener('dragstart', block)
+        }
+    }, [])
 }
+
+const PhotoCard = ({ photo, index, columns, onOpen }) => (
+    <motion.figure
+        className="bl-photo-card"
+        tabIndex={0}
+        role="button"
+        aria-haspopup="dialog"
+        onClick={onOpen}
+        onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen() }
+        }}
+        data-track="photo_open"
+        data-track-label="grid"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5, delay: (index % columns) * 0.08, ease: 'easeOut' }}
+    >
+        <img
+            src={photo.url}
+            alt={photoAlt(photo)}
+            draggable={false}
+            width={photo.width || undefined}
+            height={photo.height || undefined}
+            loading="lazy"
+            decoding="async"
+        />
+        <figcaption className="bl-photo-overlay">
+            {photo.title && <p className="bl-photo-title">{photo.title}</p>}
+            <PhotoTelemetry photo={photo} />
+        </figcaption>
+    </motion.figure>
+)
 
 const PhotoGallery = () => {
     useEffect(() => { initThemeFromStorage() }, [])
     useEffect(() => { initTracking() }, [])
+    useImageSaveGuard()
 
     const [photos, setPhotos] = useState(null)
     const [error, setError] = useState('')
@@ -135,6 +151,10 @@ const PhotoGallery = () => {
         [photos, category],
     )
 
+    // The open lightbox: the filtered list it steps through and the current index.
+    const [viewer, setViewer] = useState(null)
+    const open = (list, index) => setViewer({ list, index })
+
     const columns = useColumnCount()
     const layout = useMemo(
         () => shown
@@ -144,7 +164,7 @@ const PhotoGallery = () => {
     )
 
     return (
-        <main className="min-h-screen px-4 md:px-10 pb-20">
+        <main className="bl-photo-page min-h-screen px-4 md:px-10 pb-20">
             <header className="max-w-7xl mx-auto flex items-center justify-between gap-4 pt-4">
                 <a
                     href={MAIN_SITE}
@@ -193,7 +213,13 @@ const PhotoGallery = () => {
                 </div>
             </header>
 
-            <section className="max-w-7xl mx-auto pt-16 md:pt-24 pb-10 md:pb-14" style={{ width: 'auto' }}>
+            {!error && (
+                <div className="max-w-7xl mx-auto pt-8 md:pt-12">
+                    <HeroCarousel photos={photos} paused={!!viewer} />
+                </div>
+            )}
+
+            <section className="max-w-7xl mx-auto pt-12 md:pt-16 pb-10 md:pb-14" style={{ width: 'auto' }}>
                 <h1 className="text-4xl md:text-6xl" style={{ color: 'var(--text-primary)' }}>My Photography</h1>
                 {filters.length > 1 && (
                     <div className="mt-8">
@@ -212,7 +238,7 @@ const PhotoGallery = () => {
                         <div key={c} className="bl-photo-column">
                             {shown
                                 ? col.map(({ item, index }) => (
-                                    <PhotoCard key={item.id} photo={item} index={index} columns={columns} />
+                                    <PhotoCard key={item.id} photo={item} index={index} columns={columns} onOpen={() => open(shown, index)} />
                                 ))
                                 : col.map(({ item: h, index }) => (
                                     <div key={index} className="bl-photo-card bl-photo-skeleton" style={{ aspectRatio: `3 / ${h}` }} />
@@ -221,6 +247,17 @@ const PhotoGallery = () => {
                     ))}
                 </div>
             )}
+
+            <AnimatePresence>
+                {viewer && (
+                    <Lightbox
+                        photos={viewer.list}
+                        index={viewer.index}
+                        onIndex={(index) => setViewer((v) => ({ ...v, index }))}
+                        onClose={() => setViewer(null)}
+                    />
+                )}
+            </AnimatePresence>
         </main>
     )
 }
